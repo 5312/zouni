@@ -1832,7 +1832,8 @@ var getTokenCount = 0;var _default =
         _complete ? _complete() : false;
       } });
 
-  }, getTokenValue: function getTokenValue(options) {var
+  },
+  getTokenValue: function getTokenValue(options) {var
 
     _success2 =
 
@@ -1925,9 +1926,12 @@ var getTokenCount = 0;var _default =
       mask: mask ? mask : false,
       duration: duration ? duration : 1500,
       complete: function complete() {
-        setInterval(function () {
+        setTimeout(function () {
           uni.hideToast();
         }, 30000);
+        /* setInterval(() => {
+                   	uni.hideToast();
+                   }, 30000) */
       } });
 
   },
@@ -2108,7 +2112,7 @@ var getTokenCount = 0;var _default =
 
 /***/ }),
 
-/***/ 114:
+/***/ 111:
 /*!*****************************************!*\
   !*** D:/wx-zouni/static/image/show.png ***!
   \*****************************************/
@@ -8163,7 +8167,7 @@ internalMixin(Vue);
 
 /***/ }),
 
-/***/ 218:
+/***/ 215:
 /*!*********************************************************!*\
   !*** D:/wx-zouni/components/plate-number/plate-del.png ***!
   \*********************************************************/
@@ -8216,7 +8220,7 @@ module.exports = g;
 
 /***/ }),
 
-/***/ 51:
+/***/ 48:
 /*!******************************************!*\
   !*** D:/wx-zouni/static/image/show1.png ***!
   \******************************************/

@@ -94,7 +94,8 @@ export default {
 				complete ? complete() : false
 			}
 		})
-	},getTokenValue(options) {
+	},
+	getTokenValue(options) {
 		let {
 			success,
 			fail,
@@ -187,9 +188,12 @@ export default {
 			mask: mask ? mask : false,
 			duration: duration ? duration : 1500,
 			complete: () => {
-				setInterval(() => {
+				setTimeout( ()=> {
 					uni.hideToast();
-				}, 30000)
+				},30000)
+				/* setInterval(() => {
+					uni.hideToast();
+				}, 30000) */
 			}
 		});
 	},
