@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "协议",
+  "usingComponents": {
+    "no-date": "/components/base/no-data"
+  }
+}

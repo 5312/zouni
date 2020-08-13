@@ -1,0 +1,41 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/scan/index",
+    "pages/scan/select",
+    "pages/vip/index",
+    "pages/my/index",
+    "pages/address/index",
+    "pages/vip/wallet",
+    "pages/base/rich",
+    "pages/my/volume",
+    "pages/my/order",
+    "pages/my/my-car",
+    "pages/my/exchange-volume",
+    "pages/my/agreement",
+    "pages/my/help",
+    "pages/index/site",
+    "pages/index/site-detail",
+    "pages/base/add-car",
+    "pages/my/order-detail",
+    "pages/scan/order-detail",
+    "pages/my/card",
+    "pages/my/card-detail",
+    "pages/my/my-info",
+    "pages/base/edit-my-info"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "我的洗车",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于小程序位置接口的效果展示"
+    }
+  },
+  "usingComponents": {},
+  "sitemapLocation": "sitemap23.json"
+}

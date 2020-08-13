@@ -1,0 +1,35 @@
+.auto-login.data-v-9c92b8d2 {
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 99999;
+}
+.auto-login .content.data-v-9c92b8d2 {
+  width: 500rpx;
+  height: 600rpx;
+  background: white;
+  border-radius: 8rpx;
+}
+.auto-login .content .title.data-v-9c92b8d2 {
+  font-size: 34rpx;
+  margin-bottom: 80rpx;
+  font-weight: bold;
+}
+.auto-login .content .info-msg.data-v-9c92b8d2 {
+  font-size: 28rpx;
+  margin-bottom: 60rpx;
+  padding: 0 60rpx;
+  color: grey;
+}
+.auto-login .content .registration-agreement.data-v-9c92b8d2 {
+  margin-bottom: 40rpx;
+  font-size: 24rpx;
+}
+.auto-login .content .btn.data-v-9c92b8d2 {
+  padding: 8rpx 0rpx;
+  width: 400rpx;
+  text-align: center;
+  background: #FF8D1A;
+  border-radius: 8rpx;
+  font-size: 26rpx;
+  color: white;
+}
+

@@ -1,0 +1,38 @@
+.edit-my-info.data-v-14681c7e {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background: white;
+}
+.edit-my-info .wrap.data-v-14681c7e {
+  padding: 40rpx;
+}
+.edit-my-info .title.data-v-14681c7e {
+  color: black;
+  line-height: 2;
+  font-size: 36rpx;
+}
+.edit-my-info .input-wrap.data-v-14681c7e {
+  margin-bottom: 40rpx;
+  margin-top: 10rpx;
+}
+.edit-my-info .input-wrap .input.data-v-14681c7e {
+  font-size: 30rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  border: 1rpx solid #FF8D1A;
+  padding-left: 20rpx;
+  border-radius: 10rpx;
+}
+.edit-my-info .btn-wrap .btn.data-v-14681c7e {
+  background: #FF8D1A;
+  color: white;
+  text-align: center;
+  height: 80rpx;
+  line-height: 80rpx;
+  font-size: 32rpx;
+  border-radius: 8rpx;
+}
+

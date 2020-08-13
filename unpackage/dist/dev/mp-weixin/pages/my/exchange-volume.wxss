@@ -1,0 +1,28 @@
+.exchange-volume .ad-wrap.data-v-0f4b675a {
+  height: 300rpx;
+}
+.exchange-volume .main .info-wrap.data-v-0f4b675a {
+  color: #999999;
+  font-size: 26rpx;
+  padding: 30rpx;
+}
+.exchange-volume .main .input-wrap.data-v-0f4b675a {
+  background: #232730;
+  height: 88rpx;
+}
+.exchange-volume .main .input-wrap .input.data-v-0f4b675a {
+  padding: 0 30rpx;
+  border: none;
+}
+.exchange-volume .main .btn-wrap.data-v-0f4b675a {
+  color: #020202;
+  background-color: #0af9b8;
+  margin: 30rpx;
+  width: 690rpx;
+  text-align: center;
+  height: 92rpx;
+  line-height: 92rpx;
+  border-radius: 10rpx;
+  font-size: 36rpx;
+}
+

@@ -1,0 +1,110 @@
+*{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+.w100{
+	width: 100%;
+}
+.h100{
+	height: 100%;
+}
+page{
+	background: white;
+	height: 100%;
+}
+.flex{
+	display: flex;
+}
+.inline-block{
+	display: inline-block;
+}
+.nowrap{
+	overflow: hidden;
+	text-overflow:ellipsis;
+	white-space: nowrap;
+}
+.flex1{
+	flex: 1;
+}
+.j-center{
+	justify-content: center;
+}
+.j-start{
+	justify-content: flex-start;
+}
+.j-end{
+	justify-content: flex-end;
+}
+.j-between{
+	justify-content: space-between;
+}
+.a-center{
+	align-items: center;
+}
+.a-start{
+	align-items: flex-start;
+}
+.a-end{
+	align-items: flex-end;
+}
+.flex-column{
+	flex-direction: column;
+}
+.flex-row{
+	flex-direction: row;
+}
+.flex-wrap{
+	flex-wrap: wrap;
+}
+.absolute{
+	position: absolute;
+}
+.relative{
+	position: relative;
+}
+.fixed{
+	position: fixed;
+}
+.p-tblr{
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+}
+.radius{
+	border-radius: 50%;
+}
+.text-center{
+	text-align: center;
+}
+.text-green{
+	color: #35D5AA;
+}
+.text-yellow{
+	color: #FF8D1A;
+}
+.bg-yellow{
+	background: #FF8D1A;
+}
+.text-white {
+	color: white;
+}
+.text-black {
+	color: black;
+}
+.bg-page{
+	background: white;
+}
+.bg-white{
+	background: white;
+}
+.bold{
+	font-weight: bold;
+}
+.text-blue{
+	color: #4BFFD0;
+}
+.text-grey {
+	color: #9C9FA6;
+}

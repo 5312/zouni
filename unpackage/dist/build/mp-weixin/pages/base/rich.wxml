@@ -1,0 +1,1 @@
+<view class="rich data-v-bbf84522"><rich-text nodes="{{detail}}" class="data-v-bbf84522"></rich-text><block wx:if="{{isNoDate}}"><no-date vue-id="44f7a2f5-1" class="data-v-bbf84522" bind:__l="__l"></no-date></block></view>
