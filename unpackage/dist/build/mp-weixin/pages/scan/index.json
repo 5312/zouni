@@ -1,6 +1,0 @@
-{
-  "navigationBarTitleText": "支付详情",
-  "usingComponents": {
-    "auth-login": "/components/base/auth-login"
-  }
-}

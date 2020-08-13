@@ -1,6 +1,0 @@
-{
-  "navigationBarTitleText": "我的车辆",
-  "usingComponents": {
-    "no-date": "/components/base/no-data"
-  }
-}

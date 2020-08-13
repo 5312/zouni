@@ -258,7 +258,7 @@
 						console.log("当前城市标记的站点：",this.covers)
 					}
 				})
-			},
+			}, 
 			scanCode() {
 				uni.scanCode({
 					success: (res) => {
