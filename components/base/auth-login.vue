@@ -86,7 +86,7 @@
 				let _this=this
 				uni.openSetting({
 				  success(res) {
-				    console.log(res.authSetting)
+					console.log(res)
 					if(res.authSetting['scope.userLocation']){
 						_this.$emit("loginOk",true)
 					}

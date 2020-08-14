@@ -1,0 +1,27 @@
+.agreement .header.data-v-b431f240 {
+  height: 80rpx;
+  line-height: 80rpx;
+  padding: 0 20rpx;
+  color: #999999;
+  font-size: 24rpx;
+  border-bottom: 2rpx solid #272A2F;
+}
+.agreement .list.data-v-b431f240 {
+  border-bottom: 2rpx solid #272A2F;
+}
+.agreement .list .line.data-v-b431f240 {
+  margin: 0 20rpx;
+  height: 88rpx;
+}
+.agreement .list .line.data-v-b431f240:not(:last-child) {
+  border-bottom: 2rpx solid #272A2F;
+}
+.agreement .list .line .left.data-v-b431f240 {
+  font-size: 28rpx;
+  color: white;
+}
+.agreement .list .line .right .show-icon.data-v-b431f240 {
+  width: 30rpx;
+  height: 30rpx;
+}
+

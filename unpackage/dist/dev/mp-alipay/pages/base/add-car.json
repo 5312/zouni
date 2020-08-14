@@ -1,0 +1,6 @@
+{
+  "defaultTitle": "添加/编辑车辆",
+  "usingComponents": {
+    "plate-number": "/components/plate-number/plateNumber"
+  }
+}

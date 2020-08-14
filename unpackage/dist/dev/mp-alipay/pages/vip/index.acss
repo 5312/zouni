@@ -1,0 +1,91 @@
+.vip.data-v-7f1b9037 {
+  background: #181C1F;
+}
+.vip .header.data-v-7f1b9037 {
+  height: 240rpx;
+  background: url("https://xm-img.gaoshilo.com/money_bg.png") no-repeat;
+  background-size: 100% 100%;
+  padding: 0 60rpx;
+}
+.vip .header .left.data-v-7f1b9037 {
+  width: 120rpx;
+  height: 120rpx;
+  border: 4rpx solid #35D5AA;
+  overflow: hidden;
+}
+.vip .header .mid.data-v-7f1b9037 {
+  color: #35D5AA;
+}
+.vip .header .mid .money.data-v-7f1b9037 {
+  font-weight: bold;
+  font-size: 56rpx;
+  height: 88rpx;
+  line-height: 88rpx;
+}
+.vip .header .mid .balance.data-v-7f1b9037 {
+  font-size: 28rpx;
+}
+.vip .header .right.data-v-7f1b9037 {
+  width: 192rpx;
+  height: 76rpx;
+  background: #00FACD;
+  border-radius: 10rpx;
+  color: #000;
+  font-size: 28rpx;
+  font-weight: bold;
+  line-height: 76rpx;
+}
+.vip .ad-wrap.data-v-7f1b9037 {
+  height: 152rpx;
+  padding: 0 40rpx;
+  margin-bottom: 20rpx;
+}
+.vip .ad-wrap .ad-title.data-v-7f1b9037 {
+  font-weight: 500;
+  font-size: 26px;
+  color: #35D5AA;
+}
+.vip .ad-wrap .ad-info.data-v-7f1b9037 {
+  font-weight: 500;
+  font-size: 14px;
+  color: #A6A8AC;
+}
+.vip .ad-wrap .ad-img.data-v-7f1b9037 {
+  width: 180rpx;
+  height: 132rpx;
+  right: 0;
+  top: 50%;
+  margin-top: -66rpx;
+}
+.vip .info-wrap.data-v-7f1b9037 {
+  font-size: 24rpx;
+}
+.vip .info-wrap .info.data-v-7f1b9037 {
+  color: #A6A8AC;
+}
+.vip .card-wrap .card.data-v-7f1b9037 {
+  margin: 0 40rpx 40rpx;
+  background: #90F0CB;
+  border-radius: 10rpx;
+  height: 140rpx;
+  padding: 0 40rpx;
+}
+.vip .card-wrap .card .left .title.data-v-7f1b9037 {
+  font-size: 40rpx;
+  font-weight: bold;
+  color: black;
+  margin-bottom: 10rpx;
+}
+.vip .card-wrap .card .left .info.data-v-7f1b9037 {
+  font-size: 24rpx;
+  color: #14625C;
+}
+.vip .card-wrap .card .right.data-v-7f1b9037 {
+  padding: 16rpx 40rpx;
+  background: #253938;
+  color: #90F0CB;
+  font-size: 28rpx;
+  font-weight: bold;
+  border-radius: 6rpx;
+}
+

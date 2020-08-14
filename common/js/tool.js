@@ -124,7 +124,6 @@ export default {
 									iv: res.iv
 								},
 								success: (res1) => {
-									console.log(res1)
 									if (res1.statusCode === 200 && res1.data.code === 1) {
 										_this.uniSetStorage('userInfo', res.userInfo)
 										_this.uniSetStorage('token', res1.data.data.token)
@@ -165,6 +164,39 @@ export default {
 			}
 		});
 	},
+	async getMyAlipayToken(options){
+		let {
+			service,
+			success,
+			fail,
+			complete
+		} = options
+		var _this = this;
+		const [error , provider] = await uni.getProvider({service:service})//获取服务类型
+		const [errMsg,loginCode] = await uni.login({provider:provider}) //获取登录code
+		if(errMsg){
+			_this.uniShowToast({
+				title: "获取微信登录login的code失败！",
+				icon: "none"
+			})
+			complete ? complete() : false
+		}
+		if(loginCode.authCode){
+		    const [e,login] = await	uni.request({
+				url: baseUrl + "/api/user/login",
+				method: "POST",
+				header: {
+					'Content-Type': 'application/x-www-form-urlencoded'
+				},
+				data: {
+					authcode: loginCode.authCode,
+				}
+			});
+			console.log(login)
+			console.log(e)
+		}
+		
+	},
 	distanceHanlde(val) {
 		if (val) {
 			let value = parseFloat(val)
@@ -188,9 +220,9 @@ export default {
 			mask: mask ? mask : false,
 			duration: duration ? duration : 1500,
 			complete: () => {
-				setTimeout( ()=> {
+				setTimeout(() => {
 					uni.hideToast();
-				},30000)
+				}, 30000)
 				/* setInterval(() => {
 					uni.hideToast();
 				}, 30000) */
@@ -320,7 +352,47 @@ export default {
 	},
 	getAuthorizeInfo(type, success, fail) {
 		let _this = this
-		uni.authorize({
+		// #ifdef MP-ALIPAY
+		//支付宝authorize无法使用
+		const scopes = {
+			"scope.userLocation": async function() {
+				let [error, result] = await uni.getLocation();
+				if (result) {
+					success ? success() : false
+				} else {
+					if (fail) {
+						fail()
+					} else {
+						_this.uniShowToast({
+							title: "你拒绝了授权!",
+							icon: "none"
+						})
+						console.log("你拒绝了授权")
+					}
+				}
+			},
+			"scope.userInfo": async function() {//判断是否登录成功
+				const [error,userInfo] = await uni.getUserInfo();
+				console.log("登录判断",userInfo)
+				if(!userInfo){return};
+				if (_this.uniGetStorage("token")) {
+					success ? success() : false
+				} else {
+					_this.getMyAlipayToken({
+						service:"oauth",
+						success: () => {
+							success ? success() : false
+						}
+					})
+				}
+			}
+		}
+		scopes[type]()
+		// #endif
+		
+		// #ifndef MP-ALIPAY 
+		//支付宝无法使用authorize
+		uni.authorize({ 
 			scope: type,
 			success() {
 				if (type === 'scope.userInfo') {
@@ -349,6 +421,7 @@ export default {
 				}
 			}
 		})
+		// #endif
 	},
 	wxPayMoney(timeStamp, nonceStr, pack, signType, paySign, sucfun, failfun = null, compfun = null) { //封装微信支付函数
 		uni.requestPayment({

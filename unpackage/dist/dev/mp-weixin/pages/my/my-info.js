@@ -186,16 +186,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 var _default =
 {
   data: function data() {
     return {
       userInfo: null,
-      sexVal: null };
+      sexVal: null,
+      phone: null };
 
   },
   onLoad: function onLoad(option) {
     this.getMyInfo();
+    console.log(this.phone);
   },
   computed: {
     startDate: function startDate() {
@@ -203,12 +208,68 @@ var _default =
     },
     endDate: function endDate() {
       return this.getDate('end');
+    },
+    phoneButton: function phoneButton() {
+      if (this.phone == 0 || this.phone == "") {
+        return true;
+      } else {return false;}
+    },
+    phoneInput: function phoneInput() {
+      if (this.phone == 0 || this.phone == "") {
+        return false;
+      } else {return true;}
     } },
 
   methods: {
     bindDateChange: function bindDateChange(e) {
       this.editUserInfo({
         birthday: e.target.value });
+
+    },
+    getPhoneNumber: function getPhoneNumber(e) {
+      if (!e.detail.iv) {
+        this.$tool.uniShowToast({
+          title: "获取失败！" });
+
+        return false;
+      } else {
+        this.$tool.uniRequest({
+          url: "",
+          data: {
+            iv: e.detail.iv,
+            encrypted_data: e.detail.encryptedData },
+          success: function success(resolve) {
+            console.log(resolve);
+          } });
+
+        this.phone = "13649139296";
+        this.userInfo.tel = this.phone;
+        this.setPhone('tel', this.phone);
+      }
+      console.log(e);
+      console.log(e.detail.iv);
+      console.log(e.detail.encryptedData);
+    },
+    setPhone: function setPhone() {var type = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'tel';var phone = arguments.length > 1 ? arguments[1] : undefined;
+      var _this = this;
+      this.$tool.uniRequest({
+        url: "/api/user/edit",
+        method: 'POST',
+        params: {
+          avatarUrl: _this.userInfo.avatarUrl,
+          tel: _this.type === 'tel' ? phone : _this.userInfo.tel,
+          /* nickName:_this.type==='nickName'?_this.inputVal:_this.userInfo.nickName, */
+          gender: _this.userInfo.gender,
+          birthday: _this.userInfo.birthday },
+
+        success: function success(res) {
+          _this.$tool.uniShowToast({
+            title: "修改成功！" });
+
+          _this.$tool.uniSetStorage('isEditUserInfo', true);
+
+        } });
+
 
     },
     sexValChange: function sexValChange(index) {
@@ -231,9 +292,6 @@ var _default =
       month = month > 9 ? month : '0' + month;;
       day = day > 9 ? day : '0' + day;
       return "".concat(year, "-").concat(month, "-").concat(day);
-    },
-    editPage: function editPage(value, type) {
-      this.$tool.uniRedirectTo({ url: "/pages/base/edit-my-info?value=".concat(value, "&type=").concat(type, "&userInfo=").concat(JSON.stringify(this.userInfo)) });
     },
     base64PageImg: function base64PageImg(url) {
       var base64Img = uni.getFileSystemManager().readFileSync(url, "base64"); //转码  
@@ -280,6 +338,7 @@ var _default =
           _this.userInfo = res.userInfo;
           _this.sexVal = res.userInfo.gender === '男' ? 1 : 2;
           _this.userInfo.gender = _this.sexVal;
+          _this.phone = res.userInfo.tel;
         } });
 
     } } };exports.default = _default;

@@ -30,15 +30,18 @@
 				<image src="../../static/image/show1.png" class="icon"></image>
 			</view>
 		</view>
-		<view class="line flex a-center j-between flex-row" @click="editPage(userInfo.tel,'tel')">
+		<view class="line flex a-center j-between flex-row">
 			<view class="left">
 				手机号
 			</view>
-			<view class="right flex a-center j-end flex-row">
-				<text class="phone">{{userInfo.tel}}</text>
-				<image src="../../static/image/show1.png" class="icon"></image>
+			<view v-show="phoneButton" class=" right flex a-center j-end flex-row">
+				<button class="btns" open-type="getPhoneNumber" @getphonenumber="getPhoneNumber">获取电话号码</button>
 			</view>
-		</view>
+			<view v-show="phoneInput" class="right flex a-center j-end flex-row">
+				<text class="phone">{{phone}}</text>
+				<!-- <image src="../../static/image/show1.png" class="icon"></image> -->
+			</view>
+		</view> 
 		<view class="line flex a-center j-between flex-row">
 			<view class="left">
 				出生日期
@@ -47,7 +50,7 @@
 				<picker mode="date" :value="userInfo.birthday" :start="startDate" :end="endDate" @change="bindDateChange">
 				    <view class="uni-input">{{userInfo.birthday || '2020-07-10'}}</view>
 				</picker>
-				<!-- <text>{{userInfo.birthday}}</text> -->
+				<!-- <text>{{userInfo.birthday}}</text> --> 
 				<image src="../../static/image/show1.png" class="icon"></image>
 			</view>
 		</view>	
@@ -60,10 +63,12 @@
 			return{
 				userInfo:null,
 				sexVal:null,
+				phone:null,
 			}
 		},
 		onLoad(option){
 			this.getMyInfo()
+			console.log(this.phone)
 		},
 		computed: {
 		    startDate() {
@@ -71,13 +76,69 @@
 		    },
 		    endDate() {
 		        return this.getDate('end')
-		    }
+		    },
+			phoneButton(){
+				if(this.phone == 0 || this.phone == ""){
+					return true
+				}else{return false}
+			},
+			phoneInput(){
+				if(this.phone == 0 || this.phone == ""){
+					return false
+				}else{return true}
+			}
 		},
 		methods:{	
 			bindDateChange: function(e) {		   
 				this.editUserInfo({
 					birthday:e.target.value
 				})
+			},
+			getPhoneNumber(e){
+				if(!e.detail.iv){
+					this.$tool.uniShowToast({
+						title: "获取失败！"						
+					})
+					return false
+				}else{
+					this.$tool.uniRequest({
+						url:"",
+						data:{
+							iv:e.detail.iv,
+							encrypted_data:e.detail.encryptedData
+						},success(resolve){
+							console.log(resolve)
+						}
+					})
+					this.phone = "13649139296"
+					this.userInfo.tel = this.phone
+					this.setPhone('tel',this.phone)
+				}
+				console.log(e)
+				console.log(e.detail.iv)
+				console.log(e.detail.encryptedData)
+			},
+			setPhone(type = 'tel',phone){
+				let _this= this
+				this.$tool.uniRequest({
+					url: `/api/user/edit`,			
+					method: 'POST',
+					params:{
+						avatarUrl:_this.userInfo.avatarUrl,
+						tel:_this.type==='tel'?phone:_this.userInfo.tel,
+						/* nickName:_this.type==='nickName'?_this.inputVal:_this.userInfo.nickName, */
+						gender:_this.userInfo.gender,
+						birthday:_this.userInfo.birthday
+					},
+					success: (res) => {
+						_this.$tool.uniShowToast({
+							title: "修改成功！"						
+						})
+						_this.$tool.uniSetStorage('isEditUserInfo',true)
+						
+					}
+				})
+				
 			},
 			sexValChange(index){
 				if(this.sexVal!==index){
@@ -99,9 +160,6 @@
 			            month = month > 9 ? month : '0' + month;;
 			            day = day > 9 ? day : '0' + day;
 			            return `${year}-${month}-${day}`;
-			},
-			editPage(value,type){
-				this.$tool.uniRedirectTo({url:`/pages/base/edit-my-info?value=${value}&type=${type}&userInfo=${JSON.stringify(this.userInfo)}`})
 			},
 			base64PageImg(url) {  
 			    let base64Img = uni.getFileSystemManager().readFileSync(url, "base64");//转码  
@@ -147,7 +205,8 @@
 					success: (res) => {
 						_this.userInfo=res.userInfo	
 						_this.sexVal=res.userInfo.gender==='男'?1:2					
-						_this.userInfo.gender=_this.sexVal					
+						_this.userInfo.gender=_this.sexVal
+						_this.phone = res.userInfo.tel
 					}
 				})
 			}
@@ -177,6 +236,15 @@
 		.right{
 			font-size: 26rpx;
 			color: #505050;
+			.btns{
+				font-size: 26rpx;
+				height: 80rpx;
+				border-radius: 8rpx;
+				background: #FF8D1A;
+				line-height: 80rpx;
+				text-align: center;
+				color: white;
+			}
 			.avatar{
 				width: 66rpx;
 				height: 66rpx;

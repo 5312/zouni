@@ -331,6 +331,9 @@
 </script>
 
 <style lang="less" scoped>
+	/* #ifndef MY-ALIPAY*/
+	
+	/* #endif */
 	.index {
 		.header,
 		.main,

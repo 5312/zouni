@@ -1,0 +1,1 @@
+<view class="wallet bg-page h100 data-v-64f8a438"><block a:if="{{isNoDate}}"><no-date vue-id="3a2ee110-1" class="data-v-64f8a438" onVueInit="__l"></no-date></block></view>

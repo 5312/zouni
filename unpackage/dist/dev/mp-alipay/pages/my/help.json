@@ -1,0 +1,6 @@
+{
+  "defaultTitle": "帮助中心",
+  "usingComponents": {
+    "no-date": "/components/base/no-data"
+  }
+}

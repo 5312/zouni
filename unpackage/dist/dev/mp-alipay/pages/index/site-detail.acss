@@ -1,0 +1,103 @@
+.site-detail.data-v-5a4f37b1 {
+  padding: 40rpx;
+}
+.site-detail .header.data-v-5a4f37b1 {
+  color: #999A9C;
+}
+.site-detail .header .left.data-v-5a4f37b1 {
+  width: 208rpx;
+  height: 208rpx;
+  margin-right: 30rpx;
+  -webkit-flex-shrink: 0;
+          flex-shrink: 0;
+}
+.site-detail .header .right.data-v-5a4f37b1 {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+          flex: 1;
+}
+.site-detail .header .right .title.data-v-5a4f37b1 {
+  font-size: 38rpx;
+  margin-bottom: 18rpx;
+  color: black;
+}
+.site-detail .header .right .address.data-v-5a4f37b1 {
+  font-size: 28rpx;
+  margin-bottom: 20rpx;
+}
+.site-detail .header .right .other.data-v-5a4f37b1 {
+  font-size: 20rpx;
+}
+.site-detail .header .right .other .distance.data-v-5a4f37b1 {
+  margin-right: 20rpx;
+  display: inline-block;
+}
+.site-detail .nav-wrap.data-v-5a4f37b1 {
+  height: 86rpx;
+  color: black;
+  padding: 0 40rpx;
+  border-bottom: 1rpx solid #F4F4F4;
+}
+.site-detail .nav-wrap .nav.data-v-5a4f37b1 {
+  padding: 4rpx 20rpx;
+  box-sizing: border-box;
+  border-radius: 40rpx;
+  font-size: 22rpx;
+  border: 2rpx solid #FF8D1A;
+}
+.site-detail .nav-wrap .nav.data-v-5a4f37b1:not(:last-child) {
+  margin-right: 30px;
+}
+.site-detail .info-wrap.data-v-5a4f37b1 {
+  color: black;
+  font-size: 24rpx;
+  height: 40rpx;
+  line-height: 40rpx;
+}
+.site-detail .phone-wrap.data-v-5a4f37b1 {
+  margin-top: 14rpx;
+}
+.site-detail .phone-wrap .phone.data-v-5a4f37b1 {
+  color: red;
+}
+.site-detail .btn-wrap.data-v-5a4f37b1 {
+  padding: 40rpx 0;
+}
+.site-detail .btn-wrap .btn.data-v-5a4f37b1 {
+  text-align: center;
+  height: 92rpx;
+  line-height: 92rpx;
+  border-radius: 46rpx;
+  border: 2rpx solid #FF8D1A;
+  width: 310rpx;
+  color: #FF8D1A;
+  font-weight: 900;
+}
+.site-detail .btn-wrap .btn-active.data-v-5a4f37b1 {
+  background: #FF8D1A;
+  color: #000;
+}
+.site-detail .content .title.data-v-5a4f37b1 {
+  height: 36rpx;
+  line-height: 46rpx;
+}
+.site-detail .content .main.data-v-5a4f37b1 {
+  font-weight: 100;
+  font-size: 26rpx;
+  margin: 40rpx 0;
+}
+.site-detail .content .main ._img.data-v-5a4f37b1 {
+  width: 370rpx !important;
+}
+.site-detail .footer .title.data-v-5a4f37b1 {
+  height: 36rpx;
+  line-height: 46rpx;
+}
+.site-detail .footer .des.data-v-5a4f37b1 {
+  text-align: left;
+  text-indent: 60rpx;
+  font-size: 26rpx;
+  padding: 20rpx 40rpx 40rpx 40rpx;
+  color: #707175;
+}
+

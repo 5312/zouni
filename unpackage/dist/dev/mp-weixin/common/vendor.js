@@ -1862,7 +1862,6 @@ var getTokenCount = 0;var _default =
                   iv: res.iv },
 
                 success: function success(res1) {
-                  console.log(res1);
                   if (res1.statusCode === 200 && res1.data.code === 1) {
                     _this.uniSetStorage('userInfo', res.userInfo);
                     _this.uniSetStorage('token', res1.data.data.token);

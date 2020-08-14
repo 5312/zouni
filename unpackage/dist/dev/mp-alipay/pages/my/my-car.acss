@@ -1,0 +1,35 @@
+.my-car.data-v-c941e266 {
+  padding-top: 20rpx;
+}
+.my-car .header.data-v-c941e266 {
+  padding: 20rpx;
+}
+.my-car .header .left.data-v-c941e266 {
+  color: #7B7C80;
+}
+.my-car .header .right.data-v-c941e266 {
+  display: inline-block;
+  border-radius: 10rpx;
+  background-color: #FF8D1A;
+  padding: 10rpx 20rpx;
+  color: white;
+  font-size: 28rpx;
+}
+.my-car .list-wrap.data-v-c941e266 {
+  margin-top: 30rpx;
+  padding: 0 20rpx;
+}
+.my-car .list-wrap .box.data-v-c941e266 {
+  background: url(/static/image/car-bg.png) no-repeat;
+  background-size: 100% 100%;
+  border-radius: 10rpx;
+  height: 120rpx;
+  margin-top: 20rpx;
+  padding: 20rpx 40rpx;
+  color: white;
+}
+.my-car .list-wrap .box .right.data-v-c941e266 {
+  font-size: 30rpx;
+  height: 100%;
+}
+

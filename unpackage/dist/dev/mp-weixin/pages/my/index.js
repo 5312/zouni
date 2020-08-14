@@ -232,8 +232,7 @@ __webpack_require__.r(__webpack_exports__);
       userInfo: null,
       orderCount: null,
       isCouponCounts: false,
-      myList: [
-      {
+      myList: [{
         img: "../../static/image/11.png",
         name: "我的车辆",
         path: "/pages/my/my-car" },
@@ -264,10 +263,9 @@ __webpack_require__.r(__webpack_exports__);
         path: "/pages/my/help" }] };
 
 
-
   },
   onLoad: function onLoad() {
-    this.getPthone();
+    //this.getPthone()
     this.init();
   },
   onShow: function onShow() {
@@ -295,7 +293,9 @@ __webpack_require__.r(__webpack_exports__);
           } });
 
       } else {
-        this.$tool.uniNavigateTo({ url: "/pages/my/my-info" });
+        this.$tool.uniNavigateTo({
+          url: "/pages/my/my-info" });
+
       }
     },
     lookCoupon: function lookCoupon() {
@@ -365,7 +365,9 @@ __webpack_require__.r(__webpack_exports__);
         default:
           url = "/pages/index/index";}
 
-      this.$tool.uniNavigateTo({ url: url });
+      this.$tool.uniNavigateTo({
+        url: url });
+
     },
     toListPage: function toListPage(item) {
       if (item.isNoOpen) {
@@ -376,7 +378,9 @@ __webpack_require__.r(__webpack_exports__);
         return;
       }
       if (item.path) {
-        this.$tool.uniNavigateTo({ url: item.path });
+        this.$tool.uniNavigateTo({
+          url: item.path });
+
       } else if (item.prop === 'invoice') {
         uni.showModal({
           title: '温馨提示',

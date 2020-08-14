@@ -1,0 +1,38 @@
+.add-car.data-v-a3ed313a {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background: white;
+}
+.add-car .wrap.data-v-a3ed313a {
+  padding: 40rpx;
+}
+.add-car .title.data-v-a3ed313a {
+  color: black;
+  line-height: 2;
+  font-size: 36rpx;
+}
+.add-car .input-wrap.data-v-a3ed313a {
+  margin-bottom: 40rpx;
+  margin-top: 10rpx;
+}
+.add-car .input-wrap .input.data-v-a3ed313a {
+  font-size: 30rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  border: 1rpx solid #FF8D1A;
+  padding-left: 20rpx;
+  border-radius: 10rpx;
+}
+.add-car .btn-wrap .btn.data-v-a3ed313a {
+  background: #FF8D1A;
+  color: white;
+  text-align: center;
+  height: 80rpx;
+  line-height: 80rpx;
+  font-size: 32rpx;
+  border-radius: 8rpx;
+}
+
