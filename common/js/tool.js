@@ -223,9 +223,6 @@ export default {
 				setTimeout(() => {
 					uni.hideToast();
 				}, 30000)
-				/* setInterval(() => {
-					uni.hideToast();
-				}, 30000) */
 			}
 		});
 	},
