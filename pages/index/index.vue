@@ -2,7 +2,7 @@
 	<view :class="['index fixed p-tblr',!isAuthAddress && isShowAuthLogin?'bg-page':'']">
 		<template v-if="isAuthAddress">
 			<view class="header absolute flex j-between a-center flex-row bg-white">
-				<view class="left" @click="toPage('address')" >
+				<view class="left" @click="toPage('address')">
 					<template v-if="addressInfo">
 						<text class="address">{{addressInfo.name?addressInfo.name:''}}</text>
 						<image src="../../static/image/more1.png" mode="" class="more_icon"></image>
@@ -13,12 +13,12 @@
 						<text>{{weatherInfo.wea}}</text>
 						<text class="margin-lr">{{weatherInfo.tem}} °C</text>
 						<text>{{weatherInfo.air_level}}</text>
-					</template>				
+					</template>
 				</view>
 			</view>
 			<view class="main absolute">
-				<map class='w100 h100' id='myMap' :latitude="latitude" :longitude="longitude" show-location :scale='mapScale' 
-				 :markers="covers" @regionchange="regionchange" @markertap='markertap'  />
+				<map class='w100 h100' id='myMap' :latitude="latitude" :longitude="longitude" show-location :scale='mapScale'
+				 :markers="covers" @regionchange="regionchange" @markertap='markertap' />
 			</view>
 			<view class="footer absolute flex j-between a-center flex-row bg-white">
 				<view class="left  flex a-center j-center flex-column" @click="toPage('vip')">
@@ -62,8 +62,8 @@
 					<view class="contact-line text-center" @click.stop.prevent="call">电话客服</view>
 					<view class="contact-line text-center" @click.stop.prevent="close">取消</view>
 				</view>
-			</view>				
-		</template>	
+			</view>
+		</template>
 		<AuthLogin v-if="!isAuthAddress && isShowAuthLogin" @loginOk='loginOk' :status="'userLocation'"></AuthLogin>
 	</view>
 </template>
@@ -71,108 +71,108 @@
 <script>
 	import AuthLogin from "../../components/base/auth-login.vue"
 	export default {
-		components:{
+		components: {
 			AuthLogin
 		},
 		data() {
 			return {
 				adImg: "",
-				mapScale:16,
-				isAuthAddress:false,
-				isShowAuthLogin:false,
+				mapScale: 16,
+				isAuthAddress: false,
+				isShowAuthLogin: false,
 				phone: 0,
 				isContact: false,
-				weatherInfo:null,
+				weatherInfo: null,
 				latitude: null,
-				longitude:null,
+				longitude: null,
 				covers: [],
 				mapCtx: null,
-				addressInfo:null,
-				fromPage:null
+				addressInfo: null,
+				fromPage: null
 			}
 		},
 		onShareAppMessage(res) {
-		    if (res.from === 'button') {// 来自页面内分享按钮
-		      console.log(res.target)
-		    }
-		    return {
-		      title: '快来参加吧！',
-		      path: '/pages/index/index'
-		    }
-		 },
-		onLoad(options){
-			this.fromPage=options && options.fromPage?options.fromPage:null
-			if(this.fromPage && this.fromPage==='address'){
-				this.addressInfo=JSON.parse(options.addressInfo)
-				this.latitude=this.addressInfo.lat
-				this.longitude=this.addressInfo.lng
-				this.$tool.uniSetStorage("addressInfo",this.addressInfo)
+			if (res.from === 'button') { // 来自页面内分享按钮
+				console.log(res.target)
+			}
+			return {
+				title: '快来参加吧！',
+				path: '/pages/index/index'
 			}
 		},
-		onReady() {	
+		onLoad(options) {
+			this.fromPage = options && options.fromPage ? options.fromPage : null
+			if (this.fromPage && this.fromPage === 'address') {
+				this.addressInfo = JSON.parse(options.addressInfo)
+				this.latitude = this.addressInfo.lat
+				this.longitude = this.addressInfo.lng
+				this.$tool.uniSetStorage("addressInfo", this.addressInfo)
+			}
+		},
+		onReady() {
 			this.init()
 		},
-			
+
 		methods: {
-			init(isReset=false) {
-				this.$tool.isGetLocation('scope.userLocation',()=>{
-					this.isAuthAddress=true
-					this.isShowAuthLogin=false
-					if(this.fromPage && this.fromPage==='address' && !isReset){
-						this.mapScale=11
+			init(isReset = false) {
+				this.$tool.isGetLocation('scope.userLocation', () => {
+					this.isAuthAddress = true
+					this.isShowAuthLogin = false
+					if (this.fromPage && this.fromPage === 'address' && !isReset) {
+						this.mapScale = 11
 						this.getWeather()
 						this.getPthone()
 						this.getListInfo()
-					}else{
-						this.mapScale=16
+					} else {
+						this.mapScale = 16
 						this.getLocationInfo()
 					}
 					this.getAdInfo()
-				},()=>{
-					this.isAuthAddress=false
-					this.isShowAuthLogin=true
+				}, () => {
+					this.isAuthAddress = false
+					this.isShowAuthLogin = true
 				})
 			},
-			loginOk(){
+			loginOk() {
 				this.init()
 			},
 			addressHandle() {
-				
+
 				this.init(true)
-			},		
-			getPthone(){
+			},
+			getPthone() {
 				this.$tool.uniRequest({
 					url: `/api/Tel`,
 					success: (res) => {
-						this.phone=res.tel
+						this.phone = res.tel
 					}
 				})
-			}, 
-			markertap(e){
-				console.log('markertap',e.detail.markerId)
-				let markerId=e.detail.markerId
-				let result=null
-				this.covers.forEach((item,index)=>{
-					if(item.id==markerId){					
-						result=item
+			},
+			markertap(e) {
+				console.log('markertap', e.detail.markerId)
+				let markerId = e.detail.markerId
+				let result = null
+				this.covers.forEach((item, index) => {
+					if (item.id == markerId) {
+						result = item
 					}
 				})
 				result && this.getSiteDetail(result)
 			},
-			regionchange(e){
+			regionchange(e) {
 				//console.log(e)
-				if(e.type == "end"){
-					
+				if (e.type == "end") {
+
 				}
-			}, 
-			getSiteDetail(item){		
+			},
+			getSiteDetail(item) {
 				this.$tool.uniNavigateTo({
-					url:`/pages/index/site-detail?id=${item.goods_id}`
+					url: `/pages/index/site-detail?id=${item.goods_id}`
 				})
 			},
-			toAdPage(){
+			toAdPage() {
 				this.$tool.uniNavigateTo({
-					url:`/pages/my/card`
+					url: `/pages/my/card`
 				})
 			},
 			getLocationInfo() {
@@ -181,139 +181,131 @@
 				uni.getLocation({
 					type: "wgs84",
 					geocode: true,
-					success: (res) => {		
+					success: (res) => {
 						_this.latitude = res.latitude
-						_this.longitude = res.longitude	
+						_this.longitude = res.longitude
 						_this.$tool.uniRequest({
 							url: `/api/Geocoder`,
-							params:{
-								lat:_this.latitude,
-								lng:_this.longitude
+							params: {
+								lat: _this.latitude,
+								lng: _this.longitude
 							},
 							success: (result) => {
-								console.log("城市",result)
+								console.log("城市", result)
 								let cityName = result.geocoder.city
-								if(cityName.charAt(cityName.length-1)==='市'){
-									cityName=cityName.substr(0,cityName.length-1);
-								}								
-								_this.addressInfo={
-									name:cityName,
-									lat:_this.latitude,
-									lng:_this.longitude,
-									category_id:"",
-								}					
-								_this.mapCtx.moveToLocation()  //地图中心点切换到当前位置
-								_this.$tool.uniSetStorage("addressInfo",_this.addressInfo)
+								if (cityName.charAt(cityName.length - 1) === '市') {
+									cityName = cityName.substr(0, cityName.length - 1);
+								}
+								_this.addressInfo = {
+									name: cityName,
+									lat: _this.latitude,
+									lng: _this.longitude,
+									category_id: "",
+								}
+								_this.mapCtx.moveToLocation() //地图中心点切换到当前位置
+								_this.$tool.uniSetStorage("addressInfo", _this.addressInfo)
 								_this.getWeather()
 								_this.getListInfo()
 								_this.getPthone()
 							}
 						})
-						
+
 					}
 				})
 			},
-			getAdInfo(){
+			getAdInfo() {
 				this.$tool.uniRequest({
 					url: `/api/Ad`,
 					success: (res) => {
-						console.log('获取广告地址',res)
-						this.adImg=res.indexAd
+						console.log('获取广告地址', res)
+						this.adImg = res.indexAd
 					}
 				})
 			},
-			getWeather(){
+			getWeather() {
 				this.$tool.uniRequest({
 					url: `/api/weather`,
 					isNoCode: true,
-					params:{
-						lat:this.addressInfo.lat,
-						lng:this.addressInfo.lng,
-						city:this.addressInfo.name
+					params: {
+						lat: this.addressInfo.lat,
+						lng: this.addressInfo.lng,
+						city: this.addressInfo.name
 					},
 					success: (res) => {
-						this.weatherInfo=res
+						this.weatherInfo = res
 					}
 				})
 			},
-			getListInfo() {	
-				const cover = this.$tool.uniGetStorage("covers")//缓存标记
-				if(cover){ this.covers = cover ;return}
+			getListInfo() {
+				const cover = this.$tool.uniGetStorage("covers") //缓存标记
+				if (cover) {
+					this.covers = cover;
+					return
+				}
 				this.$tool.uniRequest({
-					url: `/api/index/`,			
+					url: `/api/index/`,
 					success: (res) => {
 						let temObj = res && res.posiList && res.posiList.data ? res.posiList.data : []
 						this.covers = []
-						for(let i in temObj){
+						for (let i in temObj) {
 							let obj = {
-								id:i+1,
+								id: i + 1,
 								goods_id: temObj[i].goods_id,
 								latitude: temObj[i].goods_lat,
 								longitude: temObj[i].goods_lng,
 								iconPath: '../../static/image/maplocation.png'
-							}						
+							}
 							this.covers.push(obj)
-						}   
-						this.$tool.uniSetStorage("covers",this.covers)
-						console.log("当前城市标记的站点：",this.covers)
+						}
+						this.$tool.uniSetStorage("covers", this.covers)
+						console.log("当前城市标记的站点：", this.covers)
 					}
 				})
-			}, 
+			},
 			scanCode() {
 				uni.scanCode({
 					success: (res) => {
-						let result=res.result
-						let siteId=''
-						if(result && result.startsWith('https://xi.ydeshui.com')){
-							let q=result
-							if(q){
-								let a=q.split('?')[1]
-								if(a && a.length>0){
-									let b=a.split('=')
-									if(b && b.length>0 && b[0]=='siteId'){
-										siteId=b[1]						
+						let result = res.result
+						let siteId = ''
+						if (result && result.startsWith('https://xi.ydeshui.com')) {
+							let q = result
+							if (q) {
+								let a = q.split('?')[1]
+								if (a && a.length > 0) {
+									let b = a.split('=')
+									if (b && b.length > 0 && b[0] == 'siteId') {
+										siteId = b[1]
 									}
 								}
 							}
 						}
-						if(siteId){
+						if (siteId) {
 							this.$tool.uniRedirectTo({
-								url:`/pages/scan/index?siteId=${siteId}&fromPage=home`
-							})		
-						}else {
+								url: `/pages/scan/index?siteId=${siteId}&fromPage=home`
+							})
+						} else {
 							this.$tool.uniShowToast({
-								title:"目前只支持小程序的扫码支付，不支持其他扫码",
-								icon:"none"
+								title: "目前只支持小程序的扫码支付，不支持其他扫码",
+								icon: "none"
 							})
 						}
 					}
 				})
 			},
-			online(){
+			online() {
 				this.$tool.uniShowToast({
 					title: "稍后开放！",
 					icon: "none"
 				})
 			},
 			toPage(type) {
-				
-				let url = ""
-				switch (type) {
-					case 'my':
-						url = "/pages/my/index"
-						break;
-					case 'vip':
-						url="/pages/my/volume"
-						break;
-					case 'address':
-						url = `/pages/address/index?addressName=${this.addressInfo.name}`
-						break;
-					case 'site':
-						url = "/pages/index/site"
-						break;
-					default:
-						url = "/pages/index/index"
+				const pagesUrl = {
+					"my": "/pages/my/index",
+					"vip": "/pages/my/volume",
+					"address": `/pages/address/index?addressName=${this.addressInfo.name}`,
+					"site": "/pages/index/site"
 				}
+				let url = pagesUrl[type] || "/pages/index/index";
 				this.$tool.uniNavigateTo({
 					url
 				})
@@ -332,9 +324,10 @@
 
 <style lang="less" scoped>
 	/* #ifndef MY-ALIPAY*/
-	
+
 	/* #endif */
 	.index {
+
 		.header,
 		.main,
 		.footer {
@@ -386,11 +379,13 @@
 				height: 100rpx;
 				border-radius: 50rpx;
 				background: #FF8D1A;
+
 				.img {
 					width: 50rpx;
 					height: 50rpx;
 					margin-right: 16rpx;
 				}
+
 				.text {
 					font-size: 36rpx;
 				}
@@ -418,6 +413,7 @@
 			right: 40rpx;
 			bottom: 280rpx;
 			border-radius: 20rpx;
+
 			.box {
 				height: 174rpx;
 				font-size: 24rpx;
@@ -431,11 +427,13 @@
 					width: 70rpx;
 					margin-bottom: 10rpx;
 				}
-				.img2{
+
+				.img2 {
 					height: 80rpx;
 					width: 80rpx;
 					margin-bottom: 10rpx;
 				}
+
 				&:active {
 					opacity: 0.6;
 				}
