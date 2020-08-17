@@ -396,6 +396,8 @@ __webpack_require__.r(__webpack_exports__);
           for (var i in temObj) {
             var obj = {
               id: i + 1,
+              width: "50rpx",
+              height: "63rpx",
               goods_id: temObj[i].goods_id,
               latitude: temObj[i].goods_lat,
               longitude: temObj[i].goods_lng,

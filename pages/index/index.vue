@@ -250,6 +250,8 @@
 						for (let i in temObj) {
 							let obj = {
 								id: i + 1,
+								width:"50rpx",
+								height:"63rpx",
 								goods_id: temObj[i].goods_id,
 								latitude: temObj[i].goods_lat,
 								longitude: temObj[i].goods_lng,
@@ -408,7 +410,7 @@
 
 		.list-wrap {
 			color: black;
-			width: 130rpx;
+			width: 120rpx;
 			height: 535rpx;
 			right: 40rpx;
 			bottom: 300rpx;

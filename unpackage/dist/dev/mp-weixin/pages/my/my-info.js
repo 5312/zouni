@@ -212,12 +212,16 @@ var _default =
     phoneButton: function phoneButton() {
       if (this.phone == 0 || this.phone == "") {
         return true;
-      } else {return false;}
+      } else {
+        return false;
+      }
     },
     phoneInput: function phoneInput() {
       if (this.phone == 0 || this.phone == "") {
         return false;
-      } else {return true;}
+      } else {
+        return true;
+      }
     } },
 
   methods: {
@@ -238,6 +242,7 @@ var _default =
           data: {
             iv: e.detail.iv,
             encrypted_data: e.detail.encryptedData },
+
           success: function success(resolve) {
             console.log(resolve);
           } });
@@ -293,6 +298,11 @@ var _default =
       day = day > 9 ? day : '0' + day;
       return "".concat(year, "-").concat(month, "-").concat(day);
     },
+    editPage: function editPage(value, type) {
+      this.$tool.uniRedirectTo({
+        url: "/pages/base/edit-my-info?value=".concat(value, "&type=").concat(type, "&userInfo=").concat(JSON.stringify(this.userInfo)) });
+
+    },
     base64PageImg: function base64PageImg(url) {
       var base64Img = uni.getFileSystemManager().readFileSync(url, "base64"); //转码  
       return 'data:image/png;base64,' + base64Img; //拼接后返回  
@@ -312,7 +322,10 @@ var _default =
 
     },
     editUserInfo: function editUserInfo(options) {var
-      avatarUrl = options.avatarUrl,birthday = options.birthday;
+
+      avatarUrl =
+
+      options.avatarUrl,birthday = options.birthday;
       var _this = this;
       this.$tool.uniRequest({
         url: "/api/user/edit",
