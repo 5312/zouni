@@ -1961,9 +1961,6 @@ var getTokenCount = 0;var _default =
         setTimeout(function () {
           uni.hideToast();
         }, 30000);
-        /* setInterval(() => {
-                   	uni.hideToast();
-                   }, 30000) */
       } });
 
   },
