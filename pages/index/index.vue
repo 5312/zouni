@@ -408,11 +408,12 @@
 
 		.list-wrap {
 			color: black;
-			width: 140rpx;
+			width: 130rpx;
 			height: 535rpx;
 			right: 40rpx;
-			bottom: 280rpx;
+			bottom: 300rpx;
 			border-radius: 20rpx;
+			box-shadow: 1px 1px 4px 2px #ddd;
 
 			.box {
 				height: 174rpx;
