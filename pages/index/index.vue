@@ -108,13 +108,15 @@
 				this.longitude = this.addressInfo.lng
 				this.$tool.uniSetStorage("addressInfo", this.addressInfo)
 			}
+			
 		},
 		onReady() {
 			this.init()
+			this.findsiteUpdata()//检测站点更新
 		},
-
 		methods: {
 			init(isReset = false) {
+				
 				this.$tool.isGetLocation('scope.userLocation', () => {
 					this.isAuthAddress = true
 					this.isShowAuthLogin = false
@@ -174,6 +176,28 @@
 				this.$tool.uniNavigateTo({
 					url: `/pages/my/card`
 				})
+			},
+			findsiteUpdata(){
+				let that = this;  
+				this.$tool.uniRequest({
+					url:"/api/index/getconts",
+					params:{
+						wxapp_id: "10001",
+					},
+					success(res){
+						if(res){
+							const cover = that.$tool.uniGetStorage("covers") //缓存标记
+							if(!cover){return}
+							const len = cover.length
+							console.log(res.cont,len)
+							if(res.cont != len){
+								console.log(res)
+								that.$tool.uniRemoveStorage("covers")//清空缓存
+								that.getListInfo();
+							}
+						}
+					}
+				}) 
 			},
 			getLocationInfo() {
 				let _this = this
@@ -410,13 +434,13 @@
 
 		.list-wrap {
 			color: black;
-			width: 120rpx;
+			width: 105rpx;
 			height: 535rpx;
 			right: 40rpx;
 			bottom: 300rpx;
 			border-radius: 20rpx;
 			box-shadow: 1px 1px 4px 2px #ddd;
-
+			font-size: 12rpx;
 			.box {
 				height: 174rpx;
 				font-size: 24rpx;

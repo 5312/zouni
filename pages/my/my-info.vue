@@ -34,6 +34,15 @@
 			<view class="left">
 				手机号
 			</view>
+			<view class="right flex a-center j-end flex-row">
+				<text class="phone">{{userInfo.tel}}</text>
+				<image src="../../static/image/show1.png" class="icon"></image>
+			</view>
+		</view>
+		<!-- <view class="line flex a-center j-between flex-row" @click="editPage(userInfo.tel,'tel')">
+			<view class="left">
+				手机号
+			</view>
 			<view v-show="phoneButton" class=" right flex a-center j-end flex-row">
 				<button class="btns" open-type="getPhoneNumber" @getphonenumber="getPhoneNumber">获取电话号码</button>
 			</view>
@@ -41,7 +50,7 @@
 				<text class="phone">{{phone}}</text>
 				<image src="../../static/image/show1.png" class="icon"></image>
 			</view>
-		</view>
+		</view> -->
 		<view class="line flex a-center j-between flex-row">
 			<view class="left">
 				出生日期

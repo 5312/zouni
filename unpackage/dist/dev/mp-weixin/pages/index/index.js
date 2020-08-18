@@ -254,13 +254,15 @@ __webpack_require__.r(__webpack_exports__);
       this.longitude = this.addressInfo.lng;
       this.$tool.uniSetStorage("addressInfo", this.addressInfo);
     }
+
   },
   onReady: function onReady() {
     this.init();
+    this.findsiteUpdata(); //检测站点更新
   },
-
   methods: {
     init: function init() {var _this2 = this;var isReset = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+
       this.$tool.isGetLocation('scope.userLocation', function () {
         _this2.isAuthAddress = true;
         _this2.isShowAuthLogin = false;
@@ -319,6 +321,28 @@ __webpack_require__.r(__webpack_exports__);
     toAdPage: function toAdPage() {
       this.$tool.uniNavigateTo({
         url: "/pages/my/card" });
+
+    },
+    findsiteUpdata: function findsiteUpdata() {
+      var that = this;
+      this.$tool.uniRequest({
+        url: "/api/index/getconts",
+        params: {
+          wxapp_id: "10001" },
+
+        success: function success(res) {
+          if (res) {
+            var cover = that.$tool.uniGetStorage("covers"); //缓存标记
+            if (!cover) {return;}
+            var len = cover.length;
+            console.log(res.cont, len);
+            if (res.cont != len) {
+              console.log(res);
+              that.$tool.uniRemoveStorage("covers"); //清空缓存
+              that.getListInfo();
+            }
+          }
+        } });
 
     },
     getLocationInfo: function getLocationInfo() {
