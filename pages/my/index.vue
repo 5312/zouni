@@ -64,16 +64,12 @@
 					<view class="box flex a-center j-start flex-row" v-for="(item,index) in list" :key='index' 
 						:style="[getStyle(item)]">
 						<view class="left">
+							<text class="tar">{{item.coupon_type.value==10?`1次`:item.coupon_type.value==20?`${item.reduce_price}`:''}}</text>
+						</view>
+						<view class="right">
 							<view class="p">
 								{{item.coupon_type.text}}
 							</view>
-							<view class="p1" v-if="item.name">{{item.name}}</view>
-							<view class="p2">有效期：{{item.start_time.text}}至{{item.end_time.text}}</view>
-						</view>
-						<view class="right">
-							<text class="text text1"></text>
-							<text class="tar">{{item.coupon_type.value==10?`1次`:item.coupon_type.value==20?`￥${item.reduce_price}`:''}}</text>
-							<text class="text text2"></text>
 						</view>
 					</view>
 				</view>
@@ -310,57 +306,30 @@
 					height: 270rpx;
 					overflow: auto;
 					.box{
-						margin:30px 20px;
-						padding: 0 30rpx;
+						margin:20px 20px;
 						border-radius: 10rpx;
-						height: 200rpx;
+						height: 100rpx;
 						.left{
+							width: 130rpx;
 							flex: 1;
-							font-size: 20rpx;
-							.p{
-								font-weight: bold;
-								font-size: 26rpx;
-							}
-							.p1,.p2{
-								font-size: 18rpx;
-							}
-							.p1{
-								margin: 10rpx 0;
+							height: 100%;
+							padding: 0 30rpx;
+							line-height: 100rpx;
+							background:#07caff;
+							.tar{
+								font-size: 40rpx;
+								font-weight: 900;
 							}
 						}
 						.right{
 							position: relative;
 							width: 160rpx;
 							text-align: center;
-							font-weight: 900;
-							font-size: 32rpx;
+							font-size: 28rpx;
 							flex-shrink: 0;
 							height: 100%;
-							.text{
-								display: inline-block;
-								width: 50rpx;
-								height: 50rpx;
-								border-radius: 50%;
-								background: white;
-								left: 0;
-								position: absolute;
-							}
-							.tar{
-								border-left: 1px dashed white;
-								display: inline-block;
-								width: 100%;
-								position: absolute;
-								left: 25rpx;
-								top: 40rpx;
-								height: 126rpx;
-								line-height: 126rpx;
-							}
-							.text1{
-								top: -25rpx;
-							}
-							.text2{
-								bottom: -25rpx;
-							}
+							line-height: 100rpx;
+							
 						}
 						&:nth-child(1) {
 							margin-top: 0;
