@@ -265,12 +265,10 @@ __webpack_require__.r(__webpack_exports__);
 
   },
   onLoad: function onLoad() {
-    //this.getPthone()
     this.init();
   },
   onShow: function onShow() {
     var isEditUserInfo = this.$tool.uniGetStorage('isEditUserInfo');
-    //console.log("isShow")
     if (isEditUserInfo) {
       this.$tool.uniRemoveStorage('isEditUserInfo');
       this.init();
@@ -313,6 +311,7 @@ __webpack_require__.r(__webpack_exports__);
       this.$tool.uniRequest({
         url: "/api/user.coupon/getcounts",
         success: function success(res) {
+          console.log('cou', res);
           _this4.isCouponCounts = res && res.count > 0 ? true : false;
           _this4.couponCounts = res && res.count > 0 ? res.count : 0;
         } });

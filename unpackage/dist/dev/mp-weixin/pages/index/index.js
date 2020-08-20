@@ -216,6 +216,22 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 {
   components: {
     AuthLogin: AuthLogin },
@@ -234,9 +250,12 @@ __webpack_require__.r(__webpack_exports__);
       covers: [],
       mapCtx: null,
       addressInfo: null,
-      fromPage: null };
+      fromPage: null,
+      markDetail: null,
+      distance: 0 };
 
   },
+
   onShareAppMessage: function onShareAppMessage(res) {
     if (res.from === 'button') {// 来自页面内分享按钮
       console.log(res.target);
@@ -259,6 +278,9 @@ __webpack_require__.r(__webpack_exports__);
   onReady: function onReady() {
     this.init();
     this.findsiteUpdata(); //检测站点更新
+  },
+  onHide: function onHide() {
+    this.markDetail = null; //切页面时隐藏信息
   },
   methods: {
     init: function init() {var _this2 = this;var isReset = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
@@ -296,16 +318,42 @@ __webpack_require__.r(__webpack_exports__);
         } });
 
     },
-    markertap: function markertap(e) {
-      console.log('markertap', e.detail.markerId);
+    markertap: function markertap(e) {var _this4 = this;
       var markerId = e.detail.markerId;
       var result = null;
       this.covers.forEach(function (item, index) {
+        item.iconPath = "../../static/image/maplocation.png"; //重置其他图标
         if (item.id == markerId) {
           result = item;
+          _this4.markColor(item, index); //改变点击颜色
         }
       });
-      result && this.getSiteDetail(result);
+      try {//重复点击判断
+        if (result.goods_id == this.markDetail.goods_id) {
+          return;
+        }
+        result && this.getInfo(result.goods_id);
+      } catch (e) {
+        result && this.getInfo(result.goods_id);
+      }
+    },
+    markColor: function markColor(item, index) {//标注变色
+      item.iconPath = "../../static/image/maplocation-on.png";
+    },
+    getInfo: function getInfo(detailId) {
+      var that = this;
+      var addressInfo = this.$tool.uniGetStorage("addressInfo");
+      this.$tool.uniRequest({
+        url: "/api/goods/detail&goods_id=".concat(detailId),
+        params: {
+          lat: addressInfo.lat,
+          lng: addressInfo.lng },
+
+        success: function success(res) {
+          that.markDetail = res.detail;
+          that.distance = res.detail.goods_distance ? that.$tool.distanceHanlde(res.detail.goods_distance) : 0;
+        } });
+
     },
     regionchange: function regionchange(e) {
       //console.log(e)
@@ -313,7 +361,20 @@ __webpack_require__.r(__webpack_exports__);
 
       }
     },
-    getSiteDetail: function getSiteDetail(item) {
+    open: function open() {
+      uni.openLocation({
+        latitude: parseFloat(this.markDetail.goods_lat),
+        longitude: parseFloat(this.markDetail.goods_lng),
+        name: this.markDetail.goods_name,
+        address: this.markDetail.goods_df, //详细地址
+        success: function success() {
+          console.log('success');
+        } });
+
+
+    },
+    getSiteDetail: function getSiteDetail() {
+      var item = this.markDetail;
       this.$tool.uniNavigateTo({
         url: "/pages/index/site-detail?id=".concat(item.goods_id) });
 
@@ -333,7 +394,9 @@ __webpack_require__.r(__webpack_exports__);
         success: function success(res) {
           if (res) {
             var cover = that.$tool.uniGetStorage("covers"); //缓存标记
-            if (!cover) {return;}
+            if (!cover) {
+              return;
+            }
             var len = cover.length;
             console.log(res.cont, len);
             if (res.cont != len) {
@@ -383,16 +446,16 @@ __webpack_require__.r(__webpack_exports__);
         } });
 
     },
-    getAdInfo: function getAdInfo() {var _this4 = this;
+    getAdInfo: function getAdInfo() {var _this5 = this;
       this.$tool.uniRequest({
         url: "/api/Ad",
         success: function success(res) {
           console.log('获取广告地址', res);
-          _this4.adImg = res.indexAd;
+          _this5.adImg = res.indexAd;
         } });
 
     },
-    getWeather: function getWeather() {var _this5 = this;
+    getWeather: function getWeather() {var _this6 = this;
       this.$tool.uniRequest({
         url: "/api/weather",
         isNoCode: true,
@@ -402,11 +465,11 @@ __webpack_require__.r(__webpack_exports__);
           city: this.addressInfo.name },
 
         success: function success(res) {
-          _this5.weatherInfo = res;
+          _this6.weatherInfo = res;
         } });
 
     },
-    getListInfo: function getListInfo() {var _this6 = this;
+    getListInfo: function getListInfo() {var _this7 = this;
       var cover = this.$tool.uniGetStorage("covers"); //缓存标记
       if (cover) {
         this.covers = cover;
@@ -416,7 +479,7 @@ __webpack_require__.r(__webpack_exports__);
         url: "/api/index/",
         success: function success(res) {
           var temObj = res && res.posiList && res.posiList.data ? res.posiList.data : [];
-          _this6.covers = [];
+          _this7.covers = [];
           for (var i in temObj) {
             var obj = {
               id: i + 1,
@@ -427,14 +490,14 @@ __webpack_require__.r(__webpack_exports__);
               longitude: temObj[i].goods_lng,
               iconPath: '../../static/image/maplocation.png' };
 
-            _this6.covers.push(obj);
+            _this7.covers.push(obj);
           }
-          _this6.$tool.uniSetStorage("covers", _this6.covers);
-          console.log("当前城市标记的站点：", _this6.covers);
+          _this7.$tool.uniSetStorage("covers", _this7.covers);
+          console.log("当前城市标记的站点：", _this7.covers);
         } });
 
     },
-    scanCode: function scanCode() {var _this7 = this;
+    scanCode: function scanCode() {var _this8 = this;
       uni.scanCode({
         success: function success(res) {
           var result = res.result;
@@ -452,11 +515,11 @@ __webpack_require__.r(__webpack_exports__);
             }
           }
           if (siteId) {
-            _this7.$tool.uniRedirectTo({
+            _this8.$tool.uniRedirectTo({
               url: "/pages/scan/index?siteId=".concat(siteId, "&fromPage=home") });
 
           } else {
-            _this7.$tool.uniShowToast({
+            _this8.$tool.uniShowToast({
               title: "目前只支持小程序的扫码支付，不支持其他扫码",
               icon: "none" });
 

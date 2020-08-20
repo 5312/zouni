@@ -16,9 +16,25 @@
 					</template>
 				</view>
 			</view>
-			<view class="main absolute">
+			<!-- map  -->
+			<view class="main absolute ">
 				<map class='w100 h100' id='myMap' :latitude="latitude" :longitude="longitude" show-location :scale='mapScale'
 				 :markers="covers" @regionchange="regionchange" @markertap='markertap' />
+			</view>
+			<!-- mark 提示 -->
+			<view v-if="markDetail" class="markDetail" @click="getSiteDetail">
+				<view class="left ">
+					<view class="text">
+						<text>{{markDetail.goods_name}}</text>
+						<text class="status">{{markDetail.goods_status.text}}</text>
+					</view>
+					<image class='img' src="../../static/image/l-c2.png" mode="widthFix"></image>
+					<text class="tag">{{markDetail.goods_time}}</text>
+				</view>
+				<view class="right box flex a-center j-center flex-column" @click.stop.prevent="open">
+					<image class="img" mode="" src="../../static/image/l-c1.png" alt=""></image>
+					<text>{{distance}}</text>
+				</view>
 			</view>
 			<view class="footer absolute flex j-between a-center flex-row bg-white">
 				<view class="left  flex a-center j-center flex-column" @click="toPage('vip')">
@@ -88,9 +104,12 @@
 				covers: [],
 				mapCtx: null,
 				addressInfo: null,
-				fromPage: null
+				fromPage: null,
+				markDetail: null,
+				distance: 0,
 			}
 		},
+
 		onShareAppMessage(res) {
 			if (res.from === 'button') { // 来自页面内分享按钮
 				console.log(res.target)
@@ -108,15 +127,18 @@
 				this.longitude = this.addressInfo.lng
 				this.$tool.uniSetStorage("addressInfo", this.addressInfo)
 			}
-			
+
 		},
 		onReady() {
 			this.init()
-			this.findsiteUpdata()//检测站点更新
+			this.findsiteUpdata() //检测站点更新
+		},
+		onHide() {
+			this.markDetail = null; //切页面时隐藏信息
 		},
 		methods: {
 			init(isReset = false) {
-				
+
 				this.$tool.isGetLocation('scope.userLocation', () => {
 					this.isAuthAddress = true
 					this.isShowAuthLogin = false
@@ -151,15 +173,41 @@
 				})
 			},
 			markertap(e) {
-				console.log('markertap', e.detail.markerId)
 				let markerId = e.detail.markerId
 				let result = null
 				this.covers.forEach((item, index) => {
+					item.iconPath = "../../static/image/maplocation.png"; //重置其他图标
 					if (item.id == markerId) {
 						result = item
+						this.markColor(item, index)//改变点击颜色
 					}
 				})
-				result && this.getSiteDetail(result)
+				try{//重复点击判断
+					if (result.goods_id == this.markDetail.goods_id) {
+						return
+					}
+					result && this.getInfo(result.goods_id)
+				}catch(e){
+					result && this.getInfo(result.goods_id)
+				}
+			},
+			markColor(item, index) { //标注变色
+				item.iconPath = "../../static/image/maplocation-on.png";
+			},
+			getInfo(detailId) {
+				let that = this
+				let addressInfo = this.$tool.uniGetStorage("addressInfo")
+				this.$tool.uniRequest({
+					url: `/api/goods/detail&goods_id=${detailId}`,
+					params: {
+						lat: addressInfo.lat,
+						lng: addressInfo.lng
+					},
+					success: (res) => {
+						that.markDetail = res.detail;
+						that.distance = res.detail.goods_distance ? that.$tool.distanceHanlde(res.detail.goods_distance) : 0
+					}
+				})
 			},
 			regionchange(e) {
 				//console.log(e)
@@ -167,7 +215,20 @@
 
 				}
 			},
-			getSiteDetail(item) {
+			open() {
+				uni.openLocation({
+					latitude: parseFloat(this.markDetail.goods_lat),
+					longitude: parseFloat(this.markDetail.goods_lng),
+					name: this.markDetail.goods_name,
+					address: this.markDetail.goods_df, //详细地址
+					success: function() {
+						console.log('success');
+					}
+				});
+
+			},
+			getSiteDetail() {
+				let item = this.markDetail;
 				this.$tool.uniNavigateTo({
 					url: `/pages/index/site-detail?id=${item.goods_id}`
 				})
@@ -177,27 +238,29 @@
 					url: `/pages/my/card`
 				})
 			},
-			findsiteUpdata(){
-				let that = this;  
+			findsiteUpdata() {
+				let that = this;
 				this.$tool.uniRequest({
-					url:"/api/index/getconts",
-					params:{
+					url: "/api/index/getconts",
+					params: {
 						wxapp_id: "10001",
 					},
-					success(res){
-						if(res){
+					success(res) {
+						if (res) {
 							const cover = that.$tool.uniGetStorage("covers") //缓存标记
-							if(!cover){return}
+							if (!cover) {
+								return
+							}
 							const len = cover.length
-							console.log(res.cont,len)
-							if(res.cont != len){
+							console.log(res.cont, len)
+							if (res.cont != len) {
 								console.log(res)
-								that.$tool.uniRemoveStorage("covers")//清空缓存
+								that.$tool.uniRemoveStorage("covers") //清空缓存
 								that.getListInfo();
 							}
 						}
 					}
-				}) 
+				})
 			},
 			getLocationInfo() {
 				let _this = this
@@ -274,8 +337,8 @@
 						for (let i in temObj) {
 							let obj = {
 								id: i + 1,
-								width:"50rpx",
-								height:"63rpx",
+								width: "50rpx",
+								height: "63rpx",
 								goods_id: temObj[i].goods_id,
 								latitude: temObj[i].goods_lat,
 								longitude: temObj[i].goods_lng,
@@ -395,6 +458,57 @@
 			bottom: 100rpx;
 		}
 
+		.markDetail {
+			position: absolute;
+			width: 80%;
+			height: 100rpx;
+			bottom: 140rpx;
+			left: 0;
+			right: 0;
+			margin: auto;
+			border-radius: 20rpx;
+			background-color: #fff;
+			border: 1rpx solid #ddd;
+			padding: 10rpx 30rpx;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			font-size: 26rpx;
+
+			.left {
+				text-align: left;
+
+				text {
+					margin: 10rpx 0;
+				}
+
+				.status {
+					padding: 8rpx;
+					background: #ff893a;
+					border-radius: 10rpx;
+					margin-left: 10rpx;
+				}
+
+				.tag {
+					border-radius: 20rpx;
+					padding: 0 20rpx;
+					vertical-align: middle;
+				}
+
+				.img {
+					width: 30rpx;
+					vertical-align: middle;
+				}
+			}
+
+			.right {
+				.img {
+					width: 50rpx;
+					height: 50rpx;
+				}
+			}
+		}
+
 		.footer {
 			bottom: 0;
 			height: 120rpx;
@@ -441,6 +555,7 @@
 			border-radius: 20rpx;
 			box-shadow: 1px 1px 4px 2px #ddd;
 			font-size: 12rpx;
+
 			.box {
 				height: 174rpx;
 				font-size: 24rpx;

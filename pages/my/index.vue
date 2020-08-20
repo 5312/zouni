@@ -117,12 +117,10 @@
 			}
 		},
 		onLoad() {
-			//this.getPthone()
 			this.init()
 		},
 		onShow() {
 			let isEditUserInfo = this.$tool.uniGetStorage('isEditUserInfo')
-			//console.log("isShow")
 			if (isEditUserInfo) {
 				this.$tool.uniRemoveStorage('isEditUserInfo')
 				this.init()
@@ -165,6 +163,7 @@
 				this.$tool.uniRequest({
 					url: `/api/user.coupon/getcounts`,
 					success: (res) => {
+						console.log('cou',res)
 						this.isCouponCounts = res && res.count > 0 ? true : false
 						this.couponCounts = res && res.count > 0 ? res.count : 0
 					}

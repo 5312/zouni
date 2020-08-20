@@ -30,6 +30,54 @@
   top: 100rpx;
   bottom: 100rpx;
 }
+.index .markDetail.data-v-57280228 {
+  position: absolute;
+  width: 80%;
+  height: 100rpx;
+  bottom: 140rpx;
+  left: 0;
+  right: 0;
+  margin: auto;
+  border-radius: 20rpx;
+  background-color: #fff;
+  border: 1rpx solid #ddd;
+  padding: 10rpx 30rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  font-size: 26rpx;
+}
+.index .markDetail .left.data-v-57280228 {
+  text-align: left;
+}
+.index .markDetail .left text.data-v-57280228 {
+  margin: 10rpx 0;
+}
+.index .markDetail .left .status.data-v-57280228 {
+  padding: 8rpx;
+  background: #ff893a;
+  border-radius: 10rpx;
+  margin-left: 10rpx;
+}
+.index .markDetail .left .tag.data-v-57280228 {
+  border-radius: 20rpx;
+  padding: 0 20rpx;
+  vertical-align: middle;
+}
+.index .markDetail .left .img.data-v-57280228 {
+  width: 30rpx;
+  vertical-align: middle;
+}
+.index .markDetail .right .img.data-v-57280228 {
+  width: 50rpx;
+  height: 50rpx;
+}
 .index .footer.data-v-57280228 {
   bottom: 0;
   height: 120rpx;

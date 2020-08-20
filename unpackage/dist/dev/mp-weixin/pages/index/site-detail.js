@@ -252,6 +252,7 @@ var _default =
         latitude: parseFloat(this.detail.goods_lat),
         longitude: parseFloat(this.detail.goods_lng),
         name: this.detail.goods_name,
+        address: this.detail.goods_df, //详细地址
         success: function success() {
           console.log('success');
         } });
