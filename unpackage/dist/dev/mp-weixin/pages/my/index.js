@@ -99,6 +99,19 @@ var render = function() {
   var _c = _vm._self._c || _h
   var m0 = __webpack_require__(/*! ../../static/image/show1.png */ 51)
 
+  var l0 = _vm.isCouponCounts
+    ? _vm.__map(_vm.list, function(item, index) {
+        var $orig = _vm.__get_orig(item)
+
+        var s0 = _vm.__get_style([_vm.getStyle(item)])
+
+        return {
+          $orig: $orig,
+          s0: s0
+        }
+      })
+    : null
+
   if (!_vm._isMounted) {
     _vm.e0 = function($event) {
       _vm.isCouponCounts = false
@@ -109,7 +122,8 @@ var render = function() {
     {},
     {
       $root: {
-        m0: m0
+        m0: m0,
+        l0: l0
       }
     }
   )
@@ -218,6 +232,23 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 {
   components: {
     AuthLogin: AuthLogin },
@@ -231,6 +262,7 @@ __webpack_require__.r(__webpack_exports__);
       phone: 0,
       userInfo: null,
       orderCount: null,
+      list: null,
       isCouponCounts: false,
       myList: [{
         img: "../../static/image/11.png",
@@ -306,14 +338,28 @@ __webpack_require__.r(__webpack_exports__);
     loginOk: function loginOk() {
       this.getNewToken();
     },
+    getStyle: function getStyle(item) {
+      var style = {};
+      style.backgroundColor = item.color.text;
+      return style;
+    },
     getCouponCounts: function getCouponCounts() {var _this4 = this;
       this.isCouponCounts = false;
+      /* this.$tool.uniRequest({
+                                   	url: `/api/user.coupon/getcounts`,
+                                   	success: (res) => {
+                                   		console.log('cou',res)
+                                   		this.isCouponCounts = res && res.count > 0 ? true : false
+                                   		this.couponCounts = res && res.count > 0 ? res.count : 0
+                                   	}
+                                   }) */
       this.$tool.uniRequest({
-        url: "/api/user.coupon/getcounts",
+        url: "/api/user.coupon/lists&data_type=not_use",
         success: function success(res) {
           console.log('cou', res);
-          _this4.isCouponCounts = res && res.count > 0 ? true : false;
-          _this4.couponCounts = res && res.count > 0 ? res.count : 0;
+          _this4.isCouponCounts = res && res.list.length > 0 ? true : false;
+          _this4.couponCounts = res && res.list.length > 0 ? res.list.length : 0;
+          _this4.list = res && res.list ? res.list : [];
         } });
 
     },
@@ -350,20 +396,12 @@ __webpack_require__.r(__webpack_exports__);
 
         return;
       }
-      var url = "";
-      switch (type) {
-        case 'volume':
-          url = "/pages/my/volume";
-          break;
-        case 'vip':
-          url = "/pages/vip/index";
-          break;
-        case 'order':
-          url = "/pages/my/order";
-          break;
-        default:
-          url = "/pages/index/index";}
+      var pageType = {
+        'volume': "/pages/my/volume",
+        'vip': "/pages/vip/index",
+        'order': "/pages/my/order" };
 
+      var url = pageType[type] ? pageType[type] : "/pages/index/index";
       this.$tool.uniNavigateTo({
         url: url });
 

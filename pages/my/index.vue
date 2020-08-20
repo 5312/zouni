@@ -57,8 +57,25 @@
 				<view class="title">
 					优惠提醒
 				</view>
-				<view class="info">
+				<!-- <view class="info">
 					恭喜，你还有{{couponCounts}}张优惠券未使用！
+				</view> -->
+				<view class="content">
+					<view class="box flex a-center j-start flex-row" v-for="(item,index) in list" :key='index' 
+						:style="[getStyle(item)]">
+						<view class="left">
+							<view class="p">
+								{{item.coupon_type.text}}
+							</view>
+							<view class="p1" v-if="item.name">{{item.name}}</view>
+							<view class="p2">有效期：{{item.start_time.text}}至{{item.end_time.text}}</view>
+						</view>
+						<view class="right">
+							<text class="text text1"></text>
+							<text class="tar">{{item.coupon_type.value==10?`1次`:item.coupon_type.value==20?`￥${item.reduce_price}`:''}}</text>
+							<text class="text text2"></text>
+						</view>
+					</view>
 				</view>
 				<view class="btn" @click="lookCoupon">
 					查看优惠
@@ -83,6 +100,7 @@
 				phone: 0,
 				userInfo: null,
 				orderCount: null,
+				list:null,
 				isCouponCounts: false,
 				myList: [{
 					img: "../../static/image/11.png",
@@ -158,14 +176,28 @@
 			loginOk() {
 				this.getNewToken()
 			},
+			getStyle(item){
+				let style={}
+				style.backgroundColor=item.color.text
+				return style
+			},
 			getCouponCounts() {
 				this.isCouponCounts = false
-				this.$tool.uniRequest({
+				/* this.$tool.uniRequest({
 					url: `/api/user.coupon/getcounts`,
 					success: (res) => {
 						console.log('cou',res)
 						this.isCouponCounts = res && res.count > 0 ? true : false
 						this.couponCounts = res && res.count > 0 ? res.count : 0
+					}
+				}) */
+				this.$tool.uniRequest({
+					url: `/api/user.coupon/lists&data_type=not_use`,
+					success: (res) => {		
+						console.log('cou',res)
+						this.isCouponCounts = res && res.list.length > 0 ? true : false
+						this.couponCounts = res && res.list.length > 0 ? res.list.length : 0
+						this.list = res && res.list?res.list:[]
 					}
 				})
 			},
@@ -202,20 +234,12 @@
 					})
 					return
 				}
-				let url = ""
-				switch (type) {
-					case 'volume':
-						url = "/pages/my/volume"
-						break;
-					case 'vip':
-						url = "/pages/vip/index"
-						break;
-					case 'order':
-						url = "/pages/my/order"
-						break;
-					default:
-						url = "/pages/index/index"
+				let pageType = {
+					'volume':"/pages/my/volume",
+					'vip':"/pages/vip/index",
+					'order':"/pages/my/order",
 				}
+				let url = pageType[type]?pageType[type]:"/pages/index/index";
 				this.$tool.uniNavigateTo({
 					url
 				})
@@ -274,12 +298,76 @@
 			.contnet {
 				background: white;
 				width: 560rpx;
-				height: 500rpx;
+				height: 600rpx;
 				padding: 30px;
 				border-radius: 10rpx;
 				box-sizing: border-box;
 				position: relative;
-
+				
+				/* 全部显示优惠卷 */
+				.content{
+					padding-top: 5px;
+					height: 270rpx;
+					overflow: auto;
+					.box{
+						margin:30px 20px;
+						padding: 0 30rpx;
+						border-radius: 10rpx;
+						height: 200rpx;
+						.left{
+							flex: 1;
+							font-size: 20rpx;
+							.p{
+								font-weight: bold;
+								font-size: 26rpx;
+							}
+							.p1,.p2{
+								font-size: 18rpx;
+							}
+							.p1{
+								margin: 10rpx 0;
+							}
+						}
+						.right{
+							position: relative;
+							width: 160rpx;
+							text-align: center;
+							font-weight: 900;
+							font-size: 32rpx;
+							flex-shrink: 0;
+							height: 100%;
+							.text{
+								display: inline-block;
+								width: 50rpx;
+								height: 50rpx;
+								border-radius: 50%;
+								background: white;
+								left: 0;
+								position: absolute;
+							}
+							.tar{
+								border-left: 1px dashed white;
+								display: inline-block;
+								width: 100%;
+								position: absolute;
+								left: 25rpx;
+								top: 40rpx;
+								height: 126rpx;
+								line-height: 126rpx;
+							}
+							.text1{
+								top: -25rpx;
+							}
+							.text2{
+								bottom: -25rpx;
+							}
+						}
+						&:nth-child(1) {
+							margin-top: 0;
+						}
+					}
+				}
+				
 				.close-wrap {
 					position: absolute;
 					right: 24rpx;

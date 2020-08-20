@@ -130,8 +130,6 @@
 				margin:30px 20px;
 				padding: 0 30rpx;
 				border-radius: 10rpx;
-				// background: url(../../static/image/car-bg.png) no-repeat;
-				// background-size:100% 100%;
 				height: 200rpx;
 				.left{
 					flex: 1;
