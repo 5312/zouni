@@ -103,11 +103,13 @@ var render = function() {
     ? _vm.__map(_vm.list, function(item, index) {
         var $orig = _vm.__get_orig(item)
 
-        var s0 = _vm.__get_style([_vm.getStyle(item)])
-
+        var g0 =
+          !(item.coupon_type.value == 10) && item.coupon_type.value == 20
+            ? item.reduce_price.split(".")
+            : null
         return {
           $orig: $orig,
-          s0: s0
+          g0: g0
         }
       })
     : null
@@ -161,9 +163,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var AuthLogin = function AuthLogin() {__webpack_require__.e(/*! require.ensure | components/base/auth-login */ "components/base/auth-login").then((function () {return resolve(__webpack_require__(/*! ../../components/base/auth-login.vue */ 199));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
-
-
-
 
 
 
@@ -324,10 +323,6 @@ __webpack_require__.r(__webpack_exports__);
 
       }
     },
-    lookCoupon: function lookCoupon() {
-      this.isCouponCounts = false;
-      this.toPage('volume');
-    },
     getNewToken: function getNewToken() {
       this.logged();
     },
@@ -341,14 +336,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     getCouponCounts: function getCouponCounts() {var _this4 = this;
       this.isCouponCounts = false;
-      /* this.$tool.uniRequest({
-                                   	url: `/api/user.coupon/getcounts`,
-                                   	success: (res) => {
-                                   		console.log('cou',res)
-                                   		this.isCouponCounts = res && res.count > 0 ? true : false
-                                   		this.couponCounts = res && res.count > 0 ? res.count : 0
-                                   	}
-                                   }) */
       this.$tool.uniRequest({
         url: "/api/user.coupon/lists&data_type=not_use",
         success: function success(res) {

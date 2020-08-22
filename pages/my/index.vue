@@ -55,16 +55,16 @@
 					<text class="close" @click="isCouponCounts=false">X</text>
 				</view>
 				<view class="title">
-					优惠提醒
+					恭喜，你还有{{list.length}}张优惠券未使用！
 				</view>
 				<!-- <view class="info">
 					恭喜，你还有{{couponCounts}}张优惠券未使用！
 				</view> -->
 				<view class="content">
 					<view class="box flex a-center j-start flex-row" v-for="(item,index) in list" :key='index' 
-						:style="[getStyle(item)]">
+						>
 						<view class="left">
-							<text class="tar">{{item.coupon_type.value==10?`1次`:item.coupon_type.value==20?`${item.reduce_price}`:''}}</text>
+							<text class="tar">{{item.coupon_type.value==10?`1次`:item.coupon_type.value==20?`¥${item.reduce_price.split('.')[0]}`:''}}</text>
 						</view>
 						<view class="right">
 							<view class="p">
@@ -72,9 +72,6 @@
 							</view>
 						</view>
 					</view>
-				</view>
-				<view class="btn" @click="lookCoupon">
-					查看优惠
 				</view>
 			</view>
 		</view>
@@ -162,10 +159,6 @@
 					})
 				}
 			},
-			lookCoupon() {
-				this.isCouponCounts = false
-				this.toPage('volume')
-			},
 			getNewToken() {
 				this.logged()
 			},
@@ -179,14 +172,6 @@
 			},
 			getCouponCounts() {
 				this.isCouponCounts = false
-				/* this.$tool.uniRequest({
-					url: `/api/user.coupon/getcounts`,
-					success: (res) => {
-						console.log('cou',res)
-						this.isCouponCounts = res && res.count > 0 ? true : false
-						this.couponCounts = res && res.count > 0 ? res.count : 0
-					}
-				}) */
 				this.$tool.uniRequest({
 					url: `/api/user.coupon/lists&data_type=not_use`,
 					success: (res) => {		
@@ -294,7 +279,7 @@
 			.contnet {
 				background: white;
 				width: 560rpx;
-				height: 600rpx;
+				height: 550rpx;
 				padding: 30px;
 				border-radius: 10rpx;
 				box-sizing: border-box;
@@ -303,27 +288,36 @@
 				/* 全部显示优惠卷 */
 				.content{
 					padding-top: 5px;
-					height: 270rpx;
+					height: 340rpx;
 					overflow: auto;
 					.box{
-						margin:20px 20px;
-						border-radius: 10rpx;
+						margin:10px 20px;
+						border-radius: 14rpx;
 						height: 100rpx;
+						border: 1rpx solid #ddd;
+						box-shadow:1rpx 5rpx 9rpx 4rpx #ddd;
+						background-color:#ffffff;
+						
 						.left{
-							width: 130rpx;
 							flex: 1;
 							height: 100%;
 							padding: 0 30rpx;
 							line-height: 100rpx;
-							background:#07caff;
+							border-radius: 14rpx;
+							border-top-right-radius:0 ;
+							border-bottom-right-radius: 0;
+							text-align: center;
+							background-color: #ffa537;
 							.tar{
 								font-size: 40rpx;
 								font-weight: 900;
+								white-space: nowrap;
+								
 							}
 						}
 						.right{
 							position: relative;
-							width: 160rpx;
+							width: 250rpx;
 							text-align: center;
 							font-size: 28rpx;
 							flex-shrink: 0;
@@ -348,9 +342,10 @@
 				}
 
 				.title {
-					font-size: 40rpx;
+					font-size: 30rpx;
 					font-weight: bold;
 					color: #FF8B16;
+					margin-top: 15rpx;
 				}
 
 				.info {

@@ -10,7 +10,7 @@
 .my .mask .contnet.data-v-4dcceeb0 {
   background: white;
   width: 560rpx;
-  height: 600rpx;
+  height: 550rpx;
   padding: 30px;
   border-radius: 10rpx;
   box-sizing: border-box;
@@ -19,31 +19,38 @@
 }
 .my .mask .contnet .content.data-v-4dcceeb0 {
   padding-top: 5px;
-  height: 270rpx;
+  height: 340rpx;
   overflow: auto;
 }
 .my .mask .contnet .content .box.data-v-4dcceeb0 {
-  margin: 20px 20px;
-  border-radius: 10rpx;
+  margin: 10px 20px;
+  border-radius: 14rpx;
   height: 100rpx;
+  border: 1rpx solid #ddd;
+  box-shadow: 1rpx 5rpx 9rpx 4rpx #ddd;
+  background-color: #ffffff;
 }
 .my .mask .contnet .content .box .left.data-v-4dcceeb0 {
-  width: 130rpx;
   -webkit-box-flex: 1;
   -webkit-flex: 1;
           flex: 1;
   height: 100%;
   padding: 0 30rpx;
   line-height: 100rpx;
-  background: #07caff;
+  border-radius: 14rpx;
+  border-top-right-radius: 0 ;
+  border-bottom-right-radius: 0;
+  text-align: center;
+  background-color: #ffa537;
 }
 .my .mask .contnet .content .box .left .tar.data-v-4dcceeb0 {
   font-size: 40rpx;
   font-weight: 900;
+  white-space: nowrap;
 }
 .my .mask .contnet .content .box .right.data-v-4dcceeb0 {
   position: relative;
-  width: 160rpx;
+  width: 250rpx;
   text-align: center;
   font-size: 28rpx;
   -webkit-flex-shrink: 0;
@@ -64,9 +71,10 @@
   line-height: 40rpx;
 }
 .my .mask .contnet .title.data-v-4dcceeb0 {
-  font-size: 40rpx;
+  font-size: 30rpx;
   font-weight: bold;
   color: #FF8B16;
+  margin-top: 15rpx;
 }
 .my .mask .contnet .info.data-v-4dcceeb0 {
   font-size: 30rpx;
