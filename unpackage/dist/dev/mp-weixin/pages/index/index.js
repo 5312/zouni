@@ -232,12 +232,19 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
 {
   components: {
     AuthLogin: AuthLogin },
 
   data: function data() {
     return {
+      addpuls: true,
       adImg: "",
       mapScale: 16,
       isAuthAddress: false,
@@ -318,6 +325,31 @@ __webpack_require__.r(__webpack_exports__);
         } });
 
     },
+    getPhoneNumber: function getPhoneNumber(e) {
+      if (!e.detail.iv) {
+        this.$tool.uniShowToast({
+          title: "获取失败！" });
+
+        return false;
+      } else {
+        this.$tool.uniRequest({
+          url: "",
+          data: {
+            iv: e.detail.iv,
+            encrypted_data: e.detail.encryptedData },
+
+          success: function success(resolve) {
+            console.log(resolve);
+          } });
+
+        /* this.phone = "13649139296"
+                this.userInfo.tel = this.phone
+                this.setPhone('tel', this.phone) */
+      }
+      console.log(e);
+      console.log(e.detail.iv);
+      console.log(e.detail.encryptedData);
+    },
     markertap: function markertap(e) {var _this4 = this;
       var markerId = e.detail.markerId;
       var result = null;
@@ -383,6 +415,10 @@ __webpack_require__.r(__webpack_exports__);
       this.$tool.uniNavigateTo({
         url: "/pages/my/card" });
 
+    },
+    hideadd: function hideadd() {
+      console.log(this.addpuls);
+      this.addpuls = false;
     },
     findsiteUpdata: function findsiteUpdata() {
       var that = this;

@@ -21,6 +21,12 @@
 				<map class='w100 h100' id='myMap' :latitude="latitude" :longitude="longitude" show-location :scale='mapScale'
 				 :markers="covers" @regionchange="regionchange" @markertap='markertap' />
 			</view>
+			<!-- 广告 -->
+			<view v-show='addpuls' class="addpuls absolute">
+				<view class="close" @click="hideadd">X</view>
+				<button plain='true' class="btnphone" type="default" open-type="getPhoneNumber" @getphonenumber="getPhoneNumber"></button>
+				<image class='img' src="../../static/image/addpuls.jpg" mode=""></image>
+			</view>
 			<!-- mark 提示 -->
 			<view v-if="markDetail" class="markDetail" @click="getSiteDetail">
 				<view class="left ">
@@ -92,6 +98,7 @@
 		},
 		data() {
 			return {
+				addpuls: true,
 				adImg: "",
 				mapScale: 16,
 				isAuthAddress: false,
@@ -172,6 +179,31 @@
 					}
 				})
 			},
+			getPhoneNumber(e) {
+				if (!e.detail.iv) {
+					this.$tool.uniShowToast({
+						title: "获取失败！"
+					})
+					return false
+				} else {
+					this.$tool.uniRequest({
+						url: "",
+						data: {
+							iv: e.detail.iv,
+							encrypted_data: e.detail.encryptedData
+						},
+						success(resolve) {
+							console.log(resolve)
+						}
+					})
+					/* this.phone = "13649139296"
+					this.userInfo.tel = this.phone
+					this.setPhone('tel', this.phone) */
+				}
+				console.log(e)
+				console.log(e.detail.iv)
+				console.log(e.detail.encryptedData)
+			},
 			markertap(e) {
 				let markerId = e.detail.markerId
 				let result = null
@@ -179,15 +211,15 @@
 					item.iconPath = "../../static/image/maplocation.png"; //重置其他图标
 					if (item.id == markerId) {
 						result = item
-						this.markColor(item, index)//改变点击颜色
+						this.markColor(item, index) //改变点击颜色
 					}
 				})
-				try{//重复点击判断
+				try { //重复点击判断
 					if (result.goods_id == this.markDetail.goods_id) {
 						return
 					}
 					result && this.getInfo(result.goods_id)
-				}catch(e){
+				} catch (e) {
 					result && this.getInfo(result.goods_id)
 				}
 			},
@@ -237,6 +269,10 @@
 				this.$tool.uniNavigateTo({
 					url: `/pages/my/card`
 				})
+			},
+			hideadd() {
+				console.log(this.addpuls)
+				this.addpuls = false;
 			},
 			findsiteUpdata() {
 				let that = this;
@@ -456,6 +492,41 @@
 		.main {
 			top: 100rpx;
 			bottom: 100rpx;
+		}
+
+		.addpuls {
+			width: 400rpx;
+			height: 550rpx;
+			bottom: 0;
+			top: 0;
+			left: 0rpx;
+			right: 0;
+			margin: auto;
+			text-align: center;
+			z-index: 9999;
+
+			.btnphone {
+				width: 100%;
+				height: 100%;
+				z-index: 8;
+				position: absolute;
+				border: none;
+			}
+
+			.close {
+				width: 50rpx;
+				height: 50rpx;
+				position: absolute;
+				z-index: 9;
+				right: 20rpx;
+				color: #fff;
+				cursor: pointer;
+			}
+
+			.img {
+				width: 100%;
+				height: 100%;
+			}
 		}
 
 		.markDetail {

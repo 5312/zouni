@@ -30,6 +30,37 @@
   top: 100rpx;
   bottom: 100rpx;
 }
+.index .addpuls.data-v-57280228 {
+  width: 400rpx;
+  height: 550rpx;
+  bottom: 0;
+  top: 0;
+  left: 0rpx;
+  right: 0;
+  margin: auto;
+  text-align: center;
+  z-index: 9999;
+}
+.index .addpuls .btnphone.data-v-57280228 {
+  width: 100%;
+  height: 100%;
+  z-index: 8;
+  position: absolute;
+  border: none;
+}
+.index .addpuls .close.data-v-57280228 {
+  width: 50rpx;
+  height: 50rpx;
+  position: absolute;
+  z-index: 9;
+  right: 20rpx;
+  color: #fff;
+  cursor: pointer;
+}
+.index .addpuls .img.data-v-57280228 {
+  width: 100%;
+  height: 100%;
+}
 .index .markDetail.data-v-57280228 {
   position: absolute;
   width: 80%;
