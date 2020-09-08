@@ -22,7 +22,8 @@
     "pages/my/card",
     "pages/my/card-detail",
     "pages/my/my-info",
-    "pages/base/edit-my-info"
+    "pages/base/edit-my-info",
+    "pages/circuit/circuit"
   ],
   "subPackages": [],
   "window": {
@@ -37,5 +38,5 @@
     }
   },
   "usingComponents": {},
-  "sitemapLocation": "sitemap75.json"
+  "sitemapLocation": "sitemap92.json"
 }

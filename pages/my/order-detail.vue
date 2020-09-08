@@ -37,26 +37,48 @@
 				</view>
 			</view>
 		</view>
+		<view class="button">
+			<u-button type="warning" @click="cancel">取消订单</u-button>
+		</view>
 	</view>
 </template>
 
 <script>
-	export default{
-		data(){
-			return{
-				detail:null
+	export default {
+		data() {
+			return {
+				detail: null,
+				id: null,
 			}
 		},
-		onLoad(options){
-			let id=options.id
-			this.getDetail(id)
+		onLoad(options) {
+			let id = options.id
+			this.id = id;
+			this.getDetail(id);
 		},
-		methods:{
-			getDetail(id){
+		methods: {
+			getDetail(id) {
 				this.$tool.uniRequest({
 					url: `/api/user.order/detail&order_id=${id}`,
 					success: (res) => {
-						this.detail=res.order
+						this.detail = res.order
+					}
+				})
+			},
+			cancel() {
+				let _this = this;
+				this.$tool.uniRequest({
+					url: `/api/user.order/cancel&order_id=${this.id}`,
+					success: (res) => {
+						_this.$tool.uniShowToast({
+							title: `${res}!`
+						})
+						setTimeout(() => {
+							uni.navigateBack({
+							    delta:1
+							});
+						}, 1000)
+
 					}
 				})
 			}
@@ -65,36 +87,46 @@
 </script>
 
 <style scoped lang="less">
-.order-detail{
-	.order-status{
-		height: 270rpx;
-		font-size: 60rpx;
-		font-weight: bold;
-		.img {
-			width: 150rpx;
-			height: 150rpx;
-		}
-	}
-	.content {
-		margin-top: 20rpx;
-		.title {
-			margin-bottom: 40rpx;
-			height: 80rpx;
-			line-height: 80rpx;
-		}
-		.list {
-			padding: 0 40rpx;
-			.line {
-				height: 68rpx;
-				line-height: 80rpx;
-				.label {
-					color: #8E8F94;
-				}
-				.item {
+	.order-detail {
+		.order-status {
+			height: 270rpx;
+			font-size: 60rpx;
+			font-weight: bold;
 
+			.img {
+				width: 150rpx;
+				height: 150rpx;
+			}
+		}
+
+		.content {
+			margin-top: 20rpx;
+
+			.title {
+				margin-bottom: 40rpx;
+				height: 80rpx;
+				line-height: 80rpx;
+			}
+
+			.list {
+				padding: 0 40rpx;
+
+				.line {
+					height: 68rpx;
+					line-height: 80rpx;
+
+					.label {
+						color: #8E8F94;
+					}
+
+					.item {}
 				}
 			}
 		}
+
+		.button {
+			width: 90%;
+			margin: 20rpx auto;
+		}
 	}
-}
 </style>

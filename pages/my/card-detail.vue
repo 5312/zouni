@@ -54,13 +54,9 @@
 		},
 		methods:{
 			strContent(detail){
-			
 				if(!detail || !detail.content)return ''
-				console.log(detail.content)
 				let str=this.$tool.htmlre(detail.content)
 				console.log(str)
-				// str=this.$tool.formatRichText(str)
-				// console.log(str)
 				return str
 			},
 			getDetail(){

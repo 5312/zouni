@@ -25,4 +25,8 @@
 .order-detail .content .list .line .label.data-v-e9404b6c {
   color: #8E8F94;
 }
+.order-detail .button.data-v-e9404b6c {
+  width: 90%;
+  margin: 20rpx auto;
+}
 

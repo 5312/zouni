@@ -141,12 +141,11 @@
 }
 .index .list-wrap.data-v-57280228 {
   color: black;
-  width: 105rpx;
+  width: 135rpx;
   height: 535rpx;
   right: 40rpx;
   bottom: 300rpx;
   border-radius: 20rpx;
-  box-shadow: 1px 1px 4px 2px #ddd;
   font-size: 12rpx;
 }
 .index .list-wrap .box.data-v-57280228 {

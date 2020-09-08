@@ -22,11 +22,11 @@
 				 :markers="covers" @regionchange="regionchange" @markertap='markertap' />
 			</view>
 			<!-- 广告 -->
-			<view v-show='addpuls' class="addpuls absolute">
+		<!-- 	<view v-show='addpuls' class="addpuls absolute">
 				<view class="close" @click="hideadd">X</view>
 				<button plain='true' class="btnphone" type="default" open-type="getPhoneNumber" @getphonenumber="getPhoneNumber"></button>
 				<image class='img' src="../../static/image/addpuls.jpg" mode=""></image>
-			</view>
+			</view> -->
 			<!-- mark 提示 -->
 			<view v-if="markDetail" class="markDetail" @click="getSiteDetail">
 				<view class="left ">
@@ -619,14 +619,12 @@
 
 		.list-wrap {
 			color: black;
-			width: 105rpx;
+			width: 135rpx;
 			height: 535rpx;
 			right: 40rpx;
 			bottom: 300rpx;
 			border-radius: 20rpx;
-			box-shadow: 1px 1px 4px 2px #ddd;
 			font-size: 12rpx;
-
 			.box {
 				height: 174rpx;
 				font-size: 24rpx;

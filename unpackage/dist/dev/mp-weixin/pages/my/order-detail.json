@@ -1,4 +1,6 @@
 {
   "navigationBarTitleText": "订单详情",
-  "usingComponents": {}
+  "usingComponents": {
+    "u-button": "/uview-ui/components/u-button/u-button"
+  }
 }

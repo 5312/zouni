@@ -1,3 +1,6 @@
+.red.data-v-5008080e {
+  color: #ff0000;
+}
 .scan .mask.data-v-5008080e {
   position: fixed;
   top: 0;
@@ -8,7 +11,7 @@
   z-index: 99999;
 }
 .scan .mask .contnet.data-v-5008080e {
-  background: white;
+  background: #fff;
   position: absolute;
   bottom: 0;
   left: 0;
@@ -41,6 +44,9 @@
 }
 .scan .mask .contnet .line.data-v-5008080e:not(:last-child) {
   border-bottom: 2rpx solid #EEEEEE;
+}
+.scan .content .main .main-official.data-v-5008080e {
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
 .scan .content .main .main-header-wrap.data-v-5008080e {
   border-bottom: 1rpx solid #F8F8F8;
@@ -92,11 +98,31 @@
           flex-shrink: 0;
 }
 .scan .content .main .btn-wrap.data-v-5008080e {
-  margin-top: 100rpx;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  padding: 20rpx 0;
+  background: #F5F5F5;
+}
+.scan .content .main .btn-wrap .price.data-v-5008080e {
+  color: #ff0000;
+  margin: 0 20rpx;
+}
+.scan .content .main .btn-wrap .price .bagPrice.data-v-5008080e {
+  font-size: 44rpx;
+  font-weight: 700;
+}
+.scan .content .main .btn-wrap .price .bagPrice .daole.data-v-5008080e {
+  font-size: 23rpx;
+}
+.scan .content .main .btn-wrap .price .smallPrice.data-v-5008080e {
+  font-size: 23rpx;
 }
 .scan .content .main .btn-wrap .btn.data-v-5008080e {
-  padding: 20rpx 40px;
+  margin-right: 90rpx;
+  padding: 20rpx 30rpx;
   font-size: 26rpx;
-  border-radius: 10rpx;
+  font-weight: 600;
+  border-radius: 50rpx;
 }
 
