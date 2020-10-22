@@ -51,8 +51,9 @@
 		<AuthLogin v-if="!isLogin && isShowAuthLogin" @loginOk='loginOk' :status="'userInfo'"></AuthLogin>
 		<view class="mask flex j-center a-center" v-if="isCouponCounts">
 			<view class="contnet flex flex-column a-center j-between">
-				<view class="close-wrap">
-					<text class="close" @click="isCouponCounts=false">X</text>
+				<view class="close-wrap" @click="isCouponCounts=false">
+					<!-- <text class="close" @click="isCouponCounts=false"></text> -->
+					<u-icon name='close' ></u-icon>
 				</view>
 				<view class="title">
 					恭喜，你还有{{list.length}}张优惠券未使用！
@@ -102,8 +103,9 @@
 				}, {
 					img: "../../static/image/my-yao.png",
 					name: "邀请好友",
-					info: "邀请好友免费洗车劵",
-					isNoOpen: true,
+					info: "",
+					isNoOpen: false,
+					path:'/pages/base/share'
 				}, {
 					img: "../../static/image/my-juan.png",
 					name: "优惠券兑换",
@@ -204,6 +206,7 @@
 						_this.isLogin = true
 						_this.isShowAuthLogin = false
 						_this.getCouponCounts()
+						_this.getPthone();
 					}
 				})
 			},
@@ -335,8 +338,8 @@
 					position: absolute;
 					right: 24rpx;
 					top: 24rpx;
-					width: 40rpx;
-					height: 40rpx;
+					width: 50rpx;
+					height: 50rpx;
 					text-align: center;
 					line-height: 40rpx;
 				}

@@ -9,12 +9,14 @@
   text-align: center;
   line-height: 80rpx;
   height: 80rpx;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 .volume .header .nav-active.data-v-78b64398 {
   border-bottom: 5rpx solid #FFC183;
   color: #FFC183;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 .volume .header .nav.data-v-78b64398:nth-child(2) {
   margin: 0 100rpx;
@@ -25,7 +27,8 @@
 .volume .content .box.data-v-78b64398 {
   margin: 30px 20px;
   padding: 0 30rpx;
-  border-radius: 10rpx;
+  -webkit-border-radius: 10rpx;
+          border-radius: 10rpx;
   height: 200rpx;
 }
 .volume .content .box .left.data-v-78b64398 {
@@ -59,7 +62,8 @@
   display: inline-block;
   width: 50rpx;
   height: 50rpx;
-  border-radius: 50%;
+  -webkit-border-radius: 50%;
+          border-radius: 50%;
   background: white;
   left: 0;
   position: absolute;

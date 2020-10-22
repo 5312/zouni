@@ -22,7 +22,7 @@
 				 :markers="covers" @regionchange="regionchange" @markertap='markertap' />
 			</view>
 			<!-- 广告 -->
-		<!-- 	<view v-show='addpuls' class="addpuls absolute">
+			<!-- 	<view v-show='addpuls' class="addpuls absolute">
 				<view class="close" @click="hideadd">X</view>
 				<button plain='true' class="btnphone" type="default" open-type="getPhoneNumber" @getphonenumber="getPhoneNumber"></button>
 				<image class='img' src="../../static/image/addpuls.jpg" mode=""></image>
@@ -31,7 +31,7 @@
 			<view v-if="markDetail" class="markDetail" @click="getSiteDetail">
 				<view class="left ">
 					<view class="text">
-						<text>{{markDetail.goods_name}}</text>
+						<view class="titles">{{markDetail.goods_name}}</view>
 						<text class="status">{{markDetail.goods_status.text}}</text>
 					</view>
 					<image class='img' src="../../static/image/l-c2.png" mode="widthFix"></image>
@@ -92,6 +92,7 @@
 
 <script>
 	import AuthLogin from "../../components/base/auth-login.vue"
+	import api from "@/common/api/index.js";
 	export default {
 		components: {
 			AuthLogin
@@ -121,9 +122,10 @@
 			if (res.from === 'button') { // 来自页面内分享按钮
 				console.log(res.target)
 			}
+			let userId = this.$tool.uniGetStorage("userId");
 			return {
 				title: '快来参加吧！',
-				path: '/pages/index/index'
+				path: `/pages/index/index?referrerId=${userId}`
 			}
 		},
 		onLoad(options) {
@@ -134,7 +136,10 @@
 				this.longitude = this.addressInfo.lng
 				this.$tool.uniSetStorage("addressInfo", this.addressInfo)
 			}
-
+			console.log(options)
+			if (options.referrerId) {
+				this.$tool.uniSetStorage("referrerId", options.referrerId); //推荐人id
+			}
 		},
 		onReady() {
 			this.init()
@@ -148,7 +153,7 @@
 
 				this.$tool.isGetLocation('scope.userLocation', () => {
 					this.isAuthAddress = true
-					this.isShowAuthLogin = false
+					this.isShowAuthLogin = false;
 					if (this.fromPage && this.fromPage === 'address' && !isReset) {
 						this.mapScale = 11
 						this.getWeather()
@@ -156,9 +161,14 @@
 						this.getListInfo()
 					} else {
 						this.mapScale = 16
-						this.getLocationInfo()
+						this.getLocationInfo();
 					}
 					this.getAdInfo()
+					let res = this.$tool.uniGetStorage('addressInfo');
+					this.getStorageListSite({ //请求最近站点列表
+						latitude: res.lat,
+						longitude: res.lng,
+					})
 				}, () => {
 					this.isAuthAddress = false
 					this.isShowAuthLogin = true
@@ -196,9 +206,6 @@
 							console.log(resolve)
 						}
 					})
-					/* this.phone = "13649139296"
-					this.userInfo.tel = this.phone
-					this.setPhone('tel', this.phone) */
 				}
 				console.log(e)
 				console.log(e.detail.iv)
@@ -206,11 +213,11 @@
 			},
 			markertap(e) {
 				let markerId = e.detail.markerId
-				let result = null
+				let result = null;
 				this.covers.forEach((item, index) => {
 					item.iconPath = "../../static/image/maplocation.png"; //重置其他图标
 					if (item.id == markerId) {
-						result = item
+						result = item;//
 						this.markColor(item, index) //改变点击颜色
 					}
 				})
@@ -235,14 +242,26 @@
 						lat: addressInfo.lat,
 						lng: addressInfo.lng
 					},
+					isNoCode:true,
 					success: (res) => {
-						that.markDetail = res.detail;
-						that.distance = res.detail.goods_distance ? that.$tool.distanceHanlde(res.detail.goods_distance) : 0
+						console.log(res)
+						if(res.msg == 'Undefined index: result'){
+							that.markDetail = null;
+							setTimeout( () => {
+								that.$tool.uniShowToast({
+									title: "即将开业！",
+									icon: "none"
+								})
+							},400)
+						}else{
+							that.markDetail = res.data.detail;
+							that.distance = res.data.detail.goods_distance ? that.$tool.distanceHanlde(res.data.detail.goods_distance) : 0
+						}
+						
 					}
 				})
 			},
 			regionchange(e) {
-				//console.log(e)
 				if (e.type == "end") {
 
 				}
@@ -288,7 +307,6 @@
 								return
 							}
 							const len = cover.length
-							console.log(res.cont, len)
 							if (res.cont != len) {
 								console.log(res)
 								that.$tool.uniRemoveStorage("covers") //清空缓存
@@ -301,12 +319,13 @@
 			getLocationInfo() {
 				let _this = this
 				this.mapCtx = uni.createMapContext('myMap')
-				uni.getLocation({
+				uni.getLocation({ //获取位置信息
 					type: "wgs84",
 					geocode: true,
 					success: (res) => {
-						_this.latitude = res.latitude
-						_this.longitude = res.longitude
+						_this.latitude = res.latitude; //纬度
+						_this.longitude = res.longitude; //经度
+
 						_this.$tool.uniRequest({
 							url: `/api/Geocoder`,
 							params: {
@@ -336,85 +355,82 @@
 					}
 				})
 			},
+			getStorageListSite(location) { //预先获取附近站点
+				let _this = this;
+				//请求之前清除缓存
+				this.$tool.uniRemoveStorage('site');
+				let params = {
+					lat: String(location.latitude),
+					lng: String(location.longitude)
+				}
+				api.GetNearbyGasStation(params).then(res => {
+					console.log('预请求成功');
+					_this.$tool.uniSetStorage('site', res); //缓存
+					getApp().globalData._site = res.posiList[0]; //第一个站点，在优惠卷付款页面使用
+				})
+			},
 			getAdInfo() {
-				this.$tool.uniRequest({
-					url: `/api/Ad`,
-					success: (res) => {
-						console.log('获取广告地址', res)
-						this.adImg = res.indexAd
-					}
+				api.getAdAddress().then(res => {
+					console.log('获取广告地址', res)
+					this.adImg = res.indexAd
 				})
 			},
 			getWeather() {
-				this.$tool.uniRequest({
-					url: `/api/weather`,
-					isNoCode: true,
-					params: {
-						lat: this.addressInfo.lat,
-						lng: this.addressInfo.lng,
-						city: this.addressInfo.name
-					},
-					success: (res) => {
-						this.weatherInfo = res
-					}
+				let wThis = this;
+				let params = {
+					lat: this.addressInfo.lat,
+					lng: this.addressInfo.lng,
+					city: this.addressInfo.name
+				};
+				api.getWeatherForecast(params).then(res => { //天气信息
+					wThis.weatherInfo = res
 				})
 			},
 			getListInfo() {
+				const wThis = this;
 				const cover = this.$tool.uniGetStorage("covers") //缓存标记
 				if (cover) {
 					this.covers = cover;
 					return
 				}
-				this.$tool.uniRequest({
-					url: `/api/index/`,
-					success: (res) => {
-						let temObj = res && res.posiList && res.posiList.data ? res.posiList.data : []
-						this.covers = []
-						for (let i in temObj) {
-							let obj = {
-								id: i + 1,
-								width: "50rpx",
-								height: "63rpx",
-								goods_id: temObj[i].goods_id,
-								latitude: temObj[i].goods_lat,
-								longitude: temObj[i].goods_lng,
-								iconPath: '../../static/image/maplocation.png'
-							}
-							this.covers.push(obj)
+				api.mapGetCorver().then( res => {
+					let temObj = res && res.posiList && res.posiList.data ? res.posiList.data : []
+					wThis.covers = []
+					for (let i in temObj) {
+						let obj = {
+							id: i + 1,
+							width: "50rpx",
+							height: "63rpx",
+							goods_id: temObj[i].goods_id,
+							latitude: temObj[i].goods_lat,
+							longitude: temObj[i].goods_lng,
+							iconPath: '../../static/image/maplocation.png'
 						}
-						this.$tool.uniSetStorage("covers", this.covers)
-						console.log("当前城市标记的站点：", this.covers)
+						wThis.covers.push(obj)
 					}
+					wThis.$tool.uniSetStorage("covers", wThis.covers)
+					console.log("当前城市标记的站点：", wThis.covers)
 				})
 			},
 			scanCode() {
-				uni.scanCode({
-					success: (res) => {
-						let result = res.result
-						let siteId = ''
-						if (result && result.startsWith('https://xi.ydeshui.com')) {
-							let q = result
-							if (q) {
-								let a = q.split('?')[1]
-								if (a && a.length > 0) {
-									let b = a.split('=')
-									if (b && b.length > 0 && b[0] == 'siteId') {
-										siteId = b[1]
-									}
-								}
-							}
-						}
-						if (siteId) {
-							this.$tool.uniRedirectTo({
-								url: `/pages/scan/index?siteId=${siteId}&fromPage=home`
-							})
-						} else {
-							this.$tool.uniShowToast({
-								title: "目前只支持小程序的扫码支付，不支持其他扫码",
-								icon: "none"
-							})
-						}
+				//优化
+				const scan = new Promise(function(resolve, reject) {
+					uni.scanCode({
+						success: resolve
+					})
+				});
+				scan.then(res => {
+					//已优化
+					let result = res.result;
+					let params = this.$tool.getUrlParams(result)
+					let type = params.siteId? 'site':'userSharing';
+					const PATH  = {
+						'site':`/pages/scan/index?siteId=${params.siteId}&fromPage=home`,//站点扫码
+						'userSharing':`/pages/my/card-detail?uid=${params.uid}&id=${params.tid}`//用户分享二维码
 					}
+					this.$tool.uniRedirectTo({
+						url: PATH[type]
+					})
 				})
 			},
 			online() {
@@ -448,9 +464,6 @@
 </script>
 
 <style lang="less" scoped>
-	/* #ifndef MY-ALIPAY*/
-
-	/* #endif */
 	.index {
 
 		.header,
@@ -531,7 +544,7 @@
 
 		.markDetail {
 			position: absolute;
-			width: 80%;
+			width: 85%;
 			height: 100rpx;
 			bottom: 140rpx;
 			left: 0;
@@ -548,16 +561,25 @@
 
 			.left {
 				text-align: left;
-
+				white-space: nowrap;
+				.titles{
+					width:313rpx;
+					overflow: hidden;
+					display:inline-block;
+					white-space: nowrap;
+					text-overflow: ellipsis;
+					vertical-align: middle;
+				}
 				text {
 					margin: 10rpx 0;
 				}
 
 				.status {
-					padding: 8rpx;
+					padding: 5rpx;
 					background: #ff893a;
 					border-radius: 10rpx;
-					margin-left: 10rpx;
+					margin: 0rpx 0 0 10rpx;
+					vertical-align: middle;
 				}
 
 				.tag {
@@ -625,6 +647,7 @@
 			bottom: 300rpx;
 			border-radius: 20rpx;
 			font-size: 12rpx;
+
 			.box {
 				height: 174rpx;
 				font-size: 24rpx;

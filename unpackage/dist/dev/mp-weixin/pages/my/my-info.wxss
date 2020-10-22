@@ -3,7 +3,8 @@
 }
 .my-info .btn.data-v-431813f6 {
   height: 80rpx;
-  border-radius: 8rpx;
+  -webkit-border-radius: 8rpx;
+          border-radius: 8rpx;
   background: #FF8D1A;
   line-height: 80rpx;
   text-align: center;
@@ -24,7 +25,8 @@
 .my-info .line .right .btns.data-v-431813f6 {
   font-size: 26rpx;
   height: 80rpx;
-  border-radius: 8rpx;
+  -webkit-border-radius: 8rpx;
+          border-radius: 8rpx;
   background: #FF8D1A;
   line-height: 80rpx;
   text-align: center;
@@ -33,7 +35,8 @@
 .my-info .line .right .avatar.data-v-431813f6 {
   width: 66rpx;
   height: 66rpx;
-  border-radius: 50%;
+  -webkit-border-radius: 50%;
+          border-radius: 50%;
 }
 .my-info .line .right .icon.data-v-431813f6 {
   width: 30rpx;
@@ -47,7 +50,8 @@
   display: inline-block;
   width: 32rpx;
   height: 32rpx;
-  border-radius: 50%;
+  -webkit-border-radius: 50%;
+          border-radius: 50%;
   border: 2rpx solid #FF8F1E;
   margin-right: 10rpx;
   position: relative;
@@ -56,7 +60,8 @@
   content: '';
   width: 20rpx;
   height: 20rpx;
-  border-radius: 50%;
+  -webkit-border-radius: 50%;
+          border-radius: 50%;
   background: #FF8F1E;
   position: absolute;
   top: 7rpx;

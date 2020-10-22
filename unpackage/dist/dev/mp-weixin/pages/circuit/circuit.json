@@ -1,9 +1,0 @@
-{
-  "usingComponents": {
-    "u-steps": "/uview-ui/components/u-steps/u-steps",
-    "u-radio-group": "/uview-ui/components/u-radio-group/u-radio-group",
-    "u-radio": "/uview-ui/components/u-radio/u-radio",
-    "u-button": "/uview-ui/components/u-button/u-button",
-    "auth-login": "/components/base/auth-login"
-  }
-}

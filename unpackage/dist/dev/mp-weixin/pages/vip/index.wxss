@@ -29,7 +29,8 @@
   width: 192rpx;
   height: 76rpx;
   background: #00FACD;
-  border-radius: 10rpx;
+  -webkit-border-radius: 10rpx;
+          border-radius: 10rpx;
   color: #000;
   font-size: 28rpx;
   font-weight: bold;
@@ -66,7 +67,8 @@
 .vip .card-wrap .card.data-v-7f1b9037 {
   margin: 0 40rpx 40rpx;
   background: #90F0CB;
-  border-radius: 10rpx;
+  -webkit-border-radius: 10rpx;
+          border-radius: 10rpx;
   height: 140rpx;
   padding: 0 40rpx;
 }
@@ -86,6 +88,7 @@
   color: #90F0CB;
   font-size: 28rpx;
   font-weight: bold;
-  border-radius: 6rpx;
+  -webkit-border-radius: 6rpx;
+          border-radius: 6rpx;
 }
 

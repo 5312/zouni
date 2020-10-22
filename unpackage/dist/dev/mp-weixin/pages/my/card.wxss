@@ -3,12 +3,14 @@
   border-bottom: 1rpx solid #EFEFEF;
   height: 118px;
   padding: 20px 0;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 .card .box .left.data-v-07ffffaa {
   width: 200rpx;
   height: 160rpx;
-  border-radius: 10rpx;
+  -webkit-border-radius: 10rpx;
+          border-radius: 10rpx;
   background: #999999;
   margin-right: 30rpx;
   -webkit-flex-shrink: 0;

@@ -40,8 +40,10 @@
 }
 .site-detail .nav-wrap .nav.data-v-5a4f37b1 {
   padding: 4rpx 20rpx;
-  box-sizing: border-box;
-  border-radius: 40rpx;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  -webkit-border-radius: 40rpx;
+          border-radius: 40rpx;
   font-size: 22rpx;
   border: 2rpx solid #FF8D1A;
 }
@@ -67,7 +69,8 @@
   text-align: center;
   height: 92rpx;
   line-height: 92rpx;
-  border-radius: 46rpx;
+  -webkit-border-radius: 46rpx;
+          border-radius: 46rpx;
   border: 2rpx solid #FF8D1A;
   width: 310rpx;
   color: #FF8D1A;

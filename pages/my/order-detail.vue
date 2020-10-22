@@ -37,7 +37,7 @@
 				</view>
 			</view>
 		</view>
-		<view class="button">
+		<view class="button" v-if="detail.pay_status.text != '已付款'">
 			<u-button type="warning" @click="cancel">取消订单</u-button>
 		</view>
 	</view>

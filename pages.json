@@ -120,11 +120,16 @@
 			"style": {
 				"navigationBarTitleText": "修改信息"
 			}
-		}, {
-			"path": "pages/circuit/circuit",
-			"style": {}
 		}
-	],
+        ,{
+            "path" : "pages/base/share",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/scan/urgent/urgent",
+            "style" : {}
+        }
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "我的洗车",

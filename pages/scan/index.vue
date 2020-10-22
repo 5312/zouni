@@ -1,75 +1,136 @@
 <template>
-	<view class="scan h100">
-		<view class="content" v-if='isLogin'>
-			<view class="main" v-if="detail">
-				<view class="main-official">
-					<official-account></official-account>
+	<view class="wrap">
+		<view class="main" v-if='isLogin && !loading'>
+			<u-steps active-color="#ff893a" :list="numList" :current="current" mode="number"></u-steps>
+			<scroll-view :style="{ height:winHeight }" :scroll-into-view="toView" scroll-y="true">
+				<view class="detail">
+					<view class="">
+						{{detail1}}
+					</view>
+					<view>{{detail2}}</view>
 				</view>
-				<view class="main-header-wrap">
-					<view class="img-wrap flex j-start a-start flex-row">
-						<image :src="detail.goods_image" class="img flex"></image>
-						<view class="info-wrap right ">
-							<view class="name bold text-yellow">
-								{{detail.goods_name}}
-							</view>
-							<view class="address ">
-								{{detail.goods_df}}
-							</view>
+				<view class="conter">
+					<view v-if="current == 0" class="box">
+						<image class="img" src="../../static/image/current1.png" mode=""></image>
+					</view>
+					<view v-else-if="current == 1" class="box">
+						<u-grid :col="3" :border="false">
+							<u-grid-item>
+								<image class="g" src="../../static/image/shoucha.png" mode="aspectFit"></image>
+								<view class="grid-text ">拉手刹</view>
+							</u-grid-item>
+							<u-grid-item>
+								<image class="g" src="../../static/image/weibiaoti-1-03.png" mode="aspectFit"></image>
+								<view class="grid-text ">挂P档</view>
+							</u-grid-item>
+							<u-grid-item>
+								<image class="g" src="../../static/image/yushua.png" mode="aspectFit"></image>
+								<view class="grid-text ">关雨刷</view>
+							</u-grid-item>
+						</u-grid>
+						<u-grid :col="3" :border="false">
+							<u-grid-item>
+								<image class="g" src="../../static/image/tianxian.png" mode="aspectFit"></image>
+								<view class="grid-text ">收天线</view>
+							</u-grid-item>
+							<u-grid-item>
+								<image class="g" src="../../static/image/rearviewmirror.png" mode="aspectFit"></image>
+								<view class="grid-text ">收后视镜</view>
+							</u-grid-item>
+							<u-grid-item>
+								<image class="g" src="../../static/image/chechuang.png" mode="aspectFit"></image>
+								<view class="grid-text ">关车窗</view>
+							</u-grid-item>
+						</u-grid>
+						<!-- <view class="line-box">以下车型不能清洗</view> -->
+						<!-- <image class="imgs2" src="../../static/image/car1.png" mode=""></image> -->
+						<view class='bottom'>
+							<!-- <transition name="fade">
+								<image v-show="air" src="../../static/image/air.png" class="imgs3" mode="aspectFit"></image>
+							</transition> -->
+							<u-modal v-model="air" content="请先勾选同意后进行下一步" @confirm="confirm"></u-modal>
+							<u-radio-group v-model="value" id="productBox">
+								<u-radio name="pact">
+									我已阅读并同意<text class="textBlue" @click="rich">《走您洗车用户服务协议》</text>
+								</u-radio>
+							</u-radio-group>
 						</view>
 					</view>
-					<view class="info-cc">
-						本服务站服务项目：{{detail.goods_tag}}
-					</view>
-				</view>
-				<view class="pay-wrap">
-					<view class="car-select item flex a-start flex-row j-start">
-						<text class="label">车牌号码：</text>
-						<text class="flex1">{{carCard}}</text>
-					</view>
-					<view class="pay-select item flex a-start flex-row j-start">
-						<text class="label">支付方式：</text>
-						<text class="flex1">微信支付</text>
-					</view>
-					<view class="pay-select item flex a-start flex-row j-start" v-if="couponList.length>0">
-						<text class="label">优惠方式：</text>
-						<view class="red flex1 inline-block" @click="selectCupon">
-							{{mess}}
-							<image src="../../static/image/more1.png" class="img-c"></image>
+					<view v-else class="box3">
+						<view class="text">请选择洗车方式</view>
+						<view class="flex lable a-center">
+							<view :class="index == 0? 'active':''" class="priceList felx " @click="hasActive(0)">
+								<view>{{price}}元</view>
+								<view>标准速洗</view>
+								<view>3分钟</view>
+							</view>
+							<!-- <view :class="index == 1? 'active':''" class="priceList flex" @click="hasActive(1)">
+							<view>13.8元</view>
+							<view>水蜡速洗</view>
+							<view>5分钟</view>
 						</view>
-
-					</view>
-					<view class="pay-select item flex a-start flex-row j-start" v-if="couponList.length>0">
-						<text class="label">优惠金额：</text>
-						<text class="flex1">￥{{couponInfoPrice.price}}</text>
-					</view>
-					<view class="pay-select item flex a-start flex-row j-start">
-						<text class="label">小计：</text>
-						<text class="flex1">￥{{price}}</text>
+						<view :class="index == 2? 'active':''" class="priceList flex" @click="hasActive(2)">
+							<view>16.8元</view>
+							<view>亮光精洗</view>
+							<view>7分钟</view>
+						</view> -->
+						</view>
+						<view class="flex li">
+							<view>车牌号</view>
+							<view>{{carCard}}</view>
+						</view>
+						<view class="flex li">
+							<view>洗车类型</view>
+							<view>常规车辆</view>
+						</view>
+						<view class="flex li">
+							<view>支付方式</view>
+							<view>微信支付</view>
+						</view>
+						<view class="flex li">
+							<view>优惠方式</view>
+							<view class="red flex1 inline-block" @click="selectCupon">
+								{{mess}}
+								<image src="../../static/image/more1.png" class="img-c"></image>
+							</view>
+						</view>
+						<view class="flex li">
+							<view>优惠金额</view>
+							<view>￥{{couponInfoPrice.price}}</view>
+						</view>
+						<view class="flex li">
+							<view>支付金额</view>
+							<view>{{price}}</view>
+						</view>
 					</view>
 				</view>
-				<view class="btn-wrap flex  a-center j-end">
-					<view class="text">合计：</view>
-					<view class="price">
-						<view class="bagPrice"><text class="daole">￥</text>{{price}}</view>
-						<view class="smallPrice">已优惠￥{{couponInfoPrice.price}}</view>
-					</view>
-					<view class="btn bg-yellow" @click="pay">立即支付</view>
+				<view class="btn">
+					<u-button v-if="current < 2" type="warning" @click="next">下一步</u-button>
+					<u-button v-if='current == 2' type="warning" @click="pay">开始洗车</u-button>
 				</view>
-			</view>
+			</scroll-view>
 		</view>
 		<AuthLogin v-if="!isLogin && isShowAuthLogin" @loginOk='loginOk' :status="'userInfo'"></AuthLogin>
-
+		<Urgent v-if='loading' :zhan='zhanId'></Urgent>
 	</view>
 </template>
 
 <script>
 	import AuthLogin from "../../components/base/auth-login.vue"
+	import Urgent from './urgent/urgent.vue'
+	import api from '@/common/api/index.js'
 	export default {
 		components: {
-			AuthLogin
+			AuthLogin,
+			Urgent
 		},
 		data() {
 			return {
+				src: '../../static/audio.mp3',
+				zhanId:0,
+				loading: true,
+				audioCtx: null,
+				index: 0,
 				isLogin: false,
 				isShowAuthLogin: false,
 				siteId: null,
@@ -77,18 +138,29 @@
 				carCard: '',
 				price: 0,
 				couponList: [],
+				air: false,
+				value: '',
+				current: 0,
+				numList: [{
+					name: ''
+				}, {
+					name: ''
+				}, {
+					name: ''
+				}, ],
 				couponInfoPrice: {
 					couponId: 0,
 					price: 0,
 					name: ""
-				}
+				},
+				winHeight: null,
+				toView: '', //锚点跳转的ID
 			}
 		},
-
 		onLoad(option) {
-			console.log("参数", option)
 			let q = option.q ? decodeURIComponent(option.q) : null
-			let fromPage = option.fromPage
+			let fromPage = option.fromPage;
+			console.log(option)
 			if (q) {
 				let a = q.split('?')[1]
 				if (a && a.length > 0) {
@@ -104,8 +176,17 @@
 			} else if (fromPage === 'select' && option.siteId) {
 				this.siteId = option.siteId
 				this.couponInfoPrice.couponId = option.userCouponId
+				this.current = option.curr || 0;
 				this.init()
 			}
+			let that = this;
+			wx.getSystemInfo({
+				success: function(res) {
+					//屏幕的宽度/屏幕的高度 = 微信固定宽度(750)/微信高度
+					that.winHeight = res.windowHeight - (res.windowWidth * 90 / 750) + 'px' //90为导航的告诉80+10(margin-bottom)  
+
+				}
+			});
 		},
 		computed: {
 			mess: function() {
@@ -114,19 +195,63 @@
 				};
 				let select = this.couponInfoPrice.couponId;
 				var obj;
-				for(let i=0;i<this.couponList.length ; i++){
+				for (let i = 0; i < this.couponList.length; i++) {
 					var temp = this.couponList[i];
-					if(temp.user_coupon_id == select){
+					if (temp.user_coupon_id == select) {
 						obj = temp;
 					}
 				}
-				let message = obj.coupon_type.text == '次卡' ? '免费洗车':obj.name;
+				let message = obj.coupon_type.text == '次卡' ? '免费洗车' : obj.name;
 				return message
+			},
+			detail1() {
+				if (this.current == 0) {
+					return `确认车辆是否停到指定位置`
+				}
+				if (this.current == 1) {
+					return `确认完成以下操作`
+				}
+				if (this.current == 2) {
+					return `确认订单信息`;
+				}
+			},
+			detail2() {
+				if (this.current == 0) {
+					return `通过洗车两侧辅助镜查看`
+				}
+
+				if (this.current == 1) {
+					return `确保洗车过程中车辆安全`
+				}
+				if (this.current == 2) {
+					return ``;
+				}
+			}
+		},
+		watch: {
+			value: function(e) {
+				if (e == 'pact') { //提示气泡
+					//this.air = false
+
+				}
 			}
 		},
 		methods: {
+			hasActive(item) {
+				this.$tool.uniShowToast({
+					icon: 'none',
+					title: "暂不支持！"
+				})
+				return;
+				this.index = item;
+			},
+			rich() {
+				this.$tool.uniNavigateTo({
+					url: `/pages/base/rich?fromPage=serviceAgreement`
+				})
+			},
 			init() {
-				this.$tool.isGetLocation("scope.userInfo", () => {
+				this.$tool.isGetLocation("scope.userInfo", () => { //登录
 					this.logged()
 				}, () => {
 					this.isLogin = false
@@ -136,12 +261,26 @@
 			loginOk() {
 				this.logged()
 			},
-			selectCupon() {
+			selectCupon() { //优惠方式
 				let url =
 					`/pages/scan/select?list=${JSON.stringify(this.couponList)}&userCouponId=${this.couponInfoPrice.couponId}&siteId=${this.siteId}`
 				this.$tool.uniNavigateTo({
 					url
 				})
+			},
+			confirm() {
+				this.air = false;
+			},
+			next(e) {
+
+				if (this.current == 1) {
+					if (this.value != 'pact') {
+						this.air = true;
+						this.toView = 'productBox';
+						return;
+					}
+				}
+				this.current = this.current + 1;
 			},
 			sequence() { //排序
 				let arr = this.couponList;
@@ -210,149 +349,181 @@
 					coupon_id: this.couponInfoPrice.couponId,
 					pay_type: '20'
 				}
-				console.log("支付参数", params)
-				this.$tool.uniRequest({
-					url: `/api/order/buyNow`,
-					method: "POST",
-					headers: {
-						'Content-Type': 'application/x-www-form-urlencoded'
-					},
-					params: params,
-					success: (res) => {
-						if (res.pay_type === '20') { //微信支付
-							let result = res.payment
-							_this.$tool.wxPayMoney(result.timeStamp, result.nonceStr, result.prepay_id, 'MD5', result.paySign, (req) => {
-								_this.$tool.uniShowToast({
-									title: "支付成功！"
-								})
-								setTimeout(() => {
-									uni.reLaunch({
-										url: `/pages/scan/order-detail?id=${res.order_id}`
-									})
-								}, 1000)
-							})
-						} else if (res.pay_type === '30') { //优惠卷支付
-							_this.$tool.uniShowToast({
-								title: "支付成功！"
-							})
-							setTimeout(() => {
-								uni.reLaunch({
-									url: `/pages/scan/order-detail?id=${res.order_id}`
-								})
-							}, 1000)
-						}
+				api.buyNow(params).then(([res,msg]) => {
+					//console.log(res,msg)
+					_this.zhanId = msg.success;//1开机2暂停3复位
+					if (res.pay_type === '20') { //微信支付
+						let result = res.payment
+						_this.$tool.wxPayMoney(result.timeStamp, result.nonceStr, result.prepay_id, 'MD5', result.paySign, (req) => {
+							_this.payGo(res,msg);
+						})
+					} else if (res.pay_type === '30') { //优惠卷支付
+						_this.payGo(res,msg);
 					}
 				})
-			}
+			},
+			payGo(res,msg){//支付成功
+				let _this = this;
+				_this.$tool.uniShowToast({
+					title: "支付成功！"
+				})
+				setTimeout(() => {
+					if (msg.success != 0) {
+						api.zhan({
+							zhan_id: msg.success,
+							zhan_type: 1, //1开机2暂停3复位
+						}).then(res => {
+							_this.loading = true; //开机成功，进入紧急停止页面
+						})
+					} else {
+						//return
+						uni.reLaunch({
+							url: `/pages/scan/order-detail?id=${res.order_id}`
+						})
+					}
+				
+				}, 1000)
+			},
 		}
 	}
 </script>
 
-<style scoped lang="less">
-	.red {
-		color: #ff0000;
+<style lang="less" scoped>
+	.textBlue {
+		color: #1b49ec;
 	}
 
-	.scan {
-		.mask {
-			position: fixed;
-			top: 0;
-			bottom: 0;
-			left: 0;
-			right: 0;
-			background: rgba(0, 0, 0, 0.6);
-			z-index: 99999;
+	page {
+		height: 100%;
 
-			.contnet {
-				background: #fff;
-				position: absolute;
-				bottom: 0;
-				left: 0;
-				right: 0;
-				max-height: 400rpx;
-				overflow-y: auto;
-				padding: 0 20px;
+		.wrap {
+			height: 100%;
+		}
+	}
 
-				.close-wrap {
-					height: 80rpx;
-					border-bottom: 2rpx solid #EEEEEE;
-					text-align: right;
-					line-height: 80rpx;
-					box-sizing: border-box;
+	.grid-text {
+		font-size: 28rpx;
+		margin-top: 4rpx;
+		color: #000;
+	}
 
-					.close {
-						color: #50A6FF;
-						display: inline-block;
-						width: 60rpx;
-						height: 60rpx;
-						text-align: center;
-						line-height: 60rpx;
-					}
+	.line-box {
+		margin: 30rpx 0;
+	}
+
+	.main {
+		padding-top: 40rpx;
+
+		.detail {
+			width: 80%;
+			margin: auto;
+			text-align: center;
+			padding: 40rpx;
+		}
+
+		.conter {
+			width: 100%;
+			margin-bottom: 30rpx;
+			min-height: 800rpx;
+
+			.box {
+				width: 100%;
+				text-align: center;
+				padding: 40rpx;
+				padding-bottom: 0rpx;
+
+
+				.g {
+					width: 100rpx;
+					height: 180rpx;
 				}
 
-				.line {
-					padding: 40rpx 0;
-					font-size: 24rpx;
 
-					&-active {
-						color: #535EDE;
+				.img {
+					width: 100%;
+					min-height: 700rpx;
+				}
+
+				.imgs {
+					width: 100%;
+					height: 360rpx;
+					border-radius: 10rpx;
+				}
+
+				.imgs2 {
+					width: 100%;
+					height: 300rpx;
+					border-radius: 10rpx;
+				}
+
+				.bottom {
+					width: 100%;
+					text-align: left;
+
+					.fade-enter-active,
+					.fade-leave-active {
+						transition: opacity .5s;
 					}
 
-					&:not(:last-child) {
-						border-bottom: 2rpx solid #EEEEEE;
+					.fade-enter,
+					.fade-leave-to
+
+					/* .fade-leave-active below version 2.1.8 */
+						{
+						opacity: 0;
+					}
+
+					.imgs3 {
+						width: 60%;
+						height: 100rpx;
 					}
 				}
 			}
-		}
 
-		.content {
-			.main {
-				.main-official{
-					box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-				}
-				.main-header-wrap {
-					border-bottom: 1rpx solid #F8F8F8;
-					padding-bottom: 20rpx;
+			.box3 {
+				width: 90%;
+				margin: auto;
+
+				.active {
+					background-color: #F0AD4E;
 				}
 
-				.info-cc {
-					padding: 0 40rpx;
-					font-size: 30rpx;
-					line-height: 56rpx
+				.flex {
+					display: flex;
+					justify-content: space-between;
+					align-items: center;
 				}
 
-				.img-wrap {
-					padding: 40rpx;
+				.text {
+					padding: 0rpx 0 20rpx;
+					color: #ddd;
+				}
 
-					.img {
-						width: 250rpx;
-						height: 250rpx;
-						border-radius: 6rpx;
-						margin-right: 30rpx;
-						flex-shrink: 0;
+				.lable {
+					margin-bottom: 20rpx;
+					justify-content: space-around;
+
+					.priceList {
+						height: 200rpx;
+						width: calc(100% / 3.5);
+						border: 1px solid #F0AD4E;
+						border-radius: 20rpx;
+						text-align: center;
+						padding: 20rpx;
+						flex-flow: wrap column;
+						align-items: center;
+						line-height: 50rpx;
+
 					}
 				}
 
-				.info-wrap {
-					.name {
-						font-size: 34rpx;
-						margin-bottom: 20rpx;
-					}
+				.li {
+					padding: 20rpx 0;
+					border-bottom: 1px solid #ddd;
 
-					.address {
-						font-size: 28rpx;
-						line-height: 1.6;
-					}
-				}
-
-				.pay-wrap {
-					padding: 0 40rpx;
-					font-size: 30rpx;
-					line-height: 2;
-					margin-top: 40rpx;
-
-					.item {
-						margin-bottom: 40rpx;
+					.flex1 {
+						text-align: right;
+						color: red;
 					}
 
 					.img-c {
@@ -361,47 +532,16 @@
 						margin-left: 10px;
 						position: relative;
 						top: 2rpx;
-					}
-
-					.label {
-						width: 150rpx;
-						flex-shrink: 0;
-					}
-				}
-
-				.btn-wrap {
-					position: fixed;
-					bottom: 0;
-					width:100%;
-					padding:20rpx 0;
-					background: #F5F5F5;
-					.text{
-
-					}
-					.price{
-						
-						color:#ff0000;
-						margin:0 20rpx;
-						.bagPrice{
-							font-size:44rpx;
-							font-weight: 700;
-							.daole{
-								font-size: 23rpx;
-							}
-						}
-						.smallPrice{
-							font-size: 23rpx;
-						}
-					}
-					.btn {
-						margin-right:90rpx;
-						padding: 20rpx 30rpx;
-						font-size: 26rpx;
-						font-weight: 600;
-						border-radius: 50rpx;
+						transform: rotate(-90deg);
 					}
 				}
 			}
+
+		}
+
+		.btn {
+			width: 90%;
+			margin: 20rpx auto;
 		}
 	}
 </style>

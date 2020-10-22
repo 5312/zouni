@@ -59,8 +59,8 @@
 			},
 			selectBox(item){
 				this.userCouponId=item.user_coupon_id
-				uni.reLaunch({
-				    url:`/pages/scan/index?siteId=${this.siteId}&userCouponId=${this.userCouponId}&fromPage=select`
+				uni.redirectTo({
+				    url:`/pages/scan/index?siteId=${this.siteId}&userCouponId=${this.userCouponId}&fromPage=select&curr=2`
 				})			
 			}
 		}

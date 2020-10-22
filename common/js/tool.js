@@ -34,6 +34,22 @@ export default {
 			title: title
 		});
 	},
+	getUrlParams(url){
+		if(url.startsWith('https://xi.ydeshui.com')){
+			let params = url.split('?')[1];
+			//用来储存对象
+			let obj = {};
+			//没参数返回
+			if(!params) return;
+			//将参数分割
+			var arr = params.split('$');
+			arr.forEach((x)=>{
+				let array =  x.split('=');
+				obj[array[0]] = array[1];
+			})
+			return obj;
+		}
+	},
 	uniRequest(options) {
 		let {
 			url,
@@ -43,10 +59,13 @@ export default {
 			success,
 			fail,
 			isNoCode,
-			complete
+			complete,
+			loading
 		} = options
-		let countNumber = 0
-		this.uniShowLoading({})
+		let countNumber = 0;
+		if(!loading){
+			this.uniShowLoading({})
+		}
 		uni.request({
 			url: baseUrl + url,
 			method: method ? method : "GET",
@@ -60,12 +79,12 @@ export default {
 			},
 			header: headers,
 			success: (res) => {
-				console.log("res请求结果", res)
+				//console.log("res请求结果", res)
 				if (res.statusCode === 200) {
 					if (isNoCode) {
 						success ? success(res.data) : false
 					} else if (res.data.code == 1) {
-						success ? success(res.data.data) : false
+						success ? success(res.data.data,res.data.msg) : false
 					} else if (res.data.code == -1) {
 						this.uniShowToast({
 							title: "token失效，重新登陆！",
@@ -74,6 +93,7 @@ export default {
 						this.uniRemoveStorage("token")
 						this.uniRemoveStorage("userInfo")
 						this.uniRemoveStorage("userId")
+						this.getTokenValue()
 					}
 				} else {
 					this.uniShowToast({
@@ -100,7 +120,8 @@ export default {
 			success,
 			fail,
 			complete
-		} = options
+		} = options;
+		let referrerId  = this.uniGetStorage("referrerId");//推荐人id
 		var _this = this;
 		uni.login({ //获取微信用户的code值
 			provider: 'weixin',
@@ -121,7 +142,8 @@ export default {
 									user_info: JSON.stringify(res.userInfo),
 									signature: res.signature,
 									encrypted_data: res.encryptedData,
-									iv: res.iv
+									iv: res.iv,
+									referrerId:referrerId || ''
 								},
 								success: (res1) => {
 									if (res1.statusCode === 200 && res1.data.code === 1) {
@@ -164,7 +186,7 @@ export default {
 			}
 		});
 	},
-	async getMyAlipayToken(options){
+	async getMyAlipayToken(options) {
 		let {
 			service,
 			success,
@@ -172,17 +194,21 @@ export default {
 			complete
 		} = options
 		var _this = this;
-		const [error , provider] = await uni.getProvider({service:service})//获取服务类型
-		const [errMsg,loginCode] = await uni.login({provider:provider}) //获取登录code
-		if(errMsg){
+		const [error, provider] = await uni.getProvider({
+			service: service
+		}) //获取服务类型
+		const [errMsg, loginCode] = await uni.login({
+			provider: provider
+		}) //获取登录code
+		if (errMsg) {
 			_this.uniShowToast({
 				title: "获取微信登录login的code失败！",
 				icon: "none"
 			})
 			complete ? complete() : false
 		}
-		if(loginCode.authCode){
-		    const [e,login] = await	uni.request({
+		if (loginCode.authCode) {
+			const [e, login] = await uni.request({
 				url: baseUrl + "/api/user/login",
 				method: "POST",
 				header: {
@@ -195,7 +221,7 @@ export default {
 			console.log(login)
 			console.log(e)
 		}
-		
+
 	},
 	distanceHanlde(val) {
 		if (val) {
@@ -368,15 +394,17 @@ export default {
 					}
 				}
 			},
-			"scope.userInfo": async function() {//判断是否登录成功
-				const [error,userInfo] = await uni.getUserInfo();
-				console.log("登录判断",userInfo)
-				if(!userInfo){return};
+			"scope.userInfo": async function() { //判断是否登录成功
+				const [error, userInfo] = await uni.getUserInfo();
+				console.log("登录判断", userInfo)
+				if (!userInfo) {
+					return
+				};
 				if (_this.uniGetStorage("token")) {
 					success ? success() : false
 				} else {
 					_this.getMyAlipayToken({
-						service:"oauth",
+						service: "oauth",
 						success: () => {
 							success ? success() : false
 						}
@@ -386,10 +414,10 @@ export default {
 		}
 		scopes[type]()
 		// #endif
-		
+
 		// #ifndef MP-ALIPAY 
 		//支付宝无法使用authorize
-		uni.authorize({ 
+		uni.authorize({
 			scope: type,
 			success() {
 				if (type === 'scope.userInfo') {

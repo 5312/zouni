@@ -12,8 +12,10 @@
   width: 560rpx;
   height: 550rpx;
   padding: 30px;
-  border-radius: 10rpx;
-  box-sizing: border-box;
+  -webkit-border-radius: 10rpx;
+          border-radius: 10rpx;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   position: relative;
   /* 全部显示优惠卷 */
 }
@@ -24,10 +26,12 @@
 }
 .my .mask .contnet .content .box.data-v-4dcceeb0 {
   margin: 10px 20px;
-  border-radius: 14rpx;
+  -webkit-border-radius: 14rpx;
+          border-radius: 14rpx;
   height: 100rpx;
   border: 1rpx solid #ddd;
-  box-shadow: 1rpx 5rpx 9rpx 4rpx #ddd;
+  -webkit-box-shadow: 1rpx 5rpx 9rpx 4rpx #ddd;
+          box-shadow: 1rpx 5rpx 9rpx 4rpx #ddd;
   background-color: #ffffff;
 }
 .my .mask .contnet .content .box .left.data-v-4dcceeb0 {
@@ -37,9 +41,12 @@
   height: 100%;
   padding: 0 30rpx;
   line-height: 100rpx;
-  border-radius: 14rpx;
-  border-top-right-radius: 0 ;
-  border-bottom-right-radius: 0;
+  -webkit-border-radius: 14rpx;
+          border-radius: 14rpx;
+  -webkit-border-top-right-radius: 0 ;
+          border-top-right-radius: 0 ;
+  -webkit-border-bottom-right-radius: 0;
+          border-bottom-right-radius: 0;
   text-align: center;
   background-color: #ffa537;
 }
@@ -65,8 +72,8 @@
   position: absolute;
   right: 24rpx;
   top: 24rpx;
-  width: 40rpx;
-  height: 40rpx;
+  width: 50rpx;
+  height: 50rpx;
   text-align: center;
   line-height: 40rpx;
 }
@@ -86,7 +93,8 @@
   line-height: 80rpx;
   font-size: 30rpx;
   background: #FF8D1A;
-  border-radius: 10rpx;
+  -webkit-border-radius: 10rpx;
+          border-radius: 10rpx;
 }
 .my .header-wrap.data-v-4dcceeb0 {
   height: 280rpx;
@@ -94,7 +102,8 @@
   background: #FF8D1A;
   background-size: 100% 100%;
   padding-top: 45rpx;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 .my .header-wrap .top.data-v-4dcceeb0 {
   width: 128rpx;
@@ -180,13 +189,16 @@
   right: 0;
   bottom: 0;
   height: 300rpx;
-  border-top-left-radius: 8rpx;
-  border-top-right-radius: 8rpx;
+  -webkit-border-top-left-radius: 8rpx;
+          border-top-left-radius: 8rpx;
+  -webkit-border-top-right-radius: 8rpx;
+          border-top-right-radius: 8rpx;
 }
 .my .contact-wrap .content .contact-line.data-v-4dcceeb0 {
   height: 100rpx;
   line-height: 100rpx;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 .my .contact-wrap .content .contact-line.data-v-4dcceeb0:nth-child(1) {
   border-bottom: 2rpx solid #272A2F;

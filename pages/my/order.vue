@@ -53,6 +53,11 @@
 				]
 			}
 		},
+		onShow(){
+			this.page=1
+			this.isPullDown=true
+			this.init()
+		},
 		onLoad(){
 			this.page=1
 			this.isPullDown=true
@@ -90,7 +95,8 @@
 				            		_this.$tool.uniShowToast({
 				            			title: "取消成功！",
 				            		})			
-									_this.getListInfo()
+									_this.getListInfo();
+									//_this.init()
 				            	}
 				            })
 				        } else if (res.cancel) {

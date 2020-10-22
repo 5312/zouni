@@ -23,7 +23,8 @@
     "pages/my/card-detail",
     "pages/my/my-info",
     "pages/base/edit-my-info",
-    "pages/circuit/circuit"
+    "pages/base/share",
+    "pages/scan/urgent/urgent"
   ],
   "subPackages": [],
   "window": {
@@ -37,6 +38,5 @@
       "desc": "你的位置信息将用于小程序位置接口的效果展示"
     }
   },
-  "usingComponents": {},
-  "sitemapLocation": "sitemap92.json"
+  "usingComponents": {}
 }

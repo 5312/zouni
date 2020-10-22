@@ -1,0 +1,1 @@
+<view class="no-data flex a-center flex-row j-center data-v-320ffc5e"><view class="left data-v-320ffc5e"></view><view class="mid data-v-320ffc5e">{{title}}</view><view class="right data-v-320ffc5e"></view></view>

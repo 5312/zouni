@@ -2,6 +2,7 @@
   position: fixed;
   z-index: 999;
   background-color: #E3E2E7;
+  -webkit-box-shadow: 0 0 30rpx rgba(0, 0, 0, 0.1);
   box-shadow: 0 0 30rpx rgba(0, 0, 0, 0.1);
   bottom: 0;
   width: 100%;
@@ -35,7 +36,8 @@
   height: 100rpx;
   line-height: 100rpx;
   background: #FFFFFF;
-  border-radius: 5px;
+  -webkit-border-radius: 5px;
+          border-radius: 5px;
   color: #4A4A4A;
 }
 .plate-popup .plate-popup-item-list.del.data-v-d6acdaea {

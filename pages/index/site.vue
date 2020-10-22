@@ -66,7 +66,15 @@
 					this.getNewListInfo(this.addressInfo.lat,this.addressInfo.lng)
 				}		
 			},
-			getNewListInfo(lat,lng) {
+			getNewListInfo(lat,lng) {//附近点
+				let site = this.$tool.uniGetStorage('site');
+				if(site){//附近站点已缓存
+					this.cardList = site && site.posiList ? site.posiList : []
+					this.total=this.cardList.length;
+					this.isPullDown=false
+					uni.stopPullDownRefresh()
+					return;
+				}
 				this.$tool.uniRequest({
 					url: `/api/index/page`,
 					params:{
@@ -84,7 +92,7 @@
 				})
 			},
 			getListInfo(category_id){
-				this.$tool.uniRequest({
+				this.$tool.uniRequest({//全部站点
 					url: `/api/goods/lists`,
 					params:{
 						page:this.page,
