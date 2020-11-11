@@ -6,8 +6,7 @@
   width: 500rpx;
   height: 600rpx;
   background: white;
-  -webkit-border-radius: 8rpx;
-          border-radius: 8rpx;
+  border-radius: 8rpx;
 }
 .auto-login .content .title.data-v-9c92b8d2 {
   font-size: 34rpx;
@@ -29,8 +28,7 @@
   width: 400rpx;
   text-align: center;
   background: #FF8D1A;
-  -webkit-border-radius: 8rpx;
-          border-radius: 8rpx;
+  border-radius: 8rpx;
   font-size: 26rpx;
   color: white;
 }

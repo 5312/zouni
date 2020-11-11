@@ -21,7 +21,7 @@
 				{{ tishi }}
 			</view>
 			<view class="kefu" v-if="type == 2">
-				<text>客服电话-</text><text class="kefu_b">{{ kefu }}</text>
+				<text>客服电话-</text><text class="kefu_b" @click.stop.prevent="call">{{ kefu }}</text>
 				<u-loading mode="flower" :show='show' size="36"></u-loading>
 			</view>
 			<view class="auto">
@@ -50,12 +50,13 @@
 				active:true,
 				customStyle: {
 					borderRadius: "50%",
-					width: '100px',
-					height: '100px',
+					width: '94px',
+					height: '94px',
 					textAlign: 'center',
 					fontSize: '20px',
-					boxShadow: '1px 4px 8px #FF8D1A',
+					boxShadow: '1px 4px 8px #ff9c38',
 					position:'absolute',
+					backgroundColor:'#f8a34fdb',
 					top:0,
 					bottom:0,
 					left:0,
@@ -63,8 +64,8 @@
 					margin:'auto',
 				},
 				disabled: false,
-				timestamp: 180,
-				seconds: 180,
+				timestamp: 300,
+				seconds: 300,
 				tel: null,
 			}
 		},
@@ -83,13 +84,13 @@
 				if (this.type == 2) {
 					return '请联系客服!'
 				}
-				if (this.seconds >= 120) {
+				if (this.seconds >= 200) {
 					return '高效清洁泡沫车身喷洒，高效去污！'
 				}
-				if (this.seconds >= 60) {
+				if (this.seconds >= 120) {
 					return '无孔纤维棉刷，感应车型外观刷洗！'
 				}
-				if (this.seconds < 60 && this.seconds != 0) {
+				if (this.seconds < 120 && this.seconds != 0) {
 					return '强力风机，无触仿形风干！'
 				}
 				return '洗车完成，欢迎下次光临！'
@@ -119,13 +120,17 @@
 					this.$tool.uniShowToast({
 						title: "洗车完成！"
 					})
-					return //-----------------------------------------
 					setTimeout(() => {
 						this.$tool.uniReLaunch({
 							url: '/pages/index/index'
 						})
 					}, 1000)
 				}
+			},
+			call() {
+				uni.makePhoneCall({
+					phoneNumber: this.tel
+				});
 			},
 			stop() {
 				let uThis = this;
@@ -199,7 +204,7 @@
 					width: 100%;
 					height: 40rpx;
 					bottom: 400rpx;
-
+					font-size:32rpx;
 				}
 
 				.kefu_b {
@@ -212,6 +217,7 @@
 					width: 100%;
 					height: 40rpx;
 					bottom: 500rpx;
+					font-size:32rpx;
 				}
 
 				.text {
@@ -234,12 +240,12 @@
 					margin: auto;
 					.circle {
 						position: absolute;
-						width: 600%;
-						height: 600%;
-						top: -250%;
-						bottom: -250%;
-						left:-250%;
-						right:-250%;
+						width: 300%;
+						height: 300%;
+						top: -100%;
+						bottom: -100%;
+						left:-100%;
+						right:-100%;
 						
 					}
 				}
@@ -247,32 +253,32 @@
 		}
 	}
 	.c1{
-		animation:myRotate 10s linear infinite;
+		animation:myRotate 10s -2s infinite linear;
 	}
 	.c2{
-		animation:myRotate 9s linear infinite;
+		transform-origin: center
+		// animation:myRotate 9s linear infinite;
 	}
 	.c3{
-		animation:myRotate 8s linear infinite;
+		animation:myRotate 16s 1s infinite linear;
 	}
 	.c4{
-		animation:myRotate 2s linear infinite;
+		animation:myRotate 6s 1s  infinite linear reverse;
 	}
 	.c5{
-		animation:myRotate 4s linear infinite;
+		animation:myRotate 4s 1s  infinite linear;
 	}
 	.c6{
-		animation:myRotate 6s linear infinite;
+		animation:myRotate 8s 1s infinite linear alternate;
 	}
 	.c7{
-		animation:myRotate 3s linear infinite;
+		animation:myRotate 4s 1s infinite linear reverse;
 	}
 	.c8{
-		animation:myRotate 1s linear infinite;
+		transform-origin: center;
 	}
 	@keyframes myRotate{
 	    0%{ transform: rotate(0deg);}
-	    50%{ transform: rotate(180deg);}
 	    100%{ transform: rotate(360deg);}
 	}
 </style>

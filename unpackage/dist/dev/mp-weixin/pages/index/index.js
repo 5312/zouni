@@ -315,8 +315,9 @@ var _index = _interopRequireDefault(__webpack_require__(/*! @/common/api/index.j
       this.init();
     },
     addressHandle: function addressHandle() {
-
       this.init(true);
+      //点击定位后，附近站点应重新加载
+      this.$tool.uniRemoveStorage('site');
     },
     getPthone: function getPthone() {var _this3 = this;
       this.$tool.uniRequest({

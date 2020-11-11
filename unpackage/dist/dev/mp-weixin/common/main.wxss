@@ -121,8 +121,7 @@ page{
 	left: 0;
 }
 .radius{
-	-webkit-border-radius: 50%;
-	        border-radius: 50%;
+	border-radius: 50%;
 }
 .text-center{
 	text-align: center;
@@ -157,6 +156,9 @@ page{
 .text-grey {
 	color: #9C9FA6;
 }
+.active {
+	opacity: 0.6;
+}
 /* 注意要写在第一行，同时给style标签加入lang="scss"属性 */
 .u-relative,
 .u-rela {
@@ -171,8 +173,7 @@ image {
 }
 view,
 text {
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
 }
 .u-font-xs {
   font-size: 22rpx;
@@ -3276,8 +3277,7 @@ page {
   left: 0;
   top: 0;
   pointer-events: none;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
   -webkit-transform-origin: 0 0;
   transform-origin: 0 0;
   width: 199.8%;

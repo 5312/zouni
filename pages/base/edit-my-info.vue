@@ -53,9 +53,9 @@
 						})
 						_this.$tool.uniSetStorage('isEditUserInfo',true)
 						setTimeout(()=>{
-							uni.redirectTo({
-							    url: `/pages/my/my-info`
-							});
+							uni.navigateBack({
+								delta: 1
+							})
 						},1000)
 					}
 				})

@@ -108,3 +108,6 @@ page{
 .text-grey {
 	color: #9C9FA6;
 }
+.active {
+	opacity: 0.6;
+}

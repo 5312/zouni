@@ -19,8 +19,7 @@
 }
 .order .list-wrap .box.data-v-1c376db8 {
   background: #FF8D1A;
-  -webkit-border-radius: 10rpx;
-          border-radius: 10rpx;
+  border-radius: 10rpx;
   height: 200rpx;
   margin-top: 20rpx;
   padding: 40rpx;

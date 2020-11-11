@@ -22,7 +22,7 @@
 			
 			<view class="info-wrap phone-wrap">联系电话：<text  @click="call(detail.goods_tel)">{{detail.goods_tel}}</text></view>
 			<view class="btn-wrap flex a-center flex-row j-between">
-				<view :class="['btn',btnIndex===index?'btn-active':'']" v-for="(item,index) in btnList" :key='index' @click="openXm(item)">
+				<view :class="['btn',btnIndex===index?'btn-active':'']" hover-class="active" v-for="(item,index) in btnList" :key='index' @click="openXm(item)">
 					{{item.name}}
 				</view>			
 			</view>
@@ -88,6 +88,16 @@
 						lng:addressInfo.lng
 					},
 					success: (res) => {
+						if(res.code == 0){
+							uni.navigateBack({
+								delta:1
+							})
+							this.$tool.uniShowToast({
+								title:'敬请期待！',
+								icon:'none'
+							})
+							return
+						}
 						this.detail = res && res.detail ? res.detail : null	
 						this.distance = this.detail.goods_distance? this.$tool.distanceHanlde(this.detail.goods_distance) :0					
 						if(this.detail && this.detail.content){

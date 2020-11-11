@@ -22,8 +22,7 @@
   text-align: center;
   height: 92rpx;
   line-height: 92rpx;
-  -webkit-border-radius: 10rpx;
-          border-radius: 10rpx;
+  border-radius: 10rpx;
   font-size: 36rpx;
 }
 

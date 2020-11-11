@@ -26,10 +26,9 @@
 			let _this = this;
 			uni.getSystemInfo({
 				success(res) {
-					//console.log(res);
 					_this.width = res.screenWidth;
 					_this.height = res.windowHeight;
-					_this.num = res.pixelRatio
+					_this.num = res.pixelRatio ;
 				}
 			});
 			this.init().catch(err => {

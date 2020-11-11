@@ -2,7 +2,7 @@
 	<view :class="['index fixed p-tblr',!isAuthAddress && isShowAuthLogin?'bg-page':'']">
 		<template v-if="isAuthAddress">
 			<view class="header absolute flex j-between a-center flex-row bg-white">
-				<view class="left" @click="toPage('address')">
+				<view class="left" hover-class="active" @click="toPage('address')">
 					<template v-if="addressInfo">
 						<text class="address">{{addressInfo.name?addressInfo.name:''}}</text>
 						<image src="../../static/image/more1.png" mode="" class="more_icon"></image>
@@ -43,34 +43,34 @@
 				</view>
 			</view>
 			<view class="footer absolute flex j-between a-center flex-row bg-white">
-				<view class="left  flex a-center j-center flex-column" @click="toPage('vip')">
+				<view class="left  flex a-center j-center flex-column" hover-class="active" @click="toPage('vip')">
 					<image src="../../static/image/03.png" mode="" class="img"></image>
 					<text>卡包</text>
 				</view>
-				<view class="mid flex j-center a-center flex-row" @click="scanCode">
+				<view class="mid flex j-center a-center flex-row" hover-class="active" @click="scanCode">
 					<image src="../../static/image/sao.png" class="img"></image>
 					<text class="text bold">扫码洗车</text>
 				</view>
-				<view class="right  flex a-center j-center flex-column" @click="toPage('my')">
+				<view class="right  flex a-center j-center flex-column" hover-class="active"  @click="toPage('my')">
 					<image src="../../static/image/02.png" mode="" class="img"></image>
 					<text>我的</text>
 				</view>
 			</view>
 			<view class="list-wrap fixed bg-white">
-				<view class="box flex a-center j-center flex-column" @click="toPage('site')">
+				<view class="box flex a-center j-center flex-column" hover-class="active" @click="toPage('site')">
 					<image src="../../static/image/06.png" class="img" mode="heightFix"></image>
 					<text>站点列表</text>
 				</view>
-				<view class="box flex a-center j-center flex-column" @click="addressHandle">
+				<view class="box flex a-center j-center flex-column" hover-class="active" @click="addressHandle">
 					<image src="../../static/image/05.png" class="img img2" mode="heightFix"></image>
 					<text>定位</text>
 				</view>
-				<view class="box flex a-center j-center flex-column" @click="isContact=true">
+				<view class="box flex a-center j-center flex-column" hover-class="active" @click="isContact=true">
 					<image src="../../static/image/04.png" class="img" mode="heightFix"></image>
 					<text>客服</text>
 				</view>
 			</view>
-			<view class="activity-wrap fixed" v-if="adImg" @click="toAdPage">
+			<view class="activity-wrap fixed" hover-class="active" v-if="adImg" @click="toAdPage">
 				<image :src="adImg" mode="" class="w100" mode="widthFix"></image>
 			</view>
 			<view class="contact-wrap fixed p-tblr" v-if="isContact" @click.stop.prevent="close">
@@ -178,8 +178,9 @@
 				this.init()
 			},
 			addressHandle() {
-
-				this.init(true)
+				this.init(true);
+				//点击定位后，附近站点应重新加载
+				this.$tool.uniRemoveStorage('site');
 			},
 			getPthone() {
 				this.$tool.uniRequest({
@@ -217,7 +218,7 @@
 				this.covers.forEach((item, index) => {
 					item.iconPath = "../../static/image/maplocation.png"; //重置其他图标
 					if (item.id == markerId) {
-						result = item;//
+						result = item; //
 						this.markColor(item, index) //改变点击颜色
 					}
 				})
@@ -242,22 +243,22 @@
 						lat: addressInfo.lat,
 						lng: addressInfo.lng
 					},
-					isNoCode:true,
+					isNoCode: true,
 					success: (res) => {
 						console.log(res)
-						if(res.msg == 'Undefined index: result'){
+						if (res.msg == 'Undefined index: result') {
 							that.markDetail = null;
-							setTimeout( () => {
+							setTimeout(() => {
 								that.$tool.uniShowToast({
 									title: "即将开业！",
 									icon: "none"
 								})
-							},400)
-						}else{
+							}, 400)
+						} else {
 							that.markDetail = res.data.detail;
-							that.distance = res.data.detail.goods_distance ? that.$tool.distanceHanlde(res.data.detail.goods_distance) : 0
+							that.distance = res.data.detail.goods_distance ? that.$tool.distanceHanlde(res.data.detail.goods_distance) :0
 						}
-						
+
 					}
 				})
 			},
@@ -393,7 +394,7 @@
 					this.covers = cover;
 					return
 				}
-				api.mapGetCorver().then( res => {
+				api.mapGetCorver().then(res => {
 					let temObj = res && res.posiList && res.posiList.data ? res.posiList.data : []
 					wThis.covers = []
 					for (let i in temObj) {
@@ -423,10 +424,10 @@
 					//已优化
 					let result = res.result;
 					let params = this.$tool.getUrlParams(result)
-					let type = params.siteId? 'site':'userSharing';
-					const PATH  = {
-						'site':`/pages/scan/index?siteId=${params.siteId}&fromPage=home`,//站点扫码
-						'userSharing':`/pages/my/card-detail?uid=${params.uid}&id=${params.tid}`//用户分享二维码
+					let type = params.siteId ? 'site' : 'userSharing';
+					const PATH = {
+						'site': `/pages/scan/index?siteId=${params.siteId}&fromPage=home`, //站点扫码
+						'userSharing': `/pages/my/card-detail?uid=${params.uid}&id=${params.tid}` //用户分享二维码
 					}
 					this.$tool.uniRedirectTo({
 						url: PATH[type]
@@ -562,14 +563,16 @@
 			.left {
 				text-align: left;
 				white-space: nowrap;
-				.titles{
-					width:313rpx;
+
+				.titles {
+					width: 313rpx;
 					overflow: hidden;
-					display:inline-block;
+					display: inline-block;
 					white-space: nowrap;
 					text-overflow: ellipsis;
 					vertical-align: middle;
 				}
+
 				text {
 					margin: 10rpx 0;
 				}
@@ -668,9 +671,6 @@
 					margin-bottom: 10rpx;
 				}
 
-				&:active {
-					opacity: 0.6;
-				}
 			}
 		}
 

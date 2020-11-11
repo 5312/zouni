@@ -79,7 +79,7 @@ export default {
 			},
 			header: headers,
 			success: (res) => {
-				//console.log("res请求结果", res)
+				console.log(url+"请求结果", res)
 				if (res.statusCode === 200) {
 					if (isNoCode) {
 						success ? success(res.data) : false
@@ -94,6 +94,8 @@ export default {
 						this.uniRemoveStorage("userInfo")
 						this.uniRemoveStorage("userId")
 						this.getTokenValue()
+					}else if(res.data.code == 0){
+						success(res.data)
 					}
 				} else {
 					this.uniShowToast({

@@ -24,8 +24,7 @@
   line-height: 80rpx;
   border: 1rpx solid #FF8D1A;
   padding-left: 20rpx;
-  -webkit-border-radius: 10rpx;
-          border-radius: 10rpx;
+  border-radius: 10rpx;
 }
 .add-car .btn-wrap .btn.data-v-a3ed313a {
   background: #FF8D1A;
@@ -34,7 +33,6 @@
   height: 80rpx;
   line-height: 80rpx;
   font-size: 32rpx;
-  -webkit-border-radius: 8rpx;
-          border-radius: 8rpx;
+  border-radius: 8rpx;
 }
 

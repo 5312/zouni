@@ -43,8 +43,7 @@ page .wrap .body .showStatus.data-v-6b621914 {
   font-size: 30rpx;
   margin: auto;
   text-align: center;
-  -webkit-border-radius: 50%;
-          border-radius: 50%;
+  border-radius: 50%;
 }
 page .wrap .body .auto.data-v-6b621914 {
   margin: 30rpx auto;
@@ -60,6 +59,7 @@ page .wrap .body .kefu.data-v-6b621914 {
   width: 100%;
   height: 40rpx;
   bottom: 400rpx;
+  font-size: 32rpx;
 }
 page .wrap .body .kefu_b.data-v-6b621914 {
   color: #1b4994;
@@ -70,6 +70,7 @@ page .wrap .body .tishi.data-v-6b621914 {
   width: 100%;
   height: 40rpx;
   bottom: 500rpx;
+  font-size: 32rpx;
 }
 page .wrap .body .text.data-v-6b621914 {
   margin: auto;
@@ -91,53 +92,47 @@ page .wrap .body .image.data-v-6b621914 {
 }
 page .wrap .body .image .circle.data-v-6b621914 {
   position: absolute;
-  width: 600%;
-  height: 600%;
-  top: -250%;
-  bottom: -250%;
-  left: -250%;
-  right: -250%;
+  width: 300%;
+  height: 300%;
+  top: -100%;
+  bottom: -100%;
+  left: -100%;
+  right: -100%;
 }
 .c1.data-v-6b621914 {
-  -webkit-animation: myRotate-data-v-6b621914 10s linear infinite;
-          animation: myRotate-data-v-6b621914 10s linear infinite;
+  -webkit-animation: myRotate-data-v-6b621914 10s -2s infinite linear;
+          animation: myRotate-data-v-6b621914 10s -2s infinite linear;
 }
 .c2.data-v-6b621914 {
-  -webkit-animation: myRotate-data-v-6b621914 9s linear infinite;
-          animation: myRotate-data-v-6b621914 9s linear infinite;
+  -webkit-transform-origin: center;
+          transform-origin: center;
 }
 .c3.data-v-6b621914 {
-  -webkit-animation: myRotate-data-v-6b621914 8s linear infinite;
-          animation: myRotate-data-v-6b621914 8s linear infinite;
+  -webkit-animation: myRotate-data-v-6b621914 16s 1s infinite linear;
+          animation: myRotate-data-v-6b621914 16s 1s infinite linear;
 }
 .c4.data-v-6b621914 {
-  -webkit-animation: myRotate-data-v-6b621914 2s linear infinite;
-          animation: myRotate-data-v-6b621914 2s linear infinite;
+  animation: myRotate-data-v-6b621914 6s 1s infinite linear reverse;
 }
 .c5.data-v-6b621914 {
-  -webkit-animation: myRotate-data-v-6b621914 4s linear infinite;
-          animation: myRotate-data-v-6b621914 4s linear infinite;
+  -webkit-animation: myRotate-data-v-6b621914 4s 1s infinite linear;
+          animation: myRotate-data-v-6b621914 4s 1s infinite linear;
 }
 .c6.data-v-6b621914 {
-  -webkit-animation: myRotate-data-v-6b621914 6s linear infinite;
-          animation: myRotate-data-v-6b621914 6s linear infinite;
+  -webkit-animation: myRotate-data-v-6b621914 8s 1s infinite linear alternate;
+          animation: myRotate-data-v-6b621914 8s 1s infinite linear alternate;
 }
 .c7.data-v-6b621914 {
-  -webkit-animation: myRotate-data-v-6b621914 3s linear infinite;
-          animation: myRotate-data-v-6b621914 3s linear infinite;
+  animation: myRotate-data-v-6b621914 4s 1s infinite linear reverse;
 }
 .c8.data-v-6b621914 {
-  -webkit-animation: myRotate-data-v-6b621914 1s linear infinite;
-          animation: myRotate-data-v-6b621914 1s linear infinite;
+  -webkit-transform-origin: center;
+          transform-origin: center;
 }
 @-webkit-keyframes myRotate-data-v-6b621914 {
 0% {
     -webkit-transform: rotate(0deg);
             transform: rotate(0deg);
-}
-50% {
-    -webkit-transform: rotate(180deg);
-            transform: rotate(180deg);
 }
 100% {
     -webkit-transform: rotate(360deg);
@@ -148,10 +143,6 @@ page .wrap .body .image .circle.data-v-6b621914 {
 0% {
     -webkit-transform: rotate(0deg);
             transform: rotate(0deg);
-}
-50% {
-    -webkit-transform: rotate(180deg);
-            transform: rotate(180deg);
 }
 100% {
     -webkit-transform: rotate(360deg);

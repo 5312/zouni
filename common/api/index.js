@@ -1,6 +1,24 @@
 import tool from '../js/tool';
 const request = tool.uniRequest.bind(tool);
 export default {
+	//洗车机状态查询
+	chaPost(params){
+		return new Promise(function(resolve,reject){
+			request({
+				url:'/api/Zhan/cha_post',
+				method:'GET',
+				params,
+				isNoCode:true,
+				success:function(result){
+					if(result.code!=0){
+						resolve(result);
+					}else{
+						reject(result);
+					}
+				},
+			})
+		})
+	},
 	//洗车机控制
 	zhan(params){
 		return new Promise(function(resolve,reject){
@@ -10,9 +28,17 @@ export default {
 				params,
 				success:function(res){//故障拦截
 					if(res.code == 0){
-						_this.$tool.uniShowToast({
-							title: "机器故障，请联系客服！"
-						})
+						uni.showModal({
+						    title: '提示',
+						    content: res.msg,
+						    success: function (res) {
+						        if (res.confirm) {
+									reject(res);
+						        } else if (res.cancel) {
+									reject(res);
+						        }
+						    }
+						});
 						return
 					}
 					resolve(res);
@@ -83,10 +109,9 @@ export default {
 					'Content-Type': 'application/x-www-form-urlencoded'
 				},
 				params: params,
-				success:function(res,msg){
-					resolve([res,msg]);//promise无法传递两个参数，所以用数组
-				},
+				isNoCode:true,
+				success:resolve,
 			})
 		})
-	}
+	},
 }

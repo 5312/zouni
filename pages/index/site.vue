@@ -1,8 +1,10 @@
 <template>
 	<view class="site bg-page h100">
 		<view class="content">
-			<view class="card flex a-center j-between flex-row" v-for="(item,index) in cardList" :key='index' @click="toPage(item)">
-				<image :src="item.goods_image"  class="left"></image>
+			<u-empty text="正在加载..." mode="list" v-show="!cardList"></u-empty>
+			<view v-show="cardList" class="card flex a-center j-between flex-row" v-for="(item,index) in cardList" :key='index' @click="toPage(item)" hover-class="active">
+				<!-- <u-lazy-load :image="item.goods_image" img-mode='widthFix' height='100%' class="left"></u-lazy-load> -->
+				<image :src="item.goods_image" class="left"></image>
 				<view class="mid">
 					<view class="title nowrap">{{item.goods_name}}</view>
 					<view class="address">{{item.goods_df}}</view>
@@ -32,7 +34,7 @@
 				page:1,
 				total:0,
 				category_id:1,
-				cardList:[],
+				cardList:null,
 				isPullDown:false,
 				addressInfo:null,
 				coupon_id:null
@@ -68,6 +70,7 @@
 			},
 			getNewListInfo(lat,lng) {//附近点
 				let site = this.$tool.uniGetStorage('site');
+				let _this =  this;
 				if(site){//附近站点已缓存
 					this.cardList = site && site.posiList ? site.posiList : []
 					this.total=this.cardList.length;
@@ -84,6 +87,7 @@
 					success: (res) => {			
 						this.cardList = res && res.posiList ? res.posiList : []
 						this.total=this.cardList.length
+						_this.$tool.uniSetStorage('site', res); //缓存
 					},					
 					complete:()=>{
 						this.isPullDown=false

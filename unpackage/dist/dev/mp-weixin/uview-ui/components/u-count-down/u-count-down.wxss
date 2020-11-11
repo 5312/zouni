@@ -44,8 +44,7 @@
   -webkit-justify-content: center;
           justify-content: center;
   padding: 2rpx;
-  -webkit-border-radius: 6rpx;
-          border-radius: 6rpx;
+  border-radius: 6rpx;
   white-space: nowrap;
   -webkit-transform: translateZ(0);
           transform: translateZ(0);

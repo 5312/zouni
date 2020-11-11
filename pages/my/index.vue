@@ -10,15 +10,15 @@
 				</view>
 			</view>
 			<view class="nav-wrap flex a-center flex-row j-start absolute">
-				<view class="nav flex a-center flex-column j-center" @click="toPage('order')">
+				<view class="nav flex a-center flex-column j-center" hover-class="active" @click="toPage('order')">
 					<image src="../../static/image/my-order.png" class="icon"></image>
 					<text class="nav-text">我的订单</text>
 				</view>
-				<view class="nav flex a-center flex-column j-center" @click="toPage('vip')">
+				<view class="nav flex a-center flex-column j-center" hover-class="active" @click="toPage('vip')">
 					<image src="../../static/image/my-money.png" class="icon"></image>
 					<text class="nav-text">钱包</text>
 				</view>
-				<view class="nav flex a-center flex-column j-center" @click="toPage('volume')">
+				<view class="nav flex a-center flex-column j-center" hover-class="active" @click="toPage('volume')">
 					<image src="../../static/image/my-juan.png" class="icon"></image>
 					<text class="nav-text">优惠券</text>
 				</view>
@@ -479,7 +479,7 @@
 				height: 300rpx;
 				border-top-left-radius: 8rpx;
 				border-top-right-radius: 8rpx;
-
+				-webkit-overflow-scrolling: touch;
 				.contact-line {
 					height: 100rpx;
 					line-height: 100rpx;

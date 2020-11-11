@@ -2,8 +2,7 @@
   height: 176rpx;
 }
 .site .ad-wrap .img.data-v-59e0219d {
-  -webkit-border-radius: 4rpx;
-          border-radius: 4rpx;
+  border-radius: 4rpx;
 }
 .site .content.data-v-59e0219d {
   padding: 0 20rpx;

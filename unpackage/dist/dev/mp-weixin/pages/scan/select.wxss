@@ -1,8 +1,7 @@
 .select-wrap .list-wrap .box.data-v-ca313c36 {
   margin: 30px 20px;
   padding: 0 30rpx;
-  -webkit-border-radius: 10rpx;
-          border-radius: 10rpx;
+  border-radius: 10rpx;
   height: 200rpx;
 }
 .select-wrap .list-wrap .box .left.data-v-ca313c36 {
@@ -36,8 +35,7 @@
   display: inline-block;
   width: 50rpx;
   height: 50rpx;
-  -webkit-border-radius: 50%;
-          border-radius: 50%;
+  border-radius: 50%;
   background: white;
   left: 0;
   position: absolute;

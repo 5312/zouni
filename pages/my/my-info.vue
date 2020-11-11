@@ -176,7 +176,7 @@
 				return `${year}-${month}-${day}`;
 			},
 			editPage(value, type) {
-				this.$tool.uniRedirectTo({
+				this.$tool.uniNavigateTo({
 					url: `/pages/base/edit-my-info?value=${value}&type=${type}&userInfo=${JSON.stringify(this.userInfo)}`
 				})
 			},

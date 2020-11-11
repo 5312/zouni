@@ -10,8 +10,7 @@ page .card-detail.data-v-32ae3df8 {
 .card-detail .content .header .img.data-v-32ae3df8 {
   width: 600rpx;
   height: 360rpx;
-  -webkit-border-radius: 10rpx;
-          border-radius: 10rpx;
+  border-radius: 10rpx;
 }
 .card-detail .content .info-wrap.data-v-32ae3df8 {
   padding: 20rpx 40rpx;
@@ -44,8 +43,7 @@ page .card-detail.data-v-32ae3df8 {
   display: inline-block;
   width: 32rpx;
   height: 32rpx;
-  -webkit-border-radius: 50%;
-          border-radius: 50%;
+  border-radius: 50%;
   border: 2rpx solid #FF8F1E;
   margin-right: 10rpx;
   position: relative;
@@ -54,8 +52,7 @@ page .card-detail.data-v-32ae3df8 {
   content: '';
   width: 20rpx;
   height: 20rpx;
-  -webkit-border-radius: 50%;
-          border-radius: 50%;
+  border-radius: 50%;
   background: #FF8F1E;
   position: absolute;
   top: 7rpx;
@@ -86,8 +83,7 @@ page .card-detail.data-v-32ae3df8 {
   padding: 20rpx 40rpx;
   color: white;
   background: #FF8D1A;
-  -webkit-border-radius: 50000rpx;
-          border-radius: 50000rpx;
+  border-radius: 50000rpx;
   font-size: 28rpx;
 }
 
