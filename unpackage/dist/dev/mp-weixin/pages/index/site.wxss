@@ -1,21 +1,56 @@
+@charset "UTF-8";
+/**
+ * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能
+ *
+ * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件
+ */
+/* 颜色变量 */
+/* uni.scss */
+/* 行为相关颜色 */
+/* 文字基本颜色 */
+/* 背景颜色 */
+/* 边框颜色 */
+/* 尺寸变量 */
+/* 文字尺寸 */
+/* 图片尺寸 */
+/* Border Radius */
+/* 水平间距 */
+/* 垂直间距 */
+/* 透明度 */
+/* 文章场景相关 */
 .site .ad-wrap.data-v-59e0219d {
   height: 176rpx;
 }
 .site .ad-wrap .img.data-v-59e0219d {
   border-radius: 4rpx;
 }
-.site .content.data-v-59e0219d {
-  padding: 0 20rpx;
-}
 .site .content .card.data-v-59e0219d {
-  border-bottom: 2rpx solid #d7dae2;
   height: 204rpx;
+  padding: 0 20rpx;
+  position: relative;
+}
+.site .content .card.data-v-59e0219d::after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+  width: 200%;
+  height: 200%;
+  border-bottom: 1rpx solid #ddd;
+  border-radius: inherit;
+  content: ' ';
+  -webkit-transform: scale(0.5);
+          transform: scale(0.5);
+  -webkit-transform-origin: 0 0;
+          transform-origin: 0 0;
+  pointer-events: none;
 }
 .site .content .card .left.data-v-59e0219d {
   width: 130rpx;
   height: 130rpx;
   -webkit-flex-shrink: 0;
           flex-shrink: 0;
+  border-radius: 6rpx;
 }
 .site .content .card .mid.data-v-59e0219d {
   width: 55%;
@@ -35,7 +70,7 @@
   margin: 10rpx 0;
 }
 .site .content .card .mid .other.data-v-59e0219d {
-  color: #5F6366;
+  color: #5f6366;
   font-size: 23rpx;
 }
 .site .content .card .mid .other .img.data-v-59e0219d {

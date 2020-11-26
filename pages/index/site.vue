@@ -1,187 +1,190 @@
 <template>
 	<view class="site bg-page h100">
 		<view class="content">
-			<u-empty text="正在加载..." mode="list" v-show="!cardList"></u-empty>
-			<view v-show="cardList" class="card flex a-center j-between flex-row" v-for="(item,index) in cardList" :key='index' @click="toPage(item)" hover-class="active">
-				<!-- <u-lazy-load :image="item.goods_image" img-mode='widthFix' height='100%' class="left"></u-lazy-load> -->
+			<u-empty text="正在加载..." mode="list" v-show="!empty"></u-empty>
+			<view v-show="empty" v-for="(item, index) in cardList" :key="index" class="card flex shadow a-center j-between flex-row" @click="toPage(item)" hover-class="active">
 				<image :src="item.goods_image" class="left"></image>
 				<view class="mid">
-					<view class="title nowrap">{{item.goods_name}}</view>
-					<view class="address">{{item.goods_df}}</view>
+					<view class="title nowrap">{{ item.goods_name }}</view>
+					<view class="address">{{ item.goods_df }}</view>
 					<view class="other flex flex-row a-center j-start">
 						<view class="distance flex flex-row a-center j-start">
 							<image src="../../static/image/l-c1.png" class="img"></image>
-							<text>{{$tool.distanceHanlde(item.goods_distance)}}</text>
+							<text>{{ $tool.distanceHanlde(item.goods_distance) }}</text>
 						</view>
 						<view class="flex flex-row a-center j-start">
 							<image src="../../static/image/l-c2.png" class="img"></image>
-							<text>{{item.goods_time}}</text>			
+							<text>{{ item.goods_time }}</text>
 						</view>
 					</view>
 				</view>
-				<view class="right" :class="[item.goods_status.text==='正常营业'?'text-yellow':'text-black']">
-					{{item.goods_status.text}}
-				</view>
+				<view class="right" :class="[item.goods_status.text === '正常营业' ? 'text-yellow' : 'text-black']">{{ item.goods_status.text }}</view>
 			</view>
 		</view>
 	</view>
 </template>
 
 <script>
-	export default{
-		data(){
-			return{
-				page:1,
-				total:0,
-				category_id:1,
-				cardList:null,
-				isPullDown:false,
-				addressInfo:null,
-				coupon_id:null
-			}
-		},
-		onLoad(options){
-			this.coupon_id=options.coupon_id || null
-			this.page=1
-			this.isPullDown=true
-			this.init()
-		},
-		onPullDownRefresh(){
-			this.page=1		
-			this.isPullDown=true
-			this.init()
-		},
-		onReachBottom(){
-			console.log("触底了")
-			this.isPullDown=false		
-			if(this.total>this.cardList.length){
-				this.page+=1
-				this.init()
-			}
-		},
-		methods:{			
-			init(){			
-				this.addressInfo=this.$tool.uniGetStorage("addressInfo")			
-				if(this.addressInfo.category_id || this.coupon_id){
-					this.getListInfo(this.addressInfo.category_id)
-				}else{
-					this.getNewListInfo(this.addressInfo.lat,this.addressInfo.lng)
-				}		
-			},
-			getNewListInfo(lat,lng) {//附近点
-				let site = this.$tool.uniGetStorage('site');
-				let _this =  this;
-				if(site){//附近站点已缓存
-					this.cardList = site && site.posiList ? site.posiList : []
-					this.total=this.cardList.length;
-					this.isPullDown=false
-					uni.stopPullDownRefresh()
-					return;
+export default {
+	data() {
+		return {
+			page:1,
+			total: 0,
+			category_id: 1,
+			empty: false,
+			addressInfo: null,
+			coupon_id: null,
+			isReachStar: 0,//数组截取star位置
+			isReachEnd: 10,//数组截取结束位置
+			arr: [],
+			goodslist:true,
+		};
+	},
+	onLoad(options) {
+		this.coupon_id = options.coupon_id || null;
+	},
+	onPullDownRefresh() {
+		//下拉刷新
+	},
+	onReachBottom() {
+		this.addressInfo = this.$cache.get('_addressInfo');
+		if (this.addressInfo.category_id || this.coupon_id) return;	//*不触发触底加载*//
+		//触底加载
+		if (this.isReachEnd > this.total) {
+			return false;
+		} else {
+			this.isReachStar += 10;
+			this.isReachEnd += 10;
+		}
+	},
+	computed: {
+		cardList() {
+			this.addressInfo = this.$cache.get('_addressInfo');
+			if (this.addressInfo.category_id || this.coupon_id ) {
+				//**全站点**//
+				if(!this.goodslist) return this.arr
+				this.goodsList();
+				this.goodslist = false
+				return this.arr;
+			} else {
+				/*次卡页面*/
+				if (this.$store.state.site != null) {
+					let list = this.$store.state.site; //从vuex stroe中取值
+					this.total = list.length; //分页判断
+					this.isPullDown = false;
+					uni.stopPullDownRefresh(); //停止页面下拉刷新
+					//10个为一组
+					let child = list.slice(this.isReachStar, this.isReachEnd);
+					this.arr.push(...child);
+					//当数据出现时；
+					this.empty = true; //数据为空的提示
+					return this.arr;
 				}
-				this.$tool.uniRequest({
-					url: `/api/index/page`,
-					params:{
-						lat:String(lat),
-						lng:String(lng)
-					},
-					success: (res) => {			
-						this.cardList = res && res.posiList ? res.posiList : []
-						this.total=this.cardList.length
-						_this.$tool.uniSetStorage('site', res); //缓存
-					},					
-					complete:()=>{
-						this.isPullDown=false
-						uni.stopPullDownRefresh()
-					}
-				})
-			},
-			getListInfo(category_id){
-				this.$tool.uniRequest({//全部站点
-					url: `/api/goods/lists`,
-					params:{
-						page:this.page,
-						search:'',
-						coupon_id:this.coupon_id || '',
-						category_id:this.coupon_id?'': category_id,
-						lat:String(this.addressInfo.lat),
-						lng:String(this.addressInfo.lng)
-					},
-					success: (res) => {									
-						if(this.isPullDown){
-							this.cardList=[]
-						}
-						this.cardList=this.cardList.concat(res.posiList)
-						this.total=res.pages.total 					
-					},
-					complete:()=>{
-						this.isPullDown=false
-						uni.stopPullDownRefresh()
-					}
-				})
-			},
-			toPage(item){
-				this.$tool.uniNavigateTo({
-					url:`/pages/index/site-detail?id=${item.goods_id}`
-				})
+				
 			}
 		}
+	},
+	methods: {
+		init() {
+			 
+		},
+		async goodsList(){
+			this.arr = [];//切换到次卡页面时
+			this.empty = false;///
+			const result = await this.$api.index_siteGoodsList({
+				page: this.page,
+				search: '',
+				coupon_id: this.coupon_id || '',
+				category_id: this.coupon_id ? '' : category_id,
+				lat: String(this.addressInfo.lat),
+				lng: String(this.addressInfo.lng)
+			});
+			let res = result.data;
+			this.total = res.pages.total;
+			this.isPullDown = false;
+			this.empty = true; //数据为空的提示
+			this.arr =  res.posiList;
+		},
+		toPage(item) {
+			this.$tool.uniNavigateTo({
+				url: `/pages/index/site-detail?id=${item.goods_id}`
+			});
+		}
 	}
+};
 </script>
 
-<style scoped lang="less">
-	.site{
-		.ad-wrap{
-			height: 176rpx;
-			.img{
-				border-radius: 4rpx;
-			}
+<style scoped lang="scss">
+.site {
+	.ad-wrap {
+		height: 176rpx;
+		.img {
+			border-radius: 4rpx;
 		}
-		.content{
-			padding:0 20rpx;
-			.card{
-				border-bottom: 2rpx solid #d7dae2;
-				height: 204rpx;
-				.left{
-					width: 130rpx;
-					height: 130rpx;
-					flex-shrink: 0;
+	}
+	.content {
+		// padding:0 20rpx;
+		.card {
+			height: 204rpx;
+			padding: 0 20rpx;
+			position: relative;
+			&::after {
+				position: absolute;
+				top: 0;
+				left: 0;
+				box-sizing: border-box;
+				width: 200%;
+				height: 200%;
+				border-bottom: 1rpx solid #ddd;
+				border-radius: inherit;
+				content: ' ';
+				transform: scale(0.5);
+				transform-origin: 0 0;
+				pointer-events: none;
+			}
+
+			.left {
+				width: 130rpx;
+				height: 130rpx;
+				flex-shrink: 0;
+				border-radius: 6rpx;
+			}
+			.mid {
+				width: 55%;
+				padding: 30rpx 30rpx;
+				.title {
+					color: black;
+					font-size: 32rpx;
+					text-overflow: ellipsis;
+					white-space: nowrap;
 				}
-				.mid{
-					width: 55%;
-					padding: 30rpx 30rpx;
-					.title{
-						color: black;
-						font-size: 32rpx;
-						text-overflow: ellipsis;
-						white-space: nowrap;
+				.address {
+					color: #97989a;
+					font-size: 23rpx;
+					overflow: hidden;
+					line-height: 30rpx;
+					margin: 10rpx 0;
+				}
+				.other {
+					color: #5f6366;
+					font-size: 23rpx;
+					.img {
+						width: 24rpx;
+						height: 24rpx;
+						margin-right: 6rpx;
 					}
-					.address{
-						color: #97989a;
-						font-size: 23rpx;
-						overflow: hidden;
-						line-height: 30rpx;
-						margin: 10rpx 0;
-					}
-					.other{
-						color: #5F6366;
-						font-size: 23rpx;
-						.img{
-							width: 24rpx;
-							height: 24rpx;
-							margin-right: 6rpx;
-						}
-						.distance{
-							display: inline-block;
-							margin-right: 40rpx;
-						}
+					.distance {
+						display: inline-block;
+						margin-right: 40rpx;
 					}
 				}
-				.right{
-					width: 25%;
-					font-size: 30rpx;
-					text-align: right;
-				}
+			}
+			.right {
+				width: 25%;
+				font-size: 30rpx;
+				text-align: right;
 			}
 		}
 	}
+}
 </style>

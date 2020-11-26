@@ -24,11 +24,11 @@
 					<text class="checkBox" @click="isAgreement=!isAgreement" :class="[isAgreement && 'isChecked']"></text>
 					<text @click="isAgreement=!isAgreement">同意</text>
 					<text class="font" @click="toAgreement">《服务协议》</text>
-				</view>
+				</view> 
 				<view class="btn-wrap flex a-center j-between flex-row">
 					<view class="price-wrap">
 						<text class="price1">总价 ￥{{detail.money}}</text>
-						<text class="price2">￥{{detail.del_money}}</text>
+						<text class="price2 text-price">{{detail.del_money}}</text>
 					</view>
 					<u-button :loading="loading" shape='circle' type="warning" class="" ripple='true' @click="getGlobl">立即支付</u-button>
 				</view>
@@ -101,14 +101,14 @@
 				this.site = getApp().globalData._site;
 				if (this.site == null && !this.suid) { /*预请求未成功时*///无邀请人,不请求附近站点；
 					this.loading = true; //按钮动画
-					let res = this.$tool.uniGetStorage('addressInfo'); //获取当前经纬度
+					let res = this.$cache.get('_addressInfo'); //获取当前经纬度
 					let _this = this;
 					this.getStorageListSite({ //请求最近站点列表
 						latitude: res.lat,
 						longitude: res.lng,
 					}, (res) => {
 						_this.loading = false;
-						_this.$tool.uniSetStorage('site', res); //缓存
+						_this.$cache.set('_site', res); //缓存
 						getApp().globalData._site = res.posiList[0];
 						_this.site = res.posiList[0]; //第一个站点
 						_this.pay(); //发起支付
@@ -130,14 +130,14 @@
 							lng: _this.longitude,
 							category_id: "",
 						}
-						_this.$tool.uniSetStorage("addressInfo", _this.addressInfo)
+						_this.$cache.set("_addressInfo", _this.addressInfo)
 					}
 				})
 			},
 			getStorageListSite(location, success) { //预先获取附近站点
 				let _this = this;
 				//请求之前清除缓存
-				this.$tool.uniRemoveStorage('site');
+				this.$cache.delete('_site');
 				this.$tool.uniRequest({
 					url: `/api/index/page`,
 					params: {
@@ -305,8 +305,8 @@
 					border-radius: 50%;
 					background: #FF8F1E;
 					position: absolute;
-					top: 7rpx;
-					left: 7rpx;
+					top: 5rpx;
+					left: 5rpx;
 				}
 			}
 

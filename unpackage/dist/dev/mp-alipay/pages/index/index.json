@@ -1,6 +1,0 @@
-{
-  "defaultTitle": "走你洗车",
-  "usingComponents": {
-    "auth-login": "/components/base/auth-login"
-  }
-}

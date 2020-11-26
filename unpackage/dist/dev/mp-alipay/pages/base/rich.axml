@@ -1,1 +1,0 @@
-<view class="rich data-v-1c95379e"><rich-text nodes="{{detail}}" class="data-v-1c95379e"></rich-text><block a:if="{{isNoDate}}"><no-date vue-id="44eda2cb-1" class="data-v-1c95379e" onVueInit="__l"></no-date></block></view>

@@ -38,14 +38,26 @@
 					停车场免费停车30分钟。为了避免洗车排队等待过久产生停车费，可通过点击【排队情况】提前查看，合理安排时间。
 				</view>
 			</view>
+			<Queue  class='queue'
+			:show='queue' 
+			@closeQueue="closeQueue"
+			:name="detail.goods_name" 
+			:goods_id='detail.goods_id'
+			:csn='detail.goods_csn'
+			:tag='detail.goods_tag'></Queue>
 		</template>	
 	</view>
 </template>
 
 <script>
+	import Queue from '../../components/queue/queue.vue';
 	export default{
+		components: {
+			Queue
+		},
 		data(){
 			return{
+				queue: false, //视频组件
 				btnIndex:1,
 				detailId:null,
 				detail:null,
@@ -80,7 +92,7 @@
 				this.getListInfo()
 			},
 			getListInfo() {
-				let addressInfo=this.$tool.uniGetStorage("addressInfo")
+				let addressInfo=this.$cache.get("_addressInfo")
 				this.$tool.uniRequest({
 					url: `/api/goods/detail&goods_id=${this.detailId}`,
 					params:{
@@ -118,13 +130,14 @@
 				    phoneNumber: tel
 				});
 			},
+			closeQueue(){
+				this.queue = false;
+			},
 			openXm(item){
 				if(item.prop==='sort'){
-					this.$tool.uniShowToast({
-						title: "稍后开放！",
-						icon: "none"
-					})
-					return
+					this.queue = true;
+					let qThis  = this;
+					 return
 				}
 				uni.openLocation({
 				    latitude: parseFloat(this.detail.goods_lat),

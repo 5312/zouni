@@ -33,7 +33,6 @@
 </template>
 
 <script>
-	import api from '@/common/api/index.js'
 	export default {
 		props: {
 			zhan: {
@@ -71,7 +70,7 @@
 		},
 		onReady() {
 			let uThis = this;
-			api.telPhone().then(res => {
+			this.$api.index_Tel().then(res => {
 				uThis.tel = res.tel;
 				uThis.show = false;
 			})
@@ -136,7 +135,7 @@
 				let uThis = this;
 				let type = 2; //this.buttonText == '紧急停止'?2:3;//this.type == 1 ? 2: this.type == 2?3:1;
 				this.load = true;
-				api.zhan({
+				this.$api.scan_indexZhan({
 					zhan_id: uThis.zhan,
 					zhan_type: type,
 				}).then(res => {
@@ -146,20 +145,6 @@
 					uThis.color = 'gray'; //颜色
 					uThis.active = false;
 					uThis.type = type; //洗车机状态	
-
-					// if(type == 3){//当复位时
-					// 	this.load = true;
-					// 	setTimeout(()=>{
-					// 		//在次执行开机
-					// 		api.zhan({
-					// 			zhan_id:uThis.zhan,
-					// 			zhan_type:1,
-					// 		}).then( res => {
-					// 			this.load = false;
-					// 			this.type = 1;//洗车机状态
-					// 		})
-					// 	},3000)
-					// }
 				})
 
 			}

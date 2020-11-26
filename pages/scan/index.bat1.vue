@@ -42,12 +42,7 @@
 								<view class="grid-text ">关车窗</view>
 							</u-grid-item>
 						</u-grid>
-						<!-- <view class="line-box">以下车型不能清洗</view> -->
-						<!-- <image class="imgs2" src="../../static/image/car1.png" mode=""></image> -->
 						<view class='bottom'>
-							<!-- <transition name="fade">
-								<image v-show="air" src="../../static/image/air.png" class="imgs3" mode="aspectFit"></image>
-							</transition> -->
 							<u-modal v-model="air" content="请先勾选同意后进行下一步" @confirm="confirm"></u-modal>
 							<u-radio-group v-model="value" id="productBox">
 								<u-radio name="pact">
@@ -119,12 +114,11 @@
 <script>
 	import AuthLogin from "../../components/base/auth-login.vue"
 	import Urgent from './urgent/urgent.vue'
-	import api from '@/common/api/index.js'
 	export default {
 		components: {
 			AuthLogin,
 			Urgent
-		},
+		}, 
 		data() {
 			return {
 				src: '../../static/audio.mp3',
@@ -183,7 +177,7 @@
 				this.init()
 			};
 			let that = this;
-			api.chaPost({
+			this.$api.scan_indexChaPost({
 				zhan_id: this.siteId
 			}).then(result => {
 				that.chaPost = result;
@@ -283,7 +277,7 @@
 			},
 			confirm() {
 				this.air = false;
-			},
+			},   
 			next(e) {
 				if (this.current == 1) {
 					if (this.value != 'pact') {
@@ -360,7 +354,7 @@
 					coupon_id: this.couponInfoPrice.couponId,
 					pay_type: '20'
 				};
-				const buyNow = await api.buyNow(params);
+				const buyNow = await this.$api.buyNow(params);
 				this.zhanId = buyNow.msg.success; //站点id//1开机2暂停3复位
 				let res = buyNow.data;
 				if (res.pay_type === '20') { //微信支付
@@ -381,15 +375,23 @@
 				})
 				setTimeout(() => {
 					if (msg.success != 0) {
-						api.zhan({
+						_this.$api.scan_indexZhan({
 							zhan_id: msg.success,
 							zhan_type: 1, //1开机2暂停3复位
 						}).then(res => {
+							if(res.code == 0){
+								uni.showModal({
+								    title: '提示',
+								    content: res.msg,
+								    success: function (res) {
+								        uni.reLaunch({
+								        	url: `/pages/scan/order-detail?id=${res.order_id}`
+								        })
+								    }
+								});
+								return
+							}
 							_this.loading = true; //开机成功，进入紧急停止页面
-						}).catch(err => {
-							uni.reLaunch({
-								url: `/pages/scan/order-detail?id=${res.order_id}`
-							})
 						})
 					} else {
 						uni.reLaunch({

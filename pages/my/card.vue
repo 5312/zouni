@@ -13,8 +13,8 @@
 						{{item.title}}
 					</view>
 					<view class="num">
-						<text class="price1">￥{{item.money}}</text>
-						<text class="price2">￥{{item.del_money}}</text>
+						<text class="price1 text-price">{{item.money}}</text>
+						<text class="price2 text-price">{{item.del_money}}</text>
 					</view>
 				</view>
 			</view>	

@@ -38,8 +38,11 @@
 </script>
 
 <style lang="scss">
+	/* 注意要写在第一行，同时给style标签加入lang="scss"属性 */
+	@import "uview-ui/index.scss"; 
+	@import "colorui/main.css";
+	@import "colorui/icon.css";
 	/*每个页面公共css */
 	@import url("@/common/css/reset.css");
-	/* 注意要写在第一行，同时给style标签加入lang="scss"属性 */
-	@import "uview-ui/index.scss";
 </style>
+ 

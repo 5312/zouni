@@ -25,7 +25,7 @@
 		onLoad(option){
 			this.inputVal=option.value
 			this.type=option.type
-			this.userInfo=JSON.parse(option.userInfo)
+			this.userInfo=JSON.parse(option.userInfo);
 		},
 		methods:{  
 			sure(){		
@@ -51,10 +51,10 @@
 						_this.$tool.uniShowToast({
 							title: "修改成功！"						
 						})
-						_this.$tool.uniSetStorage('isEditUserInfo',true)
+						_this.$cache.set('_isEditUserInfo',true)
 						setTimeout(()=>{
-							uni.navigateBack({
-								delta: 1
+							uni.redirectTo({
+								url:'/pages/my/my-info'
 							})
 						},1000)
 					}

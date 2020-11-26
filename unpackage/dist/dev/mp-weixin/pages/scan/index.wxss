@@ -96,6 +96,7 @@
   width: 150rpx;
   -webkit-flex-shrink: 0;
           flex-shrink: 0;
+  white-space: nowrap;
 }
 .scan .content .main .btn-wrap.data-v-5008080e {
   position: fixed;
@@ -119,10 +120,8 @@
   font-size: 23rpx;
 }
 .scan .content .main .btn-wrap .btn.data-v-5008080e {
-  margin-right: 90rpx;
   padding: 20rpx 30rpx;
   font-size: 26rpx;
   font-weight: 600;
-  border-radius: 50rpx;
 }
 

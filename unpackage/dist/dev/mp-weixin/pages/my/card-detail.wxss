@@ -55,8 +55,8 @@ page .card-detail.data-v-32ae3df8 {
   border-radius: 50%;
   background: #FF8F1E;
   position: absolute;
-  top: 7rpx;
-  left: 7rpx;
+  top: 5rpx;
+  left: 5rpx;
 }
 .card-detail .content .btn-wrap.data-v-32ae3df8 {
   position: fixed;

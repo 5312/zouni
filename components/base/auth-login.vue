@@ -5,7 +5,7 @@
 			<view class="info-msg">
 				请授权头像等信息，以便我们为您提供更好的服务
 			</view>
-			<!-- <view class="registration-agreement" v-if="status==='userInfo'">授权即视为同意<text class="text-green" @click="look">《注册协议》</text></view> -->
+			<view class="registration-agreement">授权即视为同意<text class="text-green" @click="look">《注册协议》</text></view>
 			<button open-type="getUserInfo" @getuserinfo="bindGetUserInfo" class="btn" :loading="loading" :disabled="loading" v-if="status==='userInfo'">
 				微信一键登录
 			</button>		

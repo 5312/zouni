@@ -51,13 +51,13 @@
 		},
 		methods:{
 			init(){			
-				let addressInfo=this.$tool.uniGetStorage("addressInfo")
+				let addressInfo=this.$cache.get("_addressInfo")
 				this.nowAddress=addressInfo.name
 				this.getNewList(addressInfo)
 				this.getAddress()
 			},
 			getNewList(addressInfo){
-				this.newList=this.$tool.uniGetStorage("addressNewList")
+				this.newList=this.$cache.get("_addressNewList")
 				this.newList=this.newList?this.newList:[]
 				let isHave=false
 				let haveIndex=-1
@@ -84,15 +84,11 @@
 						lng:addressInfo.lng
 					})
 				}	
-				this.$tool.uniSetStorage("addressNewList",this.newList)
+				this.$cache.set("_addressNewList",this.newList)
 			},
-			getAddress(){
-				this.$tool.uniRequest({
-					url:`/api/category/lists&wxapp_id=10001&token=`,
-					success:(res)=>{
-						this.addressList=res && res.list?res.list:[]	
-					}
-				})
+			async getAddress(){
+				const res = await this.$api.categoryLists();
+				this.addressList=res.data && res.data.list?res.data.list:[]	
 			},
 			select(item){
 				let addressInfo={

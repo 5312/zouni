@@ -38,7 +38,7 @@
 		methods: {
 			async init() {
 				let _this = this;
-				let uid = this.$tool.uniGetStorage('userId'); //用户id
+				let uid = this.$cache.get('_userId'); //用户id
 				let qr = await new Promise(function(resolve, reject) {
 					_this.$tool.uniRequest({
 						url: 'api/Codeok/',
@@ -160,34 +160,6 @@
 			},
 			saveImg() {
 				let that = this;
-				/* wx.previewImage({
-					current: that.imgUrl, // 当前显示图片的http链接
-					urls: [that.imgUrl], // 需要预览的图片http链接列表
-					indicator:'none',
-					longPressActions: {
-						itemList: ['发送给朋友', '保存图片', '收藏'],
-						success: function(data) {
-							console.log('选中了第' + (data.tapIndex + 1) + '个按钮,第' + (data.index + 1) + '张图片');
-						},
-						fail: function(err) {
-							console.log(err.errMsg);
-						}
-					}
-				}) */
-				/* uni.saveImageToPhotosAlbum({
-					filePath:that.imgUrl,
-					success(res) {
-						uni.showModal({
-							title:'保存成功',
-							content:'图片成功保存到相册了，快去分享给朋友吧',
-							showCancel:false,
-							confirmText:'好的',
-							success(res) {
-								
-							}
-						})
-					}
-				}) */
 			}
 		}
 	}

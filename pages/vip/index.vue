@@ -71,7 +71,7 @@
 					url: `/api/user.index/detail`,
 					params:{
 						wxapp_id:"10001",
-						token:this.$tool.uniGetStorage("token")
+						token:this.$cache.get("_token")
 					},
 					success: (res) => {
 						if (res.code === 1) {

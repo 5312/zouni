@@ -53,15 +53,15 @@
 						<view class="bagPrice"><text class="daole">￥</text>{{price}}</view>
 						<view class="smallPrice">已优惠￥{{couponInfoPrice.price}}</view>
 					</view>
-					<view class="btn bg-yellow" @click="pay">立即支付</view>
+					<u-button  @click="pay" :ripple='true' class="btn" type='warning' shape="circle" :disabled="disabled">{{ paytext }}</u-button>
 				</view>
 			</view>
+			<u-modal v-model="show" :content="content"></u-modal>
 		</view>
 		<AuthLogin v-if="!isLogin && isShowAuthLogin" @loginOk='loginOk' :status="'userInfo'"></AuthLogin>
 
 	</view>
 </template>
-
 <script>
 	import AuthLogin from "../../components/base/auth-login.vue"
 	export default {
@@ -70,6 +70,8 @@
 		},
 		data() {
 			return {
+				show:false,//模态窗
+				content:null,//模态窗
 				isLogin: false,
 				isShowAuthLogin: false,
 				siteId: null,
@@ -77,6 +79,8 @@
 				carCard: '',
 				price: 0,
 				couponList: [],
+				paytext:'立即支付',
+				disabled:false,
 				couponInfoPrice: {
 					couponId: 0,
 					price: 0,
@@ -146,9 +150,7 @@
 			sequence() { //排序
 				let arr = this.couponList;
 				let len = arr.length;
-				if (len <= 0) {
-					return
-				}
+				if (len <= 0) return;
 				for (var i = 0; i < len; i++) {
 					for (var j = 0; j < len - 1 - i; j++) {
 						if (arr[j].reduce_price * 1 < arr[j + 1].reduce_price * 1) { //相邻元素两两对比
@@ -171,78 +173,77 @@
 					this.init()
 				}
 			},
-			logged() {
-				let _this = this
-				this.$tool.uniRequest({
-					url: `/api/order/buyNow`,
-					params: {
-						goods_id: this.siteId,
-						coupon_id: this.couponInfoPrice.couponId, //默认值为0，选择后传优惠券ID
-						goods_sku_id: '0'
-					},
-					success: (res) => {
-						console.log("res", res)
-						if (res.exist_car) { //是否有添加车
-							_this.detail = res.goods_list[0]
-							_this.couponList = res && res.coupon_list ? res.coupon_list : []
-							_this.carCard = res.car ? res.car : ''
-							_this.price = res.order_pay_price
-							_this.couponInfoPrice.price = res.coupon_money
-							_this.isLogin = true
-							_this.isShowAuthLogin = false
-							if (res.coupon_money == 0) {
-								_this.sequence(); //排序默认选中
-							}
-
-						} else {
-							_this.$tool.uniRedirectTo({
-								url: `/pages/base/add-car?siteId=${this.siteId}&pageForm=scan&status=add`
-							})
-						}
+			async logged(){
+				const result = await this.$api.buyNow({
+					goods_id: this.siteId,
+					coupon_id: this.couponInfoPrice.couponId, //默认值为0，选择后传优惠券ID
+					goods_sku_id: '0'
+				},'GET');
+				
+				let res = result.data;//
+				if(res.error_msg != ""){
+					console.log(res.error_msg);
+					this.content = res.error_msg;
+					this.show = true;
+					this.paytext = '暂停营业';
+					this.disabled = true; 
+				}
+				
+				if (res.exist_car) { //是否有添加车
+					this.detail = res.goods_list[0]
+					this.couponList = res && res.coupon_list ? res.coupon_list : []
+					this.carCard = res.car ? res.car : ''
+					this.price = res.order_pay_price
+					this.couponInfoPrice.price = res.coupon_money
+					this.isLogin = true
+					this.isShowAuthLogin = false
+					if (res.coupon_money == 0) {
+						this.sequence(); //排序默认选中
 					}
-				})
+				} else {
+					this.$tool.uniRedirectTo({
+						url: `/pages/base/add-car?siteId=${this.siteId}&pageForm=scan&status=add`
+					})
+				}
 			},
-			pay() {
-				let _this = this
-				let params = {
+			async pay(){
+				let _this = this;
+				const resultl = await this.$api.buyNow({
 					wxapp_id: "10001",
 					goods_id: this.siteId,
 					coupon_id: this.couponInfoPrice.couponId,
 					pay_type: '20'
+				},'POST');
+				if(resultl.code === 0){
+					this.$tool.uniShowToast({
+						title:resultl.msg,
+					})
+					return;
 				}
-				console.log("支付参数", params)
-				this.$tool.uniRequest({
-					url: `/api/order/buyNow`,
-					method: "POST",
-					headers: {
-						'Content-Type': 'application/x-www-form-urlencoded'
-					},
-					params: params,
-					success: (res) => {
-						if (res.pay_type === '20') { //微信支付
-							let result = res.payment
-							_this.$tool.wxPayMoney(result.timeStamp, result.nonceStr, result.prepay_id, 'MD5', result.paySign, (req) => {
-								_this.$tool.uniShowToast({
-									title: "支付成功！"
-								})
-								setTimeout(() => {
-									uni.reLaunch({
-										url: `/pages/scan/order-detail?id=${res.order_id}`
-									})
-								}, 1000)
+				let res = resultl.data;//
+				
+				if (res.pay_type === '20') { //微信支付
+					let result = res.payment;
+					this.$tool.wxPayMoney(result.timeStamp, result.nonceStr, result.prepay_id, 'MD5', result.paySign, (req) => {
+						_this.$tool.uniShowToast({
+							title: "支付成功！"
+						})
+						setTimeout(() => {
+							uni.reLaunch({
+								url: `/pages/scan/order-detail?id=${res.order_id}`
 							})
-						} else if (res.pay_type === '30') { //优惠卷支付
-							_this.$tool.uniShowToast({
-								title: "支付成功！"
-							})
-							setTimeout(() => {
-								uni.reLaunch({
-									url: `/pages/scan/order-detail?id=${res.order_id}`
-								})
-							}, 1000)
-						}
-					}
-				})
+						}, 1000)
+					})
+				} else if (res.pay_type === '30') { //优惠卷支付
+					_this.$tool.uniShowToast({
+						title: "支付成功！"
+					})
+					setTimeout(() => {
+						uni.reLaunch({
+							url: `/pages/scan/order-detail?id=${res.order_id}`
+						})
+					}, 1000)
+				}
 			}
 		}
 	}
@@ -366,6 +367,7 @@
 					.label {
 						width: 150rpx;
 						flex-shrink: 0;
+						white-space: nowrap;
 					}
 				}
 
@@ -394,11 +396,9 @@
 						}
 					}
 					.btn {
-						margin-right:90rpx;
 						padding: 20rpx 30rpx;
 						font-size: 26rpx;
 						font-weight: 600;
-						border-radius: 50rpx;
 					}
 				}
 			}

@@ -1,3 +1,5 @@
+import MinCache from './unit.js';
+const minCache = new MinCache
 export const baseUrl = "https://xi.ydeshui.com/index.php?s="
 let getTokenCount = 0
 export default {
@@ -72,14 +74,14 @@ export default {
 			withCredentials: true,
 			data: params ? Object.assign({
 				wxapp_id: "10001",
-				token: this.uniGetStorage("token")
+				token: minCache.get("_token")
 			}, params) : {
 				wxapp_id: "10001",
-				token: this.uniGetStorage("token")
+				token: minCache.get("_token")
 			},
 			header: headers,
 			success: (res) => {
-				console.log(url+"请求结果", res)
+				//console.log(url+"请求结果", res)
 				if (res.statusCode === 200) {
 					if (isNoCode) {
 						success ? success(res.data) : false
@@ -90,9 +92,9 @@ export default {
 							title: "token失效，重新登陆！",
 							icon: "none"
 						})
-						this.uniRemoveStorage("token")
-						this.uniRemoveStorage("userInfo")
-						this.uniRemoveStorage("userId")
+						minCache.delete("_token")
+						minCache.delete("_userInfo")
+						minCache.delete("_userId")
 						this.getTokenValue()
 					}else if(res.data.code == 0){
 						success(res.data)
@@ -123,7 +125,7 @@ export default {
 			fail,
 			complete
 		} = options;
-		let referrerId  = this.uniGetStorage("referrerId");//推荐人id
+		let referrerId  = minCache.get("_referrerId");//推荐人id
 		var _this = this;
 		uni.login({ //获取微信用户的code值
 			provider: 'weixin',
@@ -149,9 +151,10 @@ export default {
 								},
 								success: (res1) => {
 									if (res1.statusCode === 200 && res1.data.code === 1) {
-										_this.uniSetStorage('userInfo', res.userInfo)
-										_this.uniSetStorage('token', res1.data.data.token)
-										_this.uniSetStorage('userId', res1.data.data.user_id)
+										minCache.set('_userInfo', res.userInfo)
+										minCache.set('_token', res1.data.data.token)
+										minCache.set('_session_key', res1.data.data.session_key)
+										minCache.set('_userId', res1.data.data.user_id)
 										success ? success() : false
 									} else {
 										_this.uniShowToast({
@@ -187,43 +190,6 @@ export default {
 				}
 			}
 		});
-	},
-	async getMyAlipayToken(options) {
-		let {
-			service,
-			success,
-			fail,
-			complete
-		} = options
-		var _this = this;
-		const [error, provider] = await uni.getProvider({
-			service: service
-		}) //获取服务类型
-		const [errMsg, loginCode] = await uni.login({
-			provider: provider
-		}) //获取登录code
-		if (errMsg) {
-			_this.uniShowToast({
-				title: "获取微信登录login的code失败！",
-				icon: "none"
-			})
-			complete ? complete() : false
-		}
-		if (loginCode.authCode) {
-			const [e, login] = await uni.request({
-				url: baseUrl + "/api/user/login",
-				method: "POST",
-				header: {
-					'Content-Type': 'application/x-www-form-urlencoded'
-				},
-				data: {
-					authcode: loginCode.authCode,
-				}
-			});
-			console.log(login)
-			console.log(e)
-		}
-
 	},
 	distanceHanlde(val) {
 		if (val) {
@@ -359,7 +325,7 @@ export default {
 					_this.getAuthorizeInfo(type, success, fail)
 				} else {
 					if (type === 'scope.userInfo') {
-						if (_this.uniGetStorage("token")) {
+						if (_this.uniGetStorage("_token")) {
 							success ? success() : false
 						} else {
 							_this.getTokenValue({
@@ -402,7 +368,7 @@ export default {
 				if (!userInfo) {
 					return
 				};
-				if (_this.uniGetStorage("token")) {
+				if (_this.uniGetStorage("_token")) {
 					success ? success() : false
 				} else {
 					_this.getMyAlipayToken({
@@ -423,7 +389,7 @@ export default {
 			scope: type,
 			success() {
 				if (type === 'scope.userInfo') {
-					if (_this.uniGetStorage("token")) {
+					if (_this.uniGetStorage("_token")) {
 						success ? success() : false
 					} else {
 						_this.getTokenValue({

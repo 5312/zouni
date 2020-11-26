@@ -4,7 +4,7 @@
 .my-info .btn.data-v-431813f6 {
   height: 80rpx;
   border-radius: 8rpx;
-  background: #FF8D1A;
+  background: #ff8d1a;
   line-height: 80rpx;
   text-align: center;
   color: white;
@@ -12,7 +12,7 @@
 }
 .my-info .line.data-v-431813f6 {
   height: 120rpx;
-  border-bottom: 2rpx solid #EFEFEF;
+  border-bottom: 2rpx solid #efefef;
 }
 .my-info .line .left.data-v-431813f6 {
   font-size: 30rpx;
@@ -25,7 +25,7 @@
   font-size: 26rpx;
   height: 80rpx;
   border-radius: 8rpx;
-  background: #FF8D1A;
+  background: #ff8d1a;
   line-height: 80rpx;
   text-align: center;
   color: white;
@@ -48,7 +48,7 @@
   width: 32rpx;
   height: 32rpx;
   border-radius: 50%;
-  border: 2rpx solid #FF8F1E;
+  border: 2rpx solid #ff8f1e;
   margin-right: 10rpx;
   position: relative;
 }
@@ -57,9 +57,9 @@
   width: 20rpx;
   height: 20rpx;
   border-radius: 50%;
-  background: #FF8F1E;
+  background: #ff8f1e;
   position: absolute;
-  top: 7rpx;
-  left: 7rpx;
+  top: 5rpx;
+  left: 5rpx;
 }
 

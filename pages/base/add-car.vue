@@ -13,7 +13,7 @@
 		<plate-number ref="plate" v-model="licensePlateVal"></plate-number>
 	</view>
 </template>
-
+<!-- 编辑添加车牌号页面 -->
 <script>
 	import plateNumber from '@/components/plate-number/plateNumber.vue';
 	export default{
@@ -45,7 +45,7 @@
 			carInputClick() {
 				this.$refs.plate.show();
 			},
-			save(){		
+			async save(){		
 				if(!this.licensePlateVal){
 					this.$tool.uniShowToast({
 						title:"请输入车牌号",
@@ -59,29 +59,23 @@
 				let params={
 					detail:this.licensePlateVal,  //车牌号
 					region:""
-				}
+				};
 				if(this.status==='add'){
 					url=`/api/address/add`
 				}else{
 					url=`/api/address/edit`
 					params.address_id=this.detail.address_id
 				}
-				this.$tool.uniRequest({
-					url: url,
-					method:"POST",
-					params:params,
-					success: (res) => {
-						if(_this.pageForm==='scan'){
-							_this.$tool.uniRedirectTo({
-								url:`/pages/scan/index?siteId=${this.siteId}&fromPage=addCar`
-							})				
-						}else if(_this.pageForm==='car'){
-							_this.$tool.uniReLaunch({
-								url:'/pages/my/my-car'
-							})
-						}						
-					}
-				})
+				const res = await this.$api.addCar(url,params);
+				if(this.pageForm==='scan'){
+					this.$tool.uniRedirectTo({
+						url:`/pages/scan/index?siteId=${this.siteId}&fromPage=addCar`
+					})				
+				}else if(this.pageForm==='car'){
+					this.$tool.uniReLaunch({
+						url:'/pages/my/my-car'
+					})
+				}
 			}
 		}
 	}

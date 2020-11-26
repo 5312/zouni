@@ -79,7 +79,7 @@ page{
 	text-align: center;
 }
 .text-green{
-	color: #35D5AA;
+	color: #0000ff;
 }
 .text-yellow{
 	color: #FF8D1A;
@@ -109,5 +109,12 @@ page{
 	color: #9C9FA6;
 }
 .active {
-	opacity: 0.6;
+	opacity: 0.8;
+	transform: translate(2rpx ,2rpx);
 }
+.bg-shade {
+	background: #0c0c0c;
+	color: #fff;
+	opacity: .6;
+}
+

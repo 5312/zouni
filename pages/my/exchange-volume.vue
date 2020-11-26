@@ -4,7 +4,7 @@
 			<image src="https://xm-img.gaoshilo.com/q2.jpg" mode="" class="h100 w100 ad-img"></image>
 		</view>
 		<view class="main">
-			<view class="info-wrap">输入洗车券好梦进行兑换</view>
+			<view class="info-wrap">输入洗车券进行兑换</view>
 			<view class="input-wrap">
 				<input type="text" v-model="inputVal" class="input h100 w100" placeholder="请输入洗车卷号码"/>
 			</view>
