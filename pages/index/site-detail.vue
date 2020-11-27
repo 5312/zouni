@@ -2,18 +2,26 @@
 	<view class="site-detail bg-page h100">
 		<template v-if="detail">
 			<view class="header flex flex flex-row a-center j-between">
-				<view class="left"><image :src="detail.goods_image" mode="" class="w100 h100"></image></view>
+				<view class="left "><image :src="detail.goods_image" mode="" class=" w100 h100"></image></view>
 				<view class="right">
-					<view class="title">{{ detail.goods_name }}</view>
+					<view class="title text-black text-bold">{{ detail.goods_name }}</view>
 					<view class="address">{{ detail.goods_df }}</view>
-					<view class="other text-black">
+					<view class="other text-gray text-df">
 						距离：
-						<text class="distance">{{ distance }}</text>
+						<text class="ext-red">{{ distance }}</text>
 					</view>
 				</view>
 			</view>
 			<view class="nav-wrap flex flex-row a-center j-center">
-				<view class="nav" v-for="(item, index) in detail.serviceList" :key="index">{{ item }}</view>
+				<view 
+					class="cu-capsule round" 
+					v-for="(item, index) in detail.serviceList" 
+					:key="index">
+					<view class="cu-tag bg-orange">
+						<text class="cuIcon-evaluate"></text>
+					</view>
+					<view class="cu-tag line-orange">{{ item }}</view>
+				</view>
 			</view>
 			<view class="info-wrap phone-wrap">
 				站点状态：
@@ -30,9 +38,18 @@
 				<text @click="call(detail.goods_tel)">{{ detail.goods_tel }}</text>
 			</view>
 			<view class="btn-wrap flex a-center flex-row j-between">
-				<view :class="['btn', btnIndex === index ? 'btn-active' : '']" hover-class="active" v-for="(item, index) in btnList" :key="index" @click="openXm(item)">
+				<!-- <view :class="['btn', btnIndex === index ? 'btn-active' : '']" hover-class="active" v-for="(item, index) in btnList" :key="index" @click="openXm(item)">
 					{{ item.name }}
-				</view>
+				</view> -->
+				<button 
+					hover-class="active"
+					class="cu-btn round shadow btn"
+					:class="[ btnIndex === index ? 'bg-orange' : 'lines-orange']" 
+					v-for="(item, index) in btnList" 
+					:key="index" 
+					@click="openXm(item)">
+					{{ item.name }}
+				</button>
 			</view>
 			<view class="content" v-if="detail.content">
 				<view class="title text-center ">- 洗车路线指引 -</view>
@@ -165,20 +182,22 @@ export default {
 			height: 208rpx;
 			margin-right: 30rpx;
 			flex-shrink: 0;
+			border-radius: 10rpx;
+			image{
+				border-radius: 10rpx;
+			}
 		}
 		.right {
 			flex: 1;
 			.title {
 				font-size: 38rpx;
 				margin-bottom: 18rpx;
-				color: black;
 			}
 			.address {
 				font-size: 28rpx;
 				margin-bottom: 20rpx;
 			}
 			.other {
-				font-size: 20rpx;
 				.distance {
 					margin-right: 20rpx;
 					display: inline-block;
@@ -220,15 +239,8 @@ export default {
 			text-align: center;
 			height: 92rpx;
 			line-height: 92rpx;
-			border-radius: 46rpx;
-			border: 2rpx solid #ff8d1a;
 			width: 310rpx;
-			color: #ff8d1a;
 			font-weight: 900;
-			&-active {
-				background: #ff8d1a;
-				color: #000;
-			}
 		}
 	}
 	.content {

@@ -21,18 +21,16 @@
 					</view>
 				</view>
 			</view>
-			<NoDate v-if="isNoDate"></NoDate>
+			<view class="content"><u-empty show="isNoDate" text="没有优惠卷" mode="coupon"></u-empty></view>
 		</template>
 		<AuthLogin v-if="!isLogin && isShowAuthLogin" @loginOk='loginOk' :status="'userInfo'"></AuthLogin>
 	</view>
 </template>
 
 <script>
-	import NoDate from "../../components/base/no-data.vue"
 	import AuthLogin from "../../components/base/auth-login.vue"
 	export default{
 		components:{
-			NoDate,
 			AuthLogin
 		},
 		data(){

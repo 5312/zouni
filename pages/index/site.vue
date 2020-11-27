@@ -1,8 +1,8 @@
 <template>
 	<view class="site bg-page h100">
 		<view class="content">
-			<u-empty text="正在加载..." mode="list" v-show="!empty"></u-empty>
-			<view v-show="empty" v-for="(item, index) in cardList" :key="index" class="card flex shadow a-center j-between flex-row" @click="toPage(item)" hover-class="active">
+			<u-empty text="正在加载..." mode='list' show="!empty"></u-empty>
+			<view v-show="empty" v-for="(item, index) in cardList" :key="index" class="card flex shadow a-center j-between flex-row" @click="toPage(item)" hover-class="active bg-list">
 				<image :src="item.goods_image" class="left"></image>
 				<view class="mid">
 					<view class="title nowrap">{{ item.goods_name }}</view>

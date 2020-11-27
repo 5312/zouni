@@ -38,14 +38,11 @@
 			init(){
 				this.getListInfo()
 			},
-			getListInfo(){
-				this.$tool.uniRequest({
-					url: `/api/wxapp/help`,
-					success: (res) => {
-						this.list=res.list
-						this.noDateTitle=this.list.length===0?'暂无数据':'没有更多数据了'
-					}
-				})
+			async getListInfo(){
+				const result =await this.$api.myAgreement();
+				let res = result.data;
+				this.list=res.list
+				this.noDateTitle=this.list.length===0?'暂无数据':'没有更多数据了'
 			},
 			toRichPage(item){
 				this.$tool.uniNavigateTo({

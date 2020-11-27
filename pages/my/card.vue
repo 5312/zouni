@@ -3,7 +3,7 @@
 		<template v-if='isLogin'>
 			<view class="box flex flex-row a-center j-start" v-for="(item,index) in list" :key='index' @click="select(item)">
 				<view class="left">
-					<image :src="item.images" class="img w100 h100" ></image>
+					<image :src="item.images" class="img w100 h100 " ></image>
 				</view>
 				<view class="right  flex flex-column a-start j-between">
 					<view class="title">
@@ -96,6 +96,9 @@
 			background: #999999;
 			margin-right: 30rpx;
 			flex-shrink: 0;
+			image{
+				border-radius: 10rpx;
+			}
 		}
 		.right{		
 			width: calc(100% - 200rpx);

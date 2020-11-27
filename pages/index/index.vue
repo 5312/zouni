@@ -32,7 +32,7 @@
 				/>
 			</view>
 			<!-- mark 提示 v-if="markDetail"-->
-			<view :class="{ bottommShow: bottom, bottommHide: !bottom }" class="markDetail" @click="getSiteDetail">
+			<view :class="{ bottommShow: bottom, bottommHide: !bottom }" class="markDetail shadow-warp" @click="getSiteDetail">
 				<view class="left ">
 					<view class="text">
 						<view class="titles text-cut">{{ markDetail.goods_name }}</view>
@@ -66,12 +66,10 @@
 			<view class="list-wrap shadow-wrap fixed bg-white" :class="{ sliderHide: !list, sliderShow: list }">
 				<view class="box flex a-center j-center flex-column" hover-class="active" @click="toPage('site')">
 					<image src="../../static/image/06.png" class="img" mode="heightFix"></image>
-					<!-- <view class="img icon-06.png"></view> -->
 					<text>站点列表</text>
 				</view>
 				<view class="box flex a-center j-center flex-column" hover-class="active" @click="addressHandle">
 					<image src="../../static/image/05.png" class="img img2" mode="heightFix"></image>
-					<!-- <view class="img icon-05.png"></view> -->
 					<text>定位</text>
 				</view>
 				<view class="box flex a-center j-center flex-column" hover-class="active" @click="isContact = true">
@@ -79,7 +77,7 @@
 					<text>客服</text>
 				</view>
 			</view>
-			<view class="activity-wrap fixed" v-if="adImg" @click="toAdPage"><image :src="adImg" class="w100" mode="widthFix"></image></view>
+			<view class="activity-wrap fixed" hover-class="active" v-if="adImg" @click="toAdPage"><image :src="adImg" class="w100" mode="widthFix"></image></view>
 			<view class="contact-wrap fixed p-tblr" v-if="isContact" @click.stop.prevent="close">
 				<view class="content absolute">
 					<view class="contact-line text-center" @click.stop.prevent="online">
@@ -523,12 +521,11 @@ export default {
 		margin: auto;
 		border-radius: 20rpx;
 		background-color: #fff;
-		border: 1rpx solid #ddd;
 		padding: 10rpx 30rpx;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		font-size: 26rpx;
+		font-size: 30rpx;
 
 		.left {
 			text-align: left;

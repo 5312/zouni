@@ -6,14 +6,14 @@
 				<view class="bottom">
 					<view class="name">{{ userInfo.nickName || '登陆' }}</view>
 				</view>
-				<image class="gif-black gifimg" src="../../static/image/wave.gif" mode="scaleToFill" height='25rpx'></image>
+				<image class="gif-black gifimg" src="../../static/image/wave.gif" mode="scaleToFill" height="25rpx"></image>
 			</view>
 			<view class="nav-wrap flex a-center flex-row j-start absolute">
 				<view class="nav flex a-center flex-column j-center" hover-class="active" @click="toPage('order')">
 					<image src="../../static/image/my-order.png" class="icon"></image>
 					<text class="nav-text">我的订单</text>
 				</view>
-				<view class="nav flex a-center flex-column j-center" hover-class="active" @click="toPage('vip')">
+				<view :class="{'animation-shake':shake}" class="nav flex a-center flex-column j-center" hover-class="active" @click="toPage('vip')">
 					<image src="../../static/image/my-money.png" class="icon"></image>
 					<text class="nav-text">钱包</text>
 				</view>
@@ -26,12 +26,11 @@
 				<view class="tar-h"></view>
 				<template v-for="(item, index) in myList">
 					<view
-						hover-class="bg-grey light" 
+						hover-class="bg-list"
 						class="line flex a-center flex-row j-between"
 						:class="[index == 2 || index == 5 || index == myList.length - 1 ? '' : 'line-boder-bottom']"
 						:key="index"
-						@click="toListPage(item)"
-					>
+						@click="toListPage(item)">
 						<view class="left flex a-center flex-row j-start">
 							<img :src="item.img" alt="icon" class="icon" />
 							<text class="name">{{ item.name }}</text>
@@ -86,6 +85,7 @@ export default {
 	},
 	data() {
 		return {
+			shake:false,//摇头动画
 			isLogin: false,
 			couponCounts: 0,
 			isShowAuthLogin: false,
@@ -227,6 +227,10 @@ export default {
 					title: '稍后开放！',
 					icon: 'none'
 				});
+				this.shake = true;
+				setTimeout(()=>{
+					this.shake = false;
+				},500)
 				return;
 			}
 			let pageType = {
@@ -280,6 +284,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '/colorui/animation.css';
 .my {
 	.mask {
 		position: fixed;
@@ -370,7 +375,7 @@ export default {
 				text-align: center;
 				line-height: 80rpx;
 				font-size: 30rpx;
-				background:$globalGb;
+				background: $globalGb;
 				border-radius: 10rpx;
 			}
 		}
@@ -389,13 +394,13 @@ export default {
 			height: 128rpx;
 			border: 2px solid white;
 			overflow: hidden;
-		}  
-		.gifimg{  
+		}
+		.gifimg {
 			position: absolute;
 			width: 100%;
 			height: 100rpx;
 			bottom: 0px;
-		}  
+		}
 		.bottom {
 			margin-top: 20rpx;
 
@@ -509,6 +514,6 @@ export default {
 	}
 }
 .gif-black {
-    mix-blend-mode: screen;
+	mix-blend-mode: screen;
 }
 </style>

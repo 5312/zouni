@@ -28,7 +28,7 @@
 			<view class="list">
 				<view class="abc-line" v-for="(item,index) in addressList" :key='index'>
 					<view class="abc">{{item.name}}</view>
-					<view :class="['abc-children-line',i===item.child.length-1?'':'border-b']" v-for="(val,i) in item.child" :key='i'
+					<view hover-class="bg-list active" :class="['abc-children-line',i===item.child.length-1?'':'border-b']" v-for="(val,i) in item.child" :key='i'
 						@click="select(val)">{{val.name}}</view>
 				</view>
 			</view>
@@ -182,7 +182,7 @@
 						background: #F2F2F2;
 					}
 					.abc-children-line{
-						margin: 0 40rpx;
+						padding: 0 40rpx;
 						height: 80rpx;
 						line-height: 80rpx;
 						font-size: 28rpx;		

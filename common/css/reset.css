@@ -112,6 +112,9 @@ page{
 	opacity: 0.8;
 	transform: translate(2rpx ,2rpx);
 }
+.bg-list{
+	background: #F4F6F4;
+}
 .bg-shade {
 	background: #0c0c0c;
 	color: #fff;
