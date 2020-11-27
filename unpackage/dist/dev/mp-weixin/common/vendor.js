@@ -3906,7 +3906,7 @@ var minCache = new _unit.default({
   timeout: 0 });
 
 var time = null;
-var load = { //加载动画
+var loading = { //加载动画
   star: function star() {
     _tool.default.uniShowLoading({}); //加载动画
     time = setTimeout(function () {//10s请求时长
@@ -3929,12 +3929,12 @@ minHttp.interceptors.request(function (request) {
   request.data.wxapp_id = "10001";
   request.data.token = minCache.get("_token");
   //加载动画
-  if (request.load) load.star();
+  if (request.load) loading.star();
   return request;
 });
 //响应拦截器
 minHttp.interceptors.response(function (response) {
-  load.end(); //清除加载动画
+  loading.end(); //清除加载动画
   if (response.errMsg == "request:fail ") {//请求失败，进fail
     _tool.default.uniShowToast({
       title: "请求失败，请重试",
@@ -3963,13 +3963,13 @@ minHttp.interceptors.response(function (response) {
 minHttp.setConfig(function (config) {//配置
   config.baseURL = 'https://xi.ydeshui.com/index.php?s=';
   return config;
-});var _default =
-
+});
+var load = { load: true };var _default =
 {
   // 这里统一管理api请求
   apis: {
     capture: function capture(data) {////抓拍图片
-      return minHttp.get('/api/Camera/capture', data, { load: true });
+      return minHttp.get('/api/Camera/capture', data, load);
     },
     categoryLists: function categoryLists() {var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {}; //城市列表
       return minHttp.get('/api/category/lists', data);
@@ -3981,16 +3981,16 @@ minHttp.setConfig(function (config) {//配置
       return minHttp.get("/api/Tel", data);
     },
     index_goodsDetail: function index_goodsDetail(data) {//加油站详细页
-      return minHttp.get("/api/goods/detail", data, { load: true });
+      return minHttp.get("/api/goods/detail", data, load);
     },
     index_getConts: function index_getConts(data) {//所有站点数量
-      return minHttp.get("/api/index/getconts", data, { load: true });
+      return minHttp.get("/api/index/getconts", data, load);
     },
     index_GetNearbyGasStation: function index_GetNearbyGasStation(data) {//附近站点列表
       return minHttp.get("/api/index/page", data);
     },
     index_siteGoodsList: function index_siteGoodsList(data) {//全部站点列表
-      return minHttp.get("/api/goods/lists", data, { load: true });
+      return minHttp.get("/api/goods/lists", data, load);
     },
     index_ad: function index_ad(data) {//广告
       return minHttp.get("/api/Ad", data);
@@ -4002,24 +4002,27 @@ minHttp.setConfig(function (config) {//配置
       return minHttp.get("/api/index/", data);
     },
     index_siteDetail: function index_siteDetail(data) {
-      return minHttp.get("/api/goods/detail", data, { load: true });
+      return minHttp.get("/api/goods/detail", data, load);
+    },
+    myAgreement: function myAgreement(data) {
+      return minHttp.get("/api/wxapp/help", data, load);
     },
     myInfo_getPhone: function myInfo_getPhone(data) {//获取手机号
       return minHttp.get("/api/user/getPhoneNumber", data);
     },
     scan_indexChaPost: function scan_indexChaPost(data) {//洗车机状态查询
-      return minHttp.get("/api/Zhan/cha_post", data, { load: true });
+      return minHttp.get("/api/Zhan/cha_post", data, load);
     },
     buyNow: function buyNow(data, type) {//支付
       return minHttp.http({
         url: "/api/order/buyNow",
         data: data,
         method: type,
-        load: 'load' });
+        load: load });
 
     },
     scan_indexZhan: function scan_indexZhan(data) {////洗车机控制
-      return minHttp.get("/api/Zhan", data, { load: true });
+      return minHttp.get("/api/Zhan", data, load);
     } } };exports.default = _default;
 
 /***/ }),
