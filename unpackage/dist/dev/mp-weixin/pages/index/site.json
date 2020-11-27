@@ -1,7 +1,0 @@
-{
-  "navigationBarTitleText": "站点列表",
-  "enablePullDownRefresh": true,
-  "usingComponents": {
-    "u-empty": "/uview-ui/components/u-empty/u-empty"
-  }
-}

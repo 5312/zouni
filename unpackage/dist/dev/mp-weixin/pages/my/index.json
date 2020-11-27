@@ -1,7 +1,0 @@
-{
-  "navigationBarTitleText": "我的",
-  "usingComponents": {
-    "u-icon": "/uview-ui/components/u-icon/u-icon",
-    "auth-login": "/components/base/auth-login"
-  }
-}

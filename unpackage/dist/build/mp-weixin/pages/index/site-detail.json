@@ -1,6 +1,0 @@
-{
-  "navigationBarTitleText": "洗车点详情",
-  "usingComponents": {
-    "queue": "/components/queue/queue"
-  }
-}

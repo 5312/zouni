@@ -1,6 +1,0 @@
-{
-  "navigationBarTitleText": "钱包明细",
-  "usingComponents": {
-    "no-date": "/components/base/no-data"
-  }
-}

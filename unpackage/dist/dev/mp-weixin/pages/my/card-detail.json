@@ -1,7 +1,0 @@
-{
-  "navigationBarTitleText": "次卡办理",
-  "usingComponents": {
-    "u-button": "/uview-ui/components/u-button/u-button",
-    "auth-login": "/components/base/auth-login"
-  }
-}

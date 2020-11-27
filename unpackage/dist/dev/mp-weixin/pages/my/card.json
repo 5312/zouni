@@ -1,7 +1,0 @@
-{
-  "navigationBarTitleText": "次卡列表",
-  "usingComponents": {
-    "no-date": "/components/base/no-data",
-    "auth-login": "/components/base/auth-login"
-  }
-}

@@ -1,7 +1,0 @@
-{
-  "navigationBarTitleText": "我的优惠券",
-  "usingComponents": {
-    "no-date": "/components/base/no-data",
-    "auth-login": "/components/base/auth-login"
-  }
-}
