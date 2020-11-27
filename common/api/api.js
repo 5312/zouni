@@ -7,7 +7,7 @@ const minCache = new MinCache({
 	timeout: 0
 });
 let time = null;
-const load = { //加载动画
+const loading = { //加载动画
 	star: () => {
 		tool.uniShowLoading({}) //加载动画
 		time = setTimeout(() => { //10s请求时长
@@ -30,12 +30,12 @@ minHttp.interceptors.request(request => {
 	request.data.wxapp_id = "10001"
 	request.data.token = minCache.get("_token");
 	//加载动画
-	if (request.load) load.star();
+	if (request.load) loading.star();
 	return request;
 });
 //响应拦截器
 minHttp.interceptors.response((response) => {
-	load.end(); //清除加载动画
+	loading.end(); //清除加载动画
 	if (response.errMsg == "request:fail ") { //请求失败，进fail
 		tool.uniShowToast({
 			title: "请求失败，请重试",
@@ -65,12 +65,12 @@ minHttp.setConfig(config => { //配置
 	config.baseURL = 'https://xi.ydeshui.com/index.php?s='
 	return config
 })
-
+let load = { load : true }
 export default {
 	// 这里统一管理api请求
 	apis: {
 		capture(data) { ////抓拍图片
-			return minHttp.get('/api/Camera/capture', data,{ load:true})
+			return minHttp.get('/api/Camera/capture', data,load)
 		},
 		categoryLists(data = {}) { //城市列表
 			return minHttp.get('/api/category/lists', data)
@@ -82,16 +82,16 @@ export default {
 			return minHttp.get(`/api/Tel`, data)
 		},
 		index_goodsDetail(data) { //加油站详细页
-			return minHttp.get(`/api/goods/detail`, data, { load:true})
+			return minHttp.get(`/api/goods/detail`, data, load)
 		},
 		index_getConts(data) { //所有站点数量
-			return minHttp.get(`/api/index/getconts`, data,{ load:true})
+			return minHttp.get(`/api/index/getconts`, data,load)
 		},
 		index_GetNearbyGasStation(data) { //附近站点列表
 			return minHttp.get(`/api/index/page`, data)
 		},
 		index_siteGoodsList(data) { //全部站点列表
-			return minHttp.get(`/api/goods/lists`, data, { load:true})
+			return minHttp.get(`/api/goods/lists`, data, load)
 		},
 		index_ad(data) { //广告
 			return minHttp.get(`/api/Ad`, data)
@@ -103,24 +103,27 @@ export default {
 			return minHttp.get(`/api/index/`, data)
 		},
 		index_siteDetail(data){
-			return minHttp.get(`/api/goods/detail`,data,{load:true})
+			return minHttp.get(`/api/goods/detail`,data,load)
+		},
+		myAgreement(data){
+			return minHttp.get(`/api/wxapp/help`,data,load)
 		},
 		myInfo_getPhone(data) { //获取手机号
 			return minHttp.get(`/api/user/getPhoneNumber`, data)
 		},
 		scan_indexChaPost(data) { //洗车机状态查询
-			return minHttp.get(`/api/Zhan/cha_post`, data, { load:true})
+			return minHttp.get(`/api/Zhan/cha_post`, data, load)
 		},
 		buyNow(data, type) { //支付
 			return minHttp.http({
 				url: `/api/order/buyNow`,
 				data,
 				method: type,
-				load:'load'
+				load,
 			})
 		},
 		scan_indexZhan(data) { ////洗车机控制
-			return minHttp.get(`/api/Zhan`, data,{ load:true})
+			return minHttp.get(`/api/Zhan`, data,load)
 		}
 	}
 }
