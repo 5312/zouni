@@ -183,6 +183,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
 {
   components: {
     Queue: Queue },
@@ -196,12 +202,12 @@ __webpack_require__.r(__webpack_exports__);
       distance: 0,
       btnList: [
       {
-        name: "排队情况",
-        prop: "sort" },
+        name: '排队情况',
+        prop: 'sort' },
 
       {
-        name: "地图导航",
-        prop: "map" }] };
+        name: '地图导航',
+        prop: 'map' }] };
 
 
 
@@ -211,7 +217,8 @@ __webpack_require__.r(__webpack_exports__);
     this.init();
   },
   onShareAppMessage: function onShareAppMessage(res) {
-    if (res.from === 'button') {// 来自页面内分享按钮
+    if (res.from === 'button') {
+      // 来自页面内分享按钮
       console.log(res.target);
     }
     return {
@@ -223,39 +230,33 @@ __webpack_require__.r(__webpack_exports__);
     init: function init() {
       this.getListInfo();
     },
-    getListInfo: function getListInfo() {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var addressInfo;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
-                addressInfo = _this.$cache.get("_addressInfo");
-
-                _this.$tool.uniRequest({
-                  url: "/api/goods/detail&goods_id=".concat(_this.detailId),
-                  params: {
+    getListInfo: function getListInfo() {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var addressInfo, result, res;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
+                addressInfo = _this.$cache.get('_addressInfo');_context.next = 3;return (
+                  _this.$api.index_siteDetail({
+                    goods_id: _this.detailId,
                     lat: addressInfo.lat,
-                    lng: addressInfo.lng },
+                    lng: addressInfo.lng }));case 3:result = _context.sent;if (!(
 
-                  success: function success(res) {
-                    if (res.code == 0) {
-                      uni.navigateBack({
-                        delta: 1 });
+                result.code == 0)) {_context.next = 8;break;}
+                uni.navigateBack({
+                  delta: 1 });
 
-                      _this.$tool.uniShowToast({
-                        title: '敬请期待！',
-                        icon: 'none' });
+                _this.$tool.uniShowToast({
+                  title: '敬请期待！',
+                  icon: 'none' });return _context.abrupt("return");case 8:
 
-                      return;
-                    }
-                    _this.detail = res && res.detail ? res.detail : null;
-                    _this.distance = _this.detail.goods_distance ? _this.$tool.distanceHanlde(_this.detail.goods_distance) : 0;
-                    if (_this.detail && _this.detail.content) {
-                      _this.detail.content = _this.$tool.htmlre(_this.detail.content);
-                      _this.detail.content = _this.$tool.formatRichText(_this.detail.content);
-                    }
 
-                    if (_this.detail.goods_tag) {
-                      _this.detail.serviceList = _this.detail.goods_tag && _this.detail.goods_tag.split("，");
-                      console.log(_this.detail.serviceList);
-                    }
-                  } });case 2:case "end":return _context.stop();}}}, _callee);}))();
 
+                res = result.data;
+                _this.detail = res.detail || null;
+                _this.distance = _this.detail.goods_distance ? _this.$tool.distanceHanlde(_this.detail.goods_distance) : 0;
+                if (_this.detail && _this.detail.content) {
+                  _this.detail.content = _this.$tool.htmlre(_this.detail.content);
+                  _this.detail.content = _this.$tool.formatRichText(_this.detail.content);
+                }
+                if (_this.detail.goods_tag) {
+                  _this.detail.serviceList = _this.detail.goods_tag && _this.detail.goods_tag.split('，');
+                }case 13:case "end":return _context.stop();}}}, _callee);}))();
     },
 
     call: function call(tel) {
@@ -280,7 +281,6 @@ __webpack_require__.r(__webpack_exports__);
         success: function success() {
           console.log('success');
         } });
-
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
