@@ -12,23 +12,23 @@ var _App = _interopRequireDefault(__webpack_require__(/*! ./App */ 5));
 
 
 
-var _index = _interopRequireDefault(__webpack_require__(/*! @/store/index.js */ 382));
+var _index = _interopRequireDefault(__webpack_require__(/*! @/store/index.js */ 11));
 
 
 
-var _unit = _interopRequireDefault(__webpack_require__(/*! ./common/js/unit.js */ 11));
+var _unit = _interopRequireDefault(__webpack_require__(/*! ./common/js/unit.js */ 18));
 
 
-var _tool = _interopRequireDefault(__webpack_require__(/*! @/common/js/tool.js */ 12));
-
-
-
-var _uviewUi = _interopRequireDefault(__webpack_require__(/*! uview-ui */ 13));
+var _tool = _interopRequireDefault(__webpack_require__(/*! @/common/js/tool.js */ 19));
 
 
 
-var _http = _interopRequireDefault(__webpack_require__(/*! ./common/api/http */ 39));
-var _api = _interopRequireDefault(__webpack_require__(/*! ./common/api/api */ 40));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}_vue.default.prototype.$store = _index.default; //缓存处理
+var _uviewUi = _interopRequireDefault(__webpack_require__(/*! uview-ui */ 20));
+
+
+
+var _http = _interopRequireDefault(__webpack_require__(/*! ./common/api/http */ 17));
+var _api = _interopRequireDefault(__webpack_require__(/*! ./common/api/api */ 16));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}_vue.default.prototype.$store = _index.default; //缓存处理
 _vue.default.use(_unit.default, { timeout: 0 }); //默认永久缓存
 _vue.default.prototype.$tool = _tool.default; // uview
 _vue.default.use(_uviewUi.default); //api集中处理

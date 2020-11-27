@@ -91,8 +91,9 @@
 			init(){
 				this.getListInfo()
 			},
-			getListInfo() {
+			async getListInfo() {
 				let addressInfo=this.$cache.get("_addressInfo")
+				
 				this.$tool.uniRequest({
 					url: `/api/goods/detail&goods_id=${this.detailId}`,
 					params:{

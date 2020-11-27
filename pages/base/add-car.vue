@@ -2,8 +2,6 @@
 	<view class="add-car">
 		<view class="wrap">
 			<view class="input-wrap">
-				<!-- <input type="text" v-model.trim="licensePlateVal" placeholder="请输入新增车牌号"
-				@focus="carInputClick"	class="input" :maxlength="20"/> -->
 				<view class="input"  @click="carInputClick">{{licensePlateVal || '请输入新增车牌号'}}</view>
 			</view>
 			<view class="btn-wrap">

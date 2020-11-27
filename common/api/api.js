@@ -7,27 +7,35 @@ const minCache = new MinCache({
 	timeout: 0
 });
 let time = null;
+const load = { //加载动画
+	star: () => {
+		tool.uniShowLoading({}) //加载动画
+		time = setTimeout(() => { //10s请求时长
+			tool.uniShowToast({
+				title: '请求超时，请重试',
+				icon: "none"
+			})
+			tool.uniHideLoading()
+		}, 60000); //超时关闭
+	},
+	end: () => {
+		tool.uniHideLoading(); //先结束动画
+		clearTimeout(time); //清除定时器
+	}
+}
 //请求拦截器
 minHttp.interceptors.request(request => {
 	if (request.data == undefined) request.data = {};
+	//增加token
 	request.data.wxapp_id = "10001"
 	request.data.token = minCache.get("_token");
-
-	tool.uniShowLoading({}) //加载动画
-
-	time = setTimeout(() => {//10s请求时长
-		tool.uniShowToast({
-			title:'请求超时，请重试',
-			icon: "none"
-		})
-		tool.uniHideLoading()
-	}, 60000); //超时关闭
+	//加载动画
+	if (request.load) load.star();
 	return request;
 });
 //响应拦截器
 minHttp.interceptors.response((response) => {
-	tool.uniHideLoading(); //先结束动画
-	clearTimeout(time); //清除定时器
+	load.end(); //清除加载动画
 	if (response.errMsg == "request:fail ") { //请求失败，进fail
 		tool.uniShowToast({
 			title: "请求失败，请重试",
@@ -35,7 +43,7 @@ minHttp.interceptors.response((response) => {
 		});
 		return response;
 	}
-	if (!response.statusCode == 200) {
+	if (response.statusCode !== 200) {
 		tool.uniShowToast({
 			title: "请求失败，请重试",
 			icon: "none"
@@ -62,7 +70,7 @@ export default {
 	// 这里统一管理api请求
 	apis: {
 		capture(data) { ////抓拍图片
-			return minHttp.get('/api/Camera/capture', data)
+			return minHttp.get('/api/Camera/capture', data,{ load:true})
 		},
 		categoryLists(data = {}) { //城市列表
 			return minHttp.get('/api/category/lists', data)
@@ -74,16 +82,16 @@ export default {
 			return minHttp.get(`/api/Tel`, data)
 		},
 		index_goodsDetail(data) { //加油站详细页
-			return minHttp.get(`/api/goods/detail`, data)
+			return minHttp.get(`/api/goods/detail`, data, { load:true})
 		},
 		index_getConts(data) { //所有站点数量
-			return minHttp.get(`/api/index/getconts`, data)
+			return minHttp.get(`/api/index/getconts`, data,{ load:true})
 		},
 		index_GetNearbyGasStation(data) { //附近站点列表
 			return minHttp.get(`/api/index/page`, data)
 		},
-		index_siteGoodsList(data){//全部站点列表
-			return minHttp.get(`/api/goods/lists`,data)
+		index_siteGoodsList(data) { //全部站点列表
+			return minHttp.get(`/api/goods/lists`, data, { load:true})
 		},
 		index_ad(data) { //广告
 			return minHttp.get(`/api/Ad`, data)
@@ -94,24 +102,25 @@ export default {
 		index_mapCover(data) { //地图
 			return minHttp.get(`/api/index/`, data)
 		},
+		index_siteDetail(data){
+			return minHttp.get(`/api/goods/detail`,data,{load:true})
+		},
 		myInfo_getPhone(data) { //获取手机号
 			return minHttp.get(`/api/user/getPhoneNumber`, data)
 		},
 		scan_indexChaPost(data) { //洗车机状态查询
-			return minHttp.get(`/api/Zhan/cha_post`, data)
+			return minHttp.get(`/api/Zhan/cha_post`, data, { load:true})
 		},
-		buyNow(data,type) { //支付
+		buyNow(data, type) { //支付
 			return minHttp.http({
-				url:`/api/order/buyNow`, 
+				url: `/api/order/buyNow`,
 				data,
-				method:type,
-				headers: {
-					'Content-Type': 'application/x-www-form-urlencoded'
-				}
+				method: type,
+				load:'load'
 			})
 		},
 		scan_indexZhan(data) { ////洗车机控制
-			return minHttp.get(`/api/Zhan`, data)
+			return minHttp.get(`/api/Zhan`, data,{ load:true})
 		}
 	}
 }

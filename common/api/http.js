@@ -18,14 +18,14 @@ class MinHttp {
 
 	//拦截器
 	interceptors = {
-		request: (func) => {
+		request: (func) => {//请求
 			if (func) {
 				MinHttp[requestBefore] = func;
 			} else {
 				MinHttp[requestBefore] = (request) => request
 			}
 		},
-		response: func => {
+		response: func => {//响应
 			if (func) {
 				MinHttp[requestAfter] = func
 			} else {
@@ -57,7 +57,7 @@ class MinHttp {
 			...this[config].header
 		};
 		options.method = options.method || this[config].method;
-
+		options.load = options.load || false;
 		options = { ...options,
 			...MinHttp[requestBefore](options)
 		}; //请求拦截器
@@ -92,7 +92,6 @@ MinHttp.install = function(Vue) {
 	Vue.mixin({
 		beforeCreate: function() {
 			if (this.$options.api) {
-				//console.log(this.$options.api)
 				Vue._minHttp = this.$options.api //new Vue注册的名字
 			}
 		}
