@@ -1,36 +1,38 @@
 <template>
-	<view class="my bg-page h100 relative">
+	<!--  -->
+	<view class="my bg-page h100 relative u-skeleton" >
 		<template v-if="isLogin">
 			<view class="header-wrap bg-gradual-orange flex a-center j-start flex-column" @click="myInfoPage">
-				<view class="top radius"><image :src="userInfo.avatarUrl" mode="aspectFill" class="avatar w100 h100" v-if="userInfo"></image></view>
+				<view class="top radius u-skeleton-circle"><image :src="userInfo.avatarUrl" mode="aspectFill" class="avatar w100 h100" v-if="userInfo"></image></view>
 				<view class="bottom">
 					<view class="name">{{ userInfo.nickName || '登陆' }}</view>
 				</view>
 				<image class="gif-black gifimg" src="../../static/image/wave.gif" mode="scaleToFill" height="25rpx"></image>
 			</view>
-			<view class="nav-wrap flex a-center flex-row j-start absolute">
-				<view class="nav flex a-center flex-column j-center" hover-class="active" @click="toPage('order')">
+			<view class="nav-wrap flex a-center flex-row j-start absolute ">
+				<view class="nav flex a-center flex-column j-center u-skeleton-rect" hover-class="active" @click="toPage('order')">
 					<image src="../../static/image/my-order.png" class="icon"></image>
 					<text class="nav-text">我的订单</text>
 				</view>
-				<view :class="{'animation-shake':shake}" class="nav flex a-center flex-column j-center" hover-class="active" @click="toPage('vip')">
+				<view :class="{ 'animation-shake': shake }" class="u-skeleton-rect nav flex a-center flex-column j-center" hover-class="active" @click="toPage('vip')">
 					<image src="../../static/image/my-money.png" class="icon"></image>
 					<text class="nav-text">钱包</text>
 				</view>
-				<view class="nav flex a-center flex-column j-center" hover-class="active" @click="toPage('volume')">
+				<view class="nav flex a-center flex-column j-center u-skeleton-rect" hover-class="active" @click="toPage('volume')">
 					<image src="../../static/image/my-juan.png" class="icon"></image>
 					<text class="nav-text">优惠券</text>
 				</view>
 			</view>
-			<view class="list-wrap absolute">
+			<view class="list-wrap absolute ">
 				<view class="tar-h"></view>
 				<template v-for="(item, index) in myList">
 					<view
 						hover-class="bg-list"
-						class="line flex a-center flex-row j-between"
+						class="line flex a-center flex-row j-between u-skeleton-rect"
 						:class="[index == 2 || index == 5 || index == myList.length - 1 ? '' : 'line-boder-bottom']"
 						:key="index"
-						@click="toListPage(item)">
+						@click="toListPage(item)"
+					>
 						<view class="left flex a-center flex-row j-start">
 							<img :src="item.img" alt="icon" class="icon" />
 							<text class="name">{{ item.name }}</text>
@@ -40,7 +42,7 @@
 							<img src="../../static/image/show1.png" class="show-icon" />
 						</view>
 					</view>
-					<view class="tar-h" v-if="index == 2 || index == 5"></view>
+					<view class="tar-h" v-if="index == 2 || index == 5" :key='index+10'></view>
 				</template>
 			</view>
 			<view class="contact-wrap fixed p-tblr" v-if="isContact" @click.stop.prevent="close">
@@ -50,8 +52,12 @@
 					<view class="contact-line text-center" @click.stop.prevent="close">取消</view>
 				</view>
 			</view>
+			<!--引用组件-->
+			<u-skeleton :loading="loading" :animation="true" bgColor="#FFF"></u-skeleton>
 		</template>
+		<!-- 登录 -->
 		<AuthLogin v-if="!isLogin && isShowAuthLogin" @loginOk="loginOk" :status="'userInfo'"></AuthLogin>
+		<!-- 弹窗提示 -->
 		<view class="mask flex j-center a-center" v-if="isCouponCounts">
 			<view class="contnet flex flex-column a-center j-between">
 				<view class="close-wrap" @click="isCouponCounts = false">
@@ -85,7 +91,8 @@ export default {
 	},
 	data() {
 		return {
-			shake:false,//摇头动画
+			shake: false, //摇头动画
+			loading:true,//骨架屏
 			isLogin: false,
 			couponCounts: 0,
 			isShowAuthLogin: false,
@@ -188,10 +195,10 @@ export default {
 			this.$tool.uniRequest({
 				url: `/api/user.coupon/lists&data_type=not_use`,
 				success: res => {
-					console.log('cou', res);
 					this.isCouponCounts = res && res.list.length > 0 ? true : false;
 					this.couponCounts = res && res.list.length > 0 ? res.list.length : 0;
 					this.list = res && res.list ? res.list : [];
+					this.loading =false;
 				}
 			});
 		},
@@ -228,9 +235,9 @@ export default {
 					icon: 'none'
 				});
 				this.shake = true;
-				setTimeout(()=>{
+				setTimeout(() => {
 					this.shake = false;
-				},500)
+				}, 500);
 				return;
 			}
 			let pageType = {

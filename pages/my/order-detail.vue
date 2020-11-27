@@ -70,6 +70,11 @@
 				this.$tool.uniRequest({
 					url: `/api/user.order/cancel&order_id=${this.id}`,
 					success: (res) => {
+						if(res.code == 0){
+							_this.$tool.uniShowToast({
+								title: `${res.msg}!`
+							})
+						}
 						_this.$tool.uniShowToast({
 							title: `${res}!`
 						})
@@ -77,7 +82,7 @@
 							uni.navigateBack({
 							    delta:1
 							});
-						}, 1000)
+						}, 2000)
 
 					}
 				})

@@ -1,8 +1,15 @@
 <template>
 	<view class="site bg-page h100">
 		<view class="content">
-			<u-empty text="正在加载..." mode='list' show="!empty"></u-empty>
-			<view v-show="empty" v-for="(item, index) in cardList" :key="index" class="card flex shadow a-center j-between flex-row" @click="toPage(item)" hover-class="active bg-list">
+			<u-empty text="正在加载..." mode="list" :show="!empty"></u-empty>
+			<view
+				v-show="empty"
+				v-for="(item, index) in cardList"
+				:key="index"
+				class="card flex shadow a-center j-between flex-row"
+				@click="toPage(item)"
+				hover-class="active bg-list"
+			>
 				<image :src="item.goods_image" class="left"></image>
 				<view class="mid">
 					<view class="title nowrap">{{ item.goods_name }}</view>
@@ -28,16 +35,16 @@
 export default {
 	data() {
 		return {
-			page:1,
+			page: 1,
 			total: 0,
 			category_id: 1,
 			empty: false,
 			addressInfo: null,
 			coupon_id: null,
-			isReachStar: 0,//数组截取star位置
-			isReachEnd: 10,//数组截取结束位置
+			isReachStar: 0, //数组截取star位置
+			isReachEnd: 10, //数组截取结束位置
 			arr: [],
-			goodslist:true,
+			goodslist: true
 		};
 	},
 	onLoad(options) {
@@ -48,7 +55,7 @@ export default {
 	},
 	onReachBottom() {
 		this.addressInfo = this.$cache.get('_addressInfo');
-		if (this.addressInfo.category_id || this.coupon_id) return;	//*不触发触底加载*//
+		if (this.addressInfo.category_id || this.coupon_id) return; //*不触发触底加载*//
 		//触底加载
 		if (this.isReachEnd > this.total) {
 			return false;
@@ -58,13 +65,14 @@ export default {
 		}
 	},
 	computed: {
-		cardList() {
+		cardList () {
+			/* eslint-disable */
 			this.addressInfo = this.$cache.get('_addressInfo');
-			if (this.addressInfo.category_id || this.coupon_id ) {
+			if (this.addressInfo.category_id || this.coupon_id) {
 				//**全站点**//
-				if(!this.goodslist) return this.arr
+				if (!this.goodslist) return this.arr;
 				this.goodsList();
-				this.goodslist = false
+				this.goodslist = false;
 				return this.arr;
 			} else {
 				/*次卡页面*/
@@ -80,17 +88,14 @@ export default {
 					this.empty = true; //数据为空的提示
 					return this.arr;
 				}
-				
 			}
 		}
 	},
 	methods: {
-		init() {
-			 
-		},
-		async goodsList(){
-			this.arr = [];//切换到次卡页面时
-			this.empty = false;///
+		init() {},
+		async goodsList() {
+			this.arr = []; //切换到次卡页面时
+			this.empty = false; ///
 			const result = await this.$api.index_siteGoodsList({
 				page: this.page,
 				search: '',
@@ -103,7 +108,7 @@ export default {
 			this.total = res.pages.total;
 			this.isPullDown = false;
 			this.empty = true; //数据为空的提示
-			this.arr =  res.posiList;
+			this.arr = res.posiList;
 		},
 		toPage(item) {
 			this.$tool.uniNavigateTo({

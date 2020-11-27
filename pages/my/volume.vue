@@ -26,7 +26,7 @@
 		<AuthLogin v-if="!isLogin && isShowAuthLogin" @loginOk='loginOk' :status="'userInfo'"></AuthLogin>
 	</view>
 </template>
-
+ 
 <script>
 	import AuthLogin from "../../components/base/auth-login.vue"
 	export default{
