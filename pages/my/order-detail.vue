@@ -78,12 +78,9 @@
 						_this.$tool.uniShowToast({
 							title: `${res}!`
 						})
-						setTimeout(() => {
-							uni.navigateBack({
-							    delta:1
-							});
-						}, 2000)
-
+						uni.navigateBack({
+							delta:1
+						});
 					}
 				})
 			}

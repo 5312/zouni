@@ -37,16 +37,16 @@
 					<view class="text">
 						<view class="titles text-cut">{{ markDetail.goods_name }}</view>
 					</view>
-					<image class="img" src="../../static/image/l-c2.png" mode="widthFix"></image>
+					<view class="img cuIcon-timefill text-orange"></view>
 					<text class="tag">{{ markDetail.goods_time }}</text>
 				</view>
-				<view class="right box flex a-center j-center flex-column" @click.stop.prevent="open">
-					<image class="img" mode="" src="../../static/image/l-c1.png" alt=""></image>
-					<text>{{ distance }}</text>
+				<view class="right text-xxl box flex a-center j-center flex-column" @click.stop.prevent="open">
+					<view class="cuIcon-locationfill text-orange"></view>
+					<text class="text-sm">{{ distance }}</text>
 				</view>
-				<view class="right box flex a-center j-center flex-column" @click.stop.prevent="queueFunc">
-					<image class="img" mode="" src="../../static/image/c2.png" alt=""></image>
-					<text>排队视频</text>
+				<view class="right text-xxl box flex a-center j-center flex-column" @click.stop.prevent="queueFunc">
+					<view class="cuIcon-recordfill text-orange"></view>
+					<text class="text-sm">排队视频</text>
 				</view>
 			</view>
 			<view class="footer absolute flex j-between a-center flex-row bg-white">
@@ -54,27 +54,28 @@
 					<image src="../../static/image/03.png" mode="" class="img"></image>
 					<text>卡包</text>
 				</view>
-				<view class="mid shadow-blur flex j-center a-center flex-row" hover-class="active" @click="scanCode">
-					<image src="../../static/image/sao.png" class="img"></image>
-					<text class="text-black text-xxl  bold">扫码洗车</text>
-				</view>
+				<button class="cu-btn bg-orange mid  bold shadow round text-xxl text-black" role="button" aria-disabled="false" @click="scanCode">
+					<text class="cuIcon-scan margin-right-xs"></text>
+					扫码洗车
+				</button>
 				<view class="right  flex a-center j-center flex-column" hover-class="active" @click="toPage('my')">
 					<image src="../../static/image/02.png" mode="" class="img"></image>
 					<text>我的</text>
 				</view>
 			</view>
 			<view class="list-wrap shadow-wrap fixed bg-white" :class="{ sliderHide: !list, sliderShow: list }">
-				<view class="box flex a-center j-center flex-column" hover-class="active" @click="toPage('site')">
-					<image src="../../static/image/06.png" class="img" mode="heightFix"></image>
-					<text>站点列表</text>
+				<view class="box text-sl flex a-center j-center flex-column" hover-class="active" @click="toPage('site')">
+					<view class="cuIcon-sort text-orange "></view>
+					<text class="text-sm">站点列表</text>
 				</view>
-				<view class="box flex a-center j-center flex-column" hover-class="active" @click="addressHandle">
-					<image src="../../static/image/05.png" class="img img2" mode="heightFix"></image>
-					<text>定位</text>
+				<view class="box text-sl flex a-center j-center flex-column" hover-class="active" @click="addressHandle">
+					<view class="cuIcon-focus text-orange "></view>
+
+					<text class="text-sm">定位</text>
 				</view>
-				<view class="box flex a-center j-center flex-column" hover-class="active" @click="isContact = true">
-					<image src="../../static/image/04.png" class="img" mode="heightFix"></image>
-					<text>客服</text>
+				<view class="box text-sl flex a-center j-center flex-column" hover-class="active" @click="isContact = true">
+					<view class="cuIcon-servicefill text-orange "></view>
+					<text class="text-sm">客服</text>
 				</view>
 			</view>
 			<view class="activity-wrap fixed" hover-class="active" v-if="adImg" @click="toAdPage"><image :src="adImg" class="w100" mode="widthFix"></image></view>
@@ -107,7 +108,7 @@
 <script>
 import AuthLogin from '../../components/base/auth-login.vue';
 import Queue from '../../components/queue/queue.vue';
-import {mapActions } from 'vuex'
+import { mapActions } from 'vuex';
 export default {
 	components: {
 		AuthLogin,
@@ -164,7 +165,7 @@ export default {
 	methods: {
 		...mapActions([
 			//映射actions
-			"setSite"
+			'setSite'
 		]),
 		queueFunc() {
 			this.queue = true; //显示视频弹窗
@@ -207,10 +208,10 @@ export default {
 		loginOk() {
 			this.init();
 		},
-		addressHandle() {
-			this.init(true);
-			//点击定位后，附近站点应重新加载
-			this.$cache.delete('site');
+		async addressHandle() {
+			//点击定位
+			this.mapScale = 16;
+			const loca = await this.getLocationInfo(true);
 		},
 		async getPthone() {
 			const res = await this.$api.index_Tel();
@@ -302,46 +303,48 @@ export default {
 				}
 			}
 		},
-		getLocationInfo() {
+		async getLocationInfo(addHandle = null) {
 			let _this = this;
 			this.mapCtx = uni.createMapContext('myMap');
-			uni.getLocation({
+			/* 获取位置信息 */
+			const location = await uni.getLocation({
 				//获取位置信息
 				type: 'wgs84',
-				geocode: true,
-				success: res => {
-					_this.latitude = res.latitude; //纬度
-					_this.longitude = res.longitude; //经度
-					_this.$tool.uniRequest({
-						url: `/api/Geocoder`,
-						params: {
-							lat: _this.latitude,
-							lng: _this.longitude
-						},
-						success: result => {
-							console.log('城市', result);
-							let cityName = result.geocoder.city;
-							if (cityName.charAt(cityName.length - 1) === '市') {
-								cityName = cityName.substr(0, cityName.length - 1);
-							}
-							_this.addressInfo = {
-								name: cityName,
-								lat: _this.latitude,
-								lng: _this.longitude,
-								category_id: ''
-							};
-							_this.mapCtx.moveToLocation(); //地图中心点切换到当前位置
-							_this.$cache.set('_addressInfo', _this.addressInfo);
-							_this.getWeather();
-							_this.getListInfo();
-							_this.getPthone();
-							_this.setSite({
-								latitude: _this.latitude,
-								longitude: _this.longitude
-							});
-						}
-					});
-				}
+				geocode: true
+			});
+			/* 返回 [null,{}] */
+			if (!location[1]) return;
+			let res = location[1]; ///
+			this.latitude = res.latitude; //纬度
+			this.longitude = res.longitude; //经度
+			/* 请求城市列表 */
+			const city = await this.$api.index_cityList({
+				lat: res.latitude,
+				lng: res.longitude
+			});
+			let result = city.data;
+			console.log('城市', result);
+			let cityName = result.geocoder.city;
+			if (cityName.charAt(cityName.length - 1) === '市') {
+				cityName = cityName.substr(0, cityName.length - 1);
+			}
+			this.addressInfo = {
+				name: cityName,
+				lat: this.latitude,
+				lng: this.longitude,
+				category_id: ''
+			};
+			this.mapCtx.moveToLocation(); //地图中心点切换到当前位置
+			this.$cache.set('_addressInfo', this.addressInfo);
+			if (!addHandle) {
+				this.getWeather();
+				this.getListInfo();
+				this.getPthone();
+			}
+			this.setSite({
+				//vuex的mapActive方法
+				latitude: this.latitude,
+				longitude: this.longitude
 			});
 		},
 		async getAdInfo() {
@@ -514,7 +517,7 @@ export default {
 	.markDetail {
 		position: absolute;
 		width: 85%;
-		height: 100rpx;
+		height: 120rpx;
 		bottom: 140rpx;
 		left: 0;
 		right: 0;
@@ -530,13 +533,14 @@ export default {
 		.left {
 			text-align: left;
 			white-space: nowrap;
-
+			// icon 
+			.img{
+				display: inline-block;
+			}
 			.titles {
 				width: 313rpx;
-				overflow: hidden;
 				display: inline-block;
-				white-space: nowrap;
-				text-overflow: ellipsis;
+				padding:10rpx 0 ;
 				vertical-align: middle;
 			}
 
@@ -557,11 +561,6 @@ export default {
 				padding: 0 20rpx;
 				vertical-align: middle;
 			}
-
-			.img {
-				width: 30rpx;
-				vertical-align: middle;
-			}
 		}
 
 		.right {
@@ -580,10 +579,8 @@ export default {
 		.mid {
 			width: 320rpx;
 			height: 100rpx;
-			border-radius: 30rpx;
-			background: $globalGb; // #ff8d1a;
 			position: relative;
-			top: -30rpx;
+			top: -35rpx;
 			z-index: 9;
 			.img {
 				width: 50rpx;
@@ -614,32 +611,14 @@ export default {
 
 	.list-wrap {
 		color: black;
-		width: 135rpx;
-		height: 535rpx;
+		padding:10rpx;
 		right: 40rpx;
-		bottom: 300rpx;
+		bottom: 450rpx;
 		border-radius: 20rpx;
 		font-size: 12rpx;
 
 		.box {
-			height: 174rpx;
-			font-size: 24rpx;
-
-			&:last-child {
-				height: 187rpx;
-			}
-
-			.img {
-				height: 70rpx;
-				width: 70rpx;
-				margin-bottom: 10rpx;
-			}
-
-			.img2 {
-				height: 80rpx;
-				width: 80rpx;
-				margin-bottom: 10rpx;
-			}
+			height: 150rpx;
 		}
 	}
 

@@ -12,7 +12,8 @@
 					</view>
 				</view>
 			</view>
-			<view class="nav-wrap flex flex-row a-center j-center">
+			<view class="nav-wrap flex flex-row a-center j-start">
+				<view class="leftBox"></view>
 				<view 
 					class="cu-capsule round" 
 					v-for="(item, index) in detail.serviceList" 
@@ -208,8 +209,11 @@ export default {
 	.nav-wrap {
 		height: 86rpx;
 		color: black;
-		padding: 0 40rpx;
 		border-bottom: 1rpx solid #f4f4f4;
+		.leftBox{
+			width: 208rpx;
+			margin-right: 30rpx;
+		}
 		.nav {
 			padding: 4rpx 20rpx;
 			box-sizing: border-box;

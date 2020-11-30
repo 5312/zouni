@@ -87,6 +87,9 @@ export default {
 		index_getConts(data) { //所有站点数量
 			return minHttp.get(`/api/index/getconts`, data,load)
 		},
+		index_cityList(data){
+			return minHttp.get(`/api/Geocoder`,data,load)
+		},
 		index_GetNearbyGasStation(data) { //附近站点列表
 			return minHttp.get(`/api/index/page`, data)
 		},

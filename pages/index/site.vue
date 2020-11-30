@@ -1,12 +1,17 @@
 <template>
 	<view class="site bg-page h100">
 		<view class="content">
-			<u-empty text="正在加载..." mode="list" :show="!empty"></u-empty>
+			<view class='cu-progress xs striped animation-reverse' :class="{'animation-slide-top':width == 100}">
+				<view class="bg-orange" :style="{width:width+'%'}"></view>
+			</view>
+			<u-empty text="正在加载..." mode="list" v-show="!empty"></u-empty>
 			<view
 				v-show="empty"
 				v-for="(item, index) in cardList"
 				:key="index"
 				class="card flex shadow a-center j-between flex-row"
+				:class="[item.animation?toggleDelay?'animation-slide-bottom':'':'']"
+				:style="[{animationDelay: (index + 1)*0.1 + 's'}]"
 				@click="toPage(item)"
 				hover-class="active bg-list"
 			>
@@ -19,8 +24,8 @@
 							<image src="../../static/image/l-c1.png" class="img"></image>
 							<text>{{ $tool.distanceHanlde(item.goods_distance) }}</text>
 						</view>
-						<view class="flex flex-row a-center j-start">
-							<image src="../../static/image/l-c2.png" class="img"></image>
+						<view class="flex flex-row a-center j-start text-xs">
+							<view class="cuIcon-timefill text-orange img"></view>
 							<text>{{ item.goods_time }}</text>
 						</view>
 					</view>
@@ -32,9 +37,15 @@
 </template>
 
 <script>
+	
 export default {
 	data() {
 		return {
+			width:0,//进度条
+			interval:null,//定时器
+			toggleDelay: false,//动画
+			animation:true,//动画开关
+			scoped:10,
 			page: 1,
 			total: 0,
 			category_id: 1,
@@ -49,6 +60,19 @@ export default {
 	},
 	onLoad(options) {
 		this.coupon_id = options.coupon_id || null;
+		///控制进度条
+		this.interval = setInterval(()=>{
+			this.width += this.scoped;
+			if(!this.cardList){
+				if(this.width>=90) this.width = 90;
+			}else{
+				this.width = 100;
+			}
+			if(this.width>=100){
+				console.log('清除')
+				clearInterval(this.interval);				
+			}
+		},500)
 	},
 	onPullDownRefresh() {
 		//下拉刷新
@@ -57,6 +81,7 @@ export default {
 		this.addressInfo = this.$cache.get('_addressInfo');
 		if (this.addressInfo.category_id || this.coupon_id) return; //*不触发触底加载*//
 		//触底加载
+		this.animation = false;//关闭动画
 		if (this.isReachEnd > this.total) {
 			return false;
 		} else {
@@ -65,7 +90,7 @@ export default {
 		}
 	},
 	computed: {
-		cardList () {
+		cardList (e) {
 			/* eslint-disable */
 			this.addressInfo = this.$cache.get('_addressInfo');
 			if (this.addressInfo.category_id || this.coupon_id) {
@@ -84,6 +109,19 @@ export default {
 					//10个为一组
 					let child = list.slice(this.isReachStar, this.isReachEnd);
 					this.arr.push(...child);
+					
+					if(this.animation){//触底后关闭动画
+						//给前十个加动画
+						this.arr.forEach((x,y)=>{
+							if(y<= 10){
+								x.animation = true;
+							}
+						});
+						this.toggleDelay= true;
+						setTimeout(()=>{
+							this.toggleDelay= false
+						}, 1000)
+					}
 					//当数据出现时；
 					this.empty = true; //数据为空的提示
 					return this.arr;
@@ -120,6 +158,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import "../../colorui/animation.css";
 .site {
 	.ad-wrap {
 		height: 176rpx;
@@ -128,7 +167,6 @@ export default {
 		}
 	}
 	.content {
-		// padding:0 20rpx;
 		.card {
 			height: 204rpx;
 			padding: 0 20rpx;
@@ -149,14 +187,14 @@ export default {
 			}
 
 			.left {
-				width: 130rpx;
-				height: 130rpx;
+				width: 150rpx;
+				height: 150rpx;
 				flex-shrink: 0;
 				border-radius: 6rpx;
 			}
 			.mid {
 				width: 55%;
-				padding: 30rpx 30rpx;
+				padding: 0 30rpx;
 				.title {
 					color: black;
 					font-size: 32rpx;
