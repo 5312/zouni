@@ -115,7 +115,7 @@
 			background: url(../../static/image/car-bg.png) no-repeat;
 			background-size: 100% 100%;
 			border-radius: 10rpx;
-			height: 120rpx;
+			height: 150rpx;
 			margin-top:20rpx;
 			padding:20rpx 40rpx;
 			color: white;

@@ -21,7 +21,7 @@
 					</view>
 				</view>
 			</view>
-			<view class="content"><u-empty show="isNoDate" text="没有优惠卷" mode="coupon"></u-empty></view>
+			<view class="content" v-show="isNoDate"><u-empty  text="没有优惠卷" mode="coupon"></u-empty></view>
 		</template>
 		<AuthLogin v-if="!isLogin && isShowAuthLogin" @loginOk='loginOk' :status="'userInfo'"></AuthLogin>
 	</view>

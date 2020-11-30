@@ -17,13 +17,14 @@
 		<view class="line flex a-center j-between flex-row">
 			<view class="left">性别</view>
 			<view class="right flex a-center j-end flex-row">
-				<view class="flex a-center j-end flex-row">
-					<text class="checkBox" @click="sexValChange(1)" :class="[sexVal === 1 && 'isChecked']"></text>
+				 <view class="flex a-center j-end flex-row">
+					  <switch class='orange switch-sex' @change="sexValChange" :class="sexVal===1?'checked':''" :checked="sexVal===1?true:false"></switch> 
+					<!-- <text class="checkBox" @click="sexValChange(1)" :class="[sexVal === 1 && 'isChecked']"></text>
 					男
 					<text class="checkBox checkBox1" @click="sexValChange(2)" :class="[sexVal === 2 && 'isChecked']"></text>
-					女
+					女 -->
 				</view>
-				<image src="../../static/image/show1.png" class="icon"></image>
+				<!-- <image src="../../static/image/show1.png" class="icon"></image> -->
 			</view>
 		</view>
 		<view class="line flex a-center j-between flex-row" @click="editPage(userInfo.tel, 'tel')">
@@ -162,11 +163,9 @@ export default {
 				}
 			});
 		},
-		sexValChange(index) {
-			if (this.sexVal !== index) {
-				this.sexVal = index;
-				this.editUserInfo({});
-			}
+		sexValChange(e) {
+			e.detail.value?this.sexVal = 1:this.sexVal = 2;
+			this.editUserInfo({});
 		},
 		getDate(type) {
 			const date = new Date();

@@ -98,8 +98,9 @@
 				this.isShowAuthLogin = false;
 			},
 			getGlobl() { //获取全局数据
-				this.site = getApp().globalData._site;
-				if (this.site == null && !this.suid) { /*预请求未成功时*///无邀请人,不请求附近站点；
+				/*
+				this.site =this.$store.state.site;
+				if (this.site == null && !this.suid) { ///预请求未成功时///无邀请人,不请求附近站点
 					this.loading = true; //按钮动画
 					let res = this.$cache.get('_addressInfo'); //获取当前经纬度
 					let _this = this;
@@ -116,6 +117,8 @@
 				} else {
 					this.pay();
 				}
+				**/
+				this.pay();
 			},
 			getLocationInfo() {
 				let _this = this
@@ -191,8 +194,8 @@
 						suid: this.suid || '', //分享用户id
 						planId: this.detail.plan_id,
 						customMoney: this.detail.gift_money,
-						dizhi: this.site.goods_name ,
-						dizhi_id: this.site.goods_id,
+						dizhi: '' ,// this.site.goods_name ,
+						dizhi_id:'' ,// this.site.goods_id,
 						suname: this.detail.suname || '',
 					}
 				}else{//有分享人，不请求附件站点

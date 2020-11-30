@@ -1,7 +1,8 @@
 <template>
 	<view class="mark" :class="{none: none ,markBg:!none}">
-		<view class="main"  :class="{ queueShow: show, queueHide: !show }">
-			<view class="close" @click="close"><u-icon name="close" size="40"></u-icon></view>
+		<view class="main text-sl"  :class="{ queueShow: show, queueHide: !show }">
+			<view class="cuIcon-roundclosefill close  text-white" @click="close"></view>
+			<view class="closeBg"></view>
 			<u-image class="video" width="100%" :fade="false" border-radius='10rpx' height="430rpx" :src="capture">
 				<u-loading slot="loading"></u-loading>
 				<u-icon slot="error" :label="error" label-size='40rpx' size="40" name="info-circle"></u-icon>
@@ -85,7 +86,7 @@ export default {
 			error:'加载中',//图片加载失败文字
 			customStyle: {
 				fontSize: '25px', // 注意驼峰命名，并且值必须用引号包括，因为这是对象
-				padding:'25rpx 20rpx'
+				padding:'30rpx 20rpx'
 			}
 		};
 	},
@@ -158,13 +159,23 @@ page {
 			border-radius: 20rpx;
 			.close {
 				position: absolute;
+				width: 88rpx;
+				height: 90rpx;
 				top: -20rpx;
 				right: -20rpx;
-				z-index: 999;
-				border-radius: 50%;
-				background-color: #f3f3f3;
-				padding: 15rpx;
+				z-index: 2;
 				text-align: center;
+				border-radius: 50%;
+			}
+			.closeBg{
+				position: absolute;
+				width: 60rpx;
+				height: 60rpx;
+				top: -5rpx;
+				right: -7rpx;
+				border-radius: 50%;
+				z-index: 1;
+				background-color: #000;
 			}
 			.video {
 				border-top-left-radius: 20rpx;

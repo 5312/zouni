@@ -9,7 +9,7 @@
 				</view>
 				<image class="gif-black gifimg" src="../../static/image/wave.gif" mode="scaleToFill" height="25rpx"></image>
 			</view>
-			<view class="nav-wrap flex a-center flex-row j-start absolute ">
+			<view class="nav-wrap my-shadow flex a-center flex-row j-start absolute ">
 				<view class="nav flex a-center flex-column j-center " hover-class="active" @click="toPage('order')">
 					<image src="../../static/image/my-order.png" class="icon"></image>
 					<text class="nav-text">我的订单</text>
@@ -24,7 +24,6 @@
 				</view>
 			</view>
 			<view class="list-wrap absolute ">
-				<view class="tar-h"></view>
 				<template v-for="(item, index) in myList">
 					<view
 						hover-class="bg-list"
@@ -59,15 +58,11 @@
 		<view class="mask flex j-center a-center" v-if="isCouponCounts">
 			<view class="contnet flex flex-column a-center j-between">
 				<view class="close-wrap" @click="isCouponCounts = false">
-					<!-- <text class="close" @click="isCouponCounts=false"></text> -->
-					<u-icon name="close"></u-icon>
+					<u-icon name="close" size="40rpx"></u-icon>
 				</view>
 				<view class="title">恭喜，你还有{{ list.length }}张优惠券未使用！</view>
-				<!-- <view class="info">
-					恭喜，你还有{{couponCounts}}张优惠券未使用！
-				</view> -->
 				<view class="content">
-					<view class="box flex a-center j-start flex-row" v-for="(item, index) in list" :key="index">
+					<view class="box shadow-warp flex a-center j-start flex-row" v-for="(item, index) in list" :key="index">
 						<view class="left">
 							<text class="tar">{{ item.coupon_type.value == 10 ? `1次` : item.coupon_type.value == 20 ? `¥${item.reduce_price.split('.')[0]}` : '' }}</text>
 						</view>
@@ -289,7 +284,11 @@ export default {
 
 <style lang="scss" scoped>
 @import '/colorui/animation.css';
+.my-shadow{
+	    box-shadow: 0 9rpx 10rpx rgba(0, 0, 0, 0.1);
+}
 .my {
+	background-color: #f2f2f291;
 	.mask {
 		position: fixed;
 		top: 0;
@@ -304,7 +303,7 @@ export default {
 			width: 560rpx;
 			height: 550rpx;
 			padding: 30px;
-			border-radius: 10rpx;
+			border-radius: 20rpx;
 			box-sizing: border-box;
 			position: relative;
 
@@ -318,7 +317,6 @@ export default {
 					border-radius: 14rpx;
 					height: 100rpx;
 					border: 1rpx solid #ddd;
-					box-shadow: 1rpx 5rpx 9rpx 4rpx #ddd;
 					background-color: #ffffff;
 
 					.left {
@@ -339,7 +337,7 @@ export default {
 					}
 					.right {
 						position: relative;
-						width: 250rpx;
+						width: 300rpx;
 						text-align: center;
 						font-size: 28rpx;
 						flex-shrink: 0;
@@ -354,8 +352,8 @@ export default {
 
 			.close-wrap {
 				position: absolute;
-				right: 24rpx;
-				top: 24rpx;
+				right: 8rpx;
+				top: 13rpx;
 				width: 50rpx;
 				height: 50rpx;
 				text-align: center;
@@ -388,7 +386,6 @@ export default {
 	.header-wrap {
 		height: 280rpx;
 		padding: 0 40rpx;
-		// background: $globalGb;
 		background-size: 100% 100%;
 		padding-top: 45rpx;
 		box-sizing: border-box;
@@ -418,6 +415,7 @@ export default {
 		height: 140rpx;
 		width: 750rpx;
 		top: 280rpx;
+		background-color: #fff;
 		.nav {
 			flex: 1;
 			flex-shrink: 0;
@@ -447,8 +445,12 @@ export default {
 		right: 0;
 		top: 420rpx;
 		border-bottom: 1rpx solid #d7dae2;
+		margin-top: 16rpx;
+		background-color: #fff;
+		margin: 40rpx 20rpx;
+		    border-radius: 20rpx;
 		.tar-h {
-			background: #f2f2f2;
+			background: #f2f2f291;
 			height: 16rpx;
 		}
 
