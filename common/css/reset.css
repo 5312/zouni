@@ -120,4 +120,7 @@ page{
 	color: #fff;
 	opacity: .6;
 }
+.gif-black {
+	mix-blend-mode: screen;
+}
 

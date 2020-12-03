@@ -129,6 +129,15 @@
             "path" : "pages/scan/urgent/urgent",
             "style" : {}
         }
+        ,{
+            "path" : "pages/base/writeOff",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "洗车券核销",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

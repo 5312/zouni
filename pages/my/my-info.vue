@@ -19,12 +19,7 @@
 			<view class="right flex a-center j-end flex-row">
 				 <view class="flex a-center j-end flex-row">
 					  <switch class='orange switch-sex' @change="sexValChange" :class="sexVal===1?'checked':''" :checked="sexVal===1?true:false"></switch> 
-					<!-- <text class="checkBox" @click="sexValChange(1)" :class="[sexVal === 1 && 'isChecked']"></text>
-					男
-					<text class="checkBox checkBox1" @click="sexValChange(2)" :class="[sexVal === 2 && 'isChecked']"></text>
-					女 -->
 				</view>
-				<!-- <image src="../../static/image/show1.png" class="icon"></image> -->
 			</view>
 		</view>
 		<view class="line flex a-center j-between flex-row" @click="editPage(userInfo.tel, 'tel')">

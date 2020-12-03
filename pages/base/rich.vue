@@ -44,17 +44,14 @@
 			}
 		},
 		methods: {
-			getDetail(id, urlVal, isSetTitle = false) {
-				this.$tool.uniRequest({
-					url: `/api/wxapp/${urlVal}&help_id=${id}`,
-					success: (res) => {
-						this.detail = res.detail && res.detail.content ? this.$tool.htmlre(res.detail.content) : '';
-						this.detail=this.$tool.formatRichText(this.detail)
-						this.isNoDate = this.detail ? false : true
-						isSetTitle ? this.$tool.nuiSetNavigationBarTitle(res.detail.title) : false
-					}
-				})
-			},
+			async getDetail(id, urlVal, isSetTitle = false) {
+				const result = await this.$api.richGetDetail(urlVal,id);
+				let res = result.data;
+				this.detail = res.detail && res.detail.content ? this.$tool.htmlre(res.detail.content) : '';
+				this.detail=this.$tool.formatRichText(this.detail)
+				this.isNoDate = this.detail ? false : true
+				isSetTitle ? this.$tool.nuiSetNavigationBarTitle(res.detail.title) : false
+			}, 
 			
 		}
 	}

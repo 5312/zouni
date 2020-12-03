@@ -111,8 +111,17 @@ export default {
 		myAgreement(data){
 			return minHttp.get(`/api/wxapp/help`,data,load)
 		},
+		baseWriteOff(data){
+			return minHttp.get(``,data,load)
+		},
+		richGetDetail(urlVal,id){
+			return minHttp.get(`/api/wxapp/${urlVal}&help_id=${id}`)
+		},
 		myInfo_getPhone(data) { //获取手机号
 			return minHttp.get(`/api/user/getPhoneNumber`, data)
+		},
+		help(data){
+			return minHttp.get(`/api/wxapp/help`,data)
 		},
 		scan_indexChaPost(data) { //洗车机状态查询
 			return minHttp.get(`/api/Zhan/cha_post`, data, load)

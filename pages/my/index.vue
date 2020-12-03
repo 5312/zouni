@@ -113,6 +113,12 @@ export default {
 					isNoOpen: true
 				},
 				{
+					img: '../../static/image/my-juan.png',
+					name: '优惠券核销', 
+					isNoOpen: false,
+					path:'/pages/base/writeOff'
+				},
+				{
 					img: '../../static/image/08.png',
 					name: '关于我们',
 					path: '/pages/base/rich?fromPage=about'
@@ -519,7 +525,5 @@ export default {
 		}
 	}
 }
-.gif-black {
-	mix-blend-mode: screen;
-}
+
 </style>

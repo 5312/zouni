@@ -1,17 +1,18 @@
 <template>
 	<view class="auto-login h100 flex a-center j-center">
-		<view class="content flex flex-column a-center j-center">
+		<view class="content flex flex-column a-center j-between">
 			<view class="title">{{status==='userInfo'?'授权登陆':'授权地址位置'}}</view>
 			<view class="info-msg">
 				请授权头像等信息，以便我们为您提供更好的服务
 			</view>
-			<view class="registration-agreement">授权即视为同意<text class="text-green" @click="look">《注册协议》</text></view>
+			
 			<button open-type="getUserInfo" @getuserinfo="bindGetUserInfo" class="btn" :loading="loading" :disabled="loading" v-if="status==='userInfo'">
 				微信一键登录
 			</button>		
 			<button @click="handler" class="btn"  v-if="status==='userLocation'">
 				授权地址位置
 			</button>
+			<view class="registration-agreement text-gray">授权即视为同意<text class="text-green" @click="look">《注册协议》《服务协议》</text></view>
 		</view>
 	</view>
 </template>
@@ -102,10 +103,11 @@
 	background: rgba(0,0,0,0.6);
 	z-index: 99999;
 	.content{
-		width: 500rpx;
-		height: 600rpx;
+		width: 80%;
+		height: 700rpx;
 		background: white;
 		border-radius: 8rpx;
+		padding-top:40rpx;
 		.title{
 			font-size: 34rpx;
 			margin-bottom: 80rpx;
@@ -123,10 +125,10 @@
 		}
 		.btn{
 			padding: 8rpx 0rpx;
-			width: 400rpx;
+			width: 80%;
 			text-align: center;
 			background:  #FF8D1A;
-			border-radius: 8rpx;
+			border-radius: 45rpx;
 			font-size: 26rpx;
 			color: white;
 		}

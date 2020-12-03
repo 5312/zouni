@@ -3,7 +3,6 @@
     <view class="plate-content">
         <view class="plate-popup" v-show="plateShow">
             <!-- 关闭 -->
-            <!-- <view class="plate-close" v-show="plateNumber.length===8 || plateNumber.length===7" @click="close">关闭</view> -->
             <view class="plate-close" @click="close">关闭</view>
             <view v-show="!plateNumber">
                 <view class="plate-popup-item">
