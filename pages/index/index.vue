@@ -74,8 +74,12 @@
 					<text class="text-sm">定位</text>
 				</view>
 				<view class="box text-sl flex a-center j-center flex-column" hover-class="active" @click="isContact = true">
-					<view class="cuIcon-servicefill text-orange "></view>
+					<view class="cuIcon-service text-orange "></view>
 					<text class="text-sm">客服</text>
+				</view>
+				<view class="box text-sl flex a-center j-center flex-column" hover-class="active" @click="sosGo()">
+					<view class="cuIcon-dianhua text-orange "></view>
+					<text class="text-sm">救援</text>
 				</view>
 			</view>
 			<view class="activity-wrap fixed" hover-class="active" v-if="adImg" @click="toAdPage"><image :src="adImg" class="w100" mode="widthFix"></image></view>
@@ -429,6 +433,11 @@ export default {
 				phoneNumber: this.phone
 			});
 		},
+		sosGo(phone){
+		 	uni.makePhoneCall({
+				phoneNumber:  this.phone, 
+			});
+		},
 		close() {
 			this.isContact = false;
 		}
@@ -613,12 +622,12 @@ export default {
 		color: black;
 		padding:10rpx;
 		right: 40rpx;
-		bottom: 450rpx;
+		bottom: 350rpx;
 		border-radius: 20rpx;
 		font-size: 12rpx;
 
 		.box {
-			height: 150rpx;
+			height: 140rpx;
 		}
 	}
 

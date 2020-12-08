@@ -57,7 +57,9 @@ minHttp.interceptors.response((response) => {
 		})
 		minCache.clear();
 		tool.getTokenValue();
-	} else { //其他情况下
+	} else if (response.data.code == 0){//这时请求也错误
+		 return Promise.reject(response.data.msg);
+	}else { //其他情况下
 		return response.data;
 	}
 })
@@ -105,14 +107,14 @@ export default {
 		index_mapCover(data) { //地图
 			return minHttp.get(`/api/index/`, data)
 		},
-		index_siteDetail(data){
+		index_siteDetail(data){//站点详情
 			return minHttp.get(`/api/goods/detail`,data,load)
 		},
 		myAgreement(data){
 			return minHttp.get(`/api/wxapp/help`,data,load)
 		},
-		baseWriteOff(data){
-			return minHttp.get(``,data,load)
+		baseWriteOff(data){//洗车券兑换
+			return minHttp.get(`/api/recika/checkcode`,data,load)
 		},
 		richGetDetail(urlVal,id){
 			return minHttp.get(`/api/wxapp/${urlVal}&help_id=${id}`)
@@ -120,8 +122,8 @@ export default {
 		myInfo_getPhone(data) { //获取手机号
 			return minHttp.get(`/api/user/getPhoneNumber`, data)
 		},
-		help(data){
-			return minHttp.get(`/api/wxapp/help`,data)
+		help(data){//帮助中心
+			return minHttp.get(`/api/wxapp/help`,data,load)
 		},
 		scan_indexChaPost(data) { //洗车机状态查询
 			return minHttp.get(`/api/Zhan/cha_post`, data, load)

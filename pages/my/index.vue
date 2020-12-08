@@ -109,18 +109,14 @@ export default {
 				},
 				{
 					img: '../../static/image/my-juan.png',
-					name: '优惠券兑换',
-					isNoOpen: true
-				},
-				{
-					img: '../../static/image/my-juan.png',
-					name: '优惠券核销', 
+					name: '优惠券兑换', 
 					isNoOpen: false,
 					path:'/pages/base/writeOff'
 				},
 				{
 					img: '../../static/image/08.png',
 					name: '关于我们',
+					info:'',
 					path: '/pages/base/rich?fromPage=about'
 				},
 				{
@@ -143,6 +139,10 @@ export default {
 	},
 	onLoad() {
 		this.init();
+		const accountInfo = uni.getAccountInfoSync();
+		if(this.myList[3].name == '关于我们'){
+			this.myList[3].info = '版本号：'+(accountInfo.miniProgram.version || '2.2.1');
+		}
 	},
 	onShow() {
 		let isEditUserInfo = this.$cache.get('_isEditUserInfo');

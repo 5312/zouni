@@ -122,8 +122,7 @@ export default {
 				goods_id: this.detailId,
 				lat: addressInfo.lat,
 				lng: addressInfo.lng
-			});
-			if (result.code == 0) {
+			}).catch(err => {
 				uni.navigateBack({
 					delta: 1
 				});
@@ -131,8 +130,8 @@ export default {
 					title: '敬请期待！',
 					icon: 'none'
 				});
-				return;
-			}
+			});
+			if (!result) return;
 			let res = result.data;
 			this.detail = res.detail || null;
 			this.distance = this.detail.goods_distance ? this.$tool.distanceHanlde(this.detail.goods_distance) : 0;

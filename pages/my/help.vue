@@ -4,7 +4,7 @@
 			<view class="header">常见问题</view>
 			<u-collapse :item-style="itemStyle">
 				<u-collapse-item  :title="item.title" v-for="(item, index) in list" :key="index">
-					<view>{{ item.content}}</view>
+					<view class="con">{{ item.content}}</view>
 				</u-collapse-item>
 			</u-collapse>
 		</view>
@@ -48,6 +48,11 @@ export default {
 
 <style scoped lang="less">
 .help {
+	.content{
+		.con{
+			padding:20rpx;
+		}
+	}
 	.header {
 		height: 80rpx;
 		line-height: 80rpx;

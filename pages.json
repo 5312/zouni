@@ -133,7 +133,7 @@
             "path" : "pages/base/writeOff",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "洗车券核销",
+                "navigationBarTitleText": "洗车券兑换",
                 "enablePullDownRefresh": false
             }
             

@@ -76,6 +76,9 @@ export default {
 	},
 	onPullDownRefresh() {
 		//下拉刷新
+		setTimeout(()=>{
+			uni.stopPullDownRefresh();
+		},2000)
 	},
 	onReachBottom() {
 		this.addressInfo = this.$cache.get('_addressInfo');

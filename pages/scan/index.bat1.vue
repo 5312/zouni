@@ -379,19 +379,17 @@
 							zhan_id: msg.success,
 							zhan_type: 1, //1开机2暂停3复位
 						}).then(res => {
-							if(res.code == 0){
-								uni.showModal({
-								    title: '提示',
-								    content: res.msg,
-								    success: function (res) {
-								        uni.reLaunch({
-								        	url: `/pages/scan/order-detail?id=${res.order_id}`
-								        })
-								    }
-								});
-								return
-							}
 							_this.loading = true; //开机成功，进入紧急停止页面
+						}).catch(err => {
+							uni.showModal({
+							    title: '提示',
+							    content: err,
+							    success: function (res) {
+							        uni.reLaunch({
+							        	url: `/pages/scan/order-detail?id=${res.order_id}`
+							        })
+							    }
+							});
 						})
 					} else {
 						uni.reLaunch({
