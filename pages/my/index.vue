@@ -7,7 +7,7 @@
 				<view class="bottom">
 					<view class="name">{{ userInfo.nickName || '登陆' }}</view>
 				</view>
-				<image class="gif-black gifimg" src="../../static/image/wave.gif" mode="scaleToFill" height="25rpx"></image>
+				<image class="gif-black gifimg" src="https://xi.ydeshui.com/uploads/wave.gif" mode="scaleToFill" height="25rpx"></image>
 			</view>
 			<view class="nav-wrap my-shadow flex a-center flex-row j-start absolute ">
 				<view class="nav flex a-center flex-column j-center " hover-class="active" @click="toPage('order')">

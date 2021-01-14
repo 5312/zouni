@@ -71,7 +71,7 @@
 		onReady() {
 			let uThis = this;
 			this.$api.index_Tel().then(res => {
-				uThis.tel = res.tel;
+				uThis.tel = res.data.tel;
 				uThis.show = false;
 			})
 		},
@@ -153,6 +153,9 @@
 </script>
 
 <style scoped lang="scss">
+	image{
+		max-width: auto !important;
+	}
 	page {
 		height: 100%;
 
@@ -216,6 +219,7 @@
 				}
 
 				.image {
+					
 					position: absolute;
 					top: 0;
 					width: 200rpx;

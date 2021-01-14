@@ -3,13 +3,13 @@
 		<view class="main text-sl"  :class="{ queueShow: show, queueHide: !show }">
 			<view class="cuIcon-roundclosefill close  text-white" @click="close"></view>
 			<view class="closeBg"></view>
-			<u-image class="video" width="100%" :fade="false" border-radius='10rpx' height="430rpx" :src="capture">
+			<u-image class="video"  mode='widthFix' :fade="false" border-radius='10rpx' height="400rpx" :src="capture">
 				<u-loading slot="loading"></u-loading>
 				<u-icon slot="error" :label="error" label-size='40rpx' size="40" name="info-circle"></u-icon>
 				
 			</u-image>
 			<view class="bottom flex j-between">
-				<view class="goods_name">
+				<view class="goods_name text-cut">
 					<view>{{ name }}</view>
 					<view class="flex tag">
 						<u-tag v-for="(x,y) in tagText" :key='y' 
@@ -148,7 +148,7 @@ page {
 		.main {
 			position: absolute;
 			width: 90%;
-			height: 580rpx;
+			height: 560rpx;
 			top: 0;
 			bottom: 0;
 			left: 0;

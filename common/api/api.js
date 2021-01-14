@@ -8,9 +8,10 @@ const minCache = new MinCache({
 });
 let time = null;
 const loading = { //加载动画
-	star: () => {
+	star: (url) => {
 		tool.uniShowLoading({}) //加载动画
 		time = setTimeout(() => { //10s请求时长
+			console.log(url)
 			tool.uniShowToast({
 				title: '请求超时，请重试',
 				icon: "none"
@@ -30,7 +31,7 @@ minHttp.interceptors.request(request => {
 	request.data.wxapp_id = "10001"
 	request.data.token = minCache.get("_token");
 	//加载动画
-	if (request.load) loading.star();
+	if (request.load) loading.star(request);
 	return request;
 });
 //响应拦截器
